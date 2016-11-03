@@ -9,6 +9,10 @@ gem 'pg', '~> 0.18'
 gem 'puma', '~> 3.0'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
+
+# Bootstrap
+gem 'bootstrap-sass'
+
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .coffee assets and views
@@ -50,11 +54,20 @@ end
 
 group :test do
   # We use Rspec instead of minitest
+  gem 'shoulda-matchers', '~> 3.1'
   gem 'rspec-rails'
   gem 'capybara'
+  gem 'launchy'
   gem 'database_cleaner'
   gem 'factory_girl_rails'
+  gem 'simplecov'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+
+# Use httparty to make API request
+gem "httparty"
+
+# Use oauth to make user login
+gem 'oauth'
