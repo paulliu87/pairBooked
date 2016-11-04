@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe TimeslotsController, type: :controller do
   describe 'index' do
     it 'assigns timeslots' do
-      get :"/categories/1/timeslots"
+      get :"/challenges/1/timeslots"
       expect(@timeslots).to all(be(Timeslot))
     end
   end
