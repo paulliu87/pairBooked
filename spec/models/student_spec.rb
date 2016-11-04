@@ -30,7 +30,7 @@ RSpec.describe Student, type: :model do
     end
   end
 
-  describe "create_with_omniauth" do
+  pending "create_with_omniauth" do
 
 
     it "has a username" do

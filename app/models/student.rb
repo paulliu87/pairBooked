@@ -5,8 +5,8 @@ class Student < ApplicationRecord
   def self.create_with_omniauth(auth)
     create! do |student|
       student.username = auth["uid"]
-      student.fullname = auth["info"]["name"]
-      student.email = auth["info"]["email"]
+      student.fullname = auth["name"]
+      student.email = auth["email"]
     end
   end
 end

@@ -4,9 +4,8 @@ class AuthenticationController < ApplicationController
 
   def login
     auth = request.env["omniauth.auth"]
-    student = Student.find_by_provider_and_uid(
-      auth["provider"],
-      auth["uid"]
+    student = Student.find_by(
+      username: auth["uid"]
     ) || Student.create_with_omniauth(auth)
     session[:student_id] = student.id
     # redirect_to slack_entry_url if student.slack_name == nil

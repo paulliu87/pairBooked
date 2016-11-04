@@ -4,7 +4,6 @@ Rails.application.routes.draw do
   get '/logout', to: "authentication#logout"
   post '/login', to: "authentication#login"
   get "/auth/:github/callback" => "authentication#login"
-  get "/logout" => "authentication#logout", :as => :logout
 
   root to: 'authentication#index'
 end
