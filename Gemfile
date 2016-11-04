@@ -38,6 +38,7 @@ group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri
   gem 'rspec-rails'
+  gem 'webmock'
   gem 'rails-controller-testing'
 
 # For JS tests
@@ -71,4 +72,6 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem "httparty"
 
 # Use oauth to make user login
-gem 'oauth'
+gem 'omniauth'
+gem 'omniauth-github'
+gem 'dotenv-rails'

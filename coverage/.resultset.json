@@ -1,7 +1,7 @@
 {
   "RSpec": {
     "coverage": {
-      "/Users/apprentice/Desktop/pairBooked/app/helpers/application_helper.rb": [
+      "/Users/apprentice/final-project/pairBooked/app/helpers/application_helper.rb": [
         1,
         null
       ],
@@ -31,18 +31,25 @@
         null,
         null
       ],
-      "/Users/apprentice/Desktop/pairBooked/app/channels/application_cable/channel.rb": [
+      "/Users/apprentice/final-project/pairBooked/app/channels/application_cable/connection.rb": [
         0,
         0,
         0,
         0
       ],
-      "/Users/apprentice/Desktop/pairBooked/app/channels/application_cable/connection.rb": [
+      "/Users/apprentice/final-project/pairBooked/app/controllers/application_controller.rb": [
+        0,
+        0,
+        0
+      ],
+      "/Users/apprentice/final-project/pairBooked/app/controllers/login_controller.rb": [
+        0,
         0,
         0,
         0,
         0
       ],
+
       "/Users/apprentice/Desktop/pairBooked/app/jobs/application_job.rb": [
         0,
         0
@@ -53,6 +60,7 @@
         0,
         0
       ],
+
       "/Users/apprentice/Desktop/pairBooked/app/models/application_record.rb": [
         0,
         0,
@@ -60,10 +68,15 @@
       ],
       "/Users/apprentice/Desktop/pairBooked/app/models/challenge.rb": [
         0,
+        0
+      ],
+      "/Users/apprentice/final-project/pairBooked/app/models/student.rb": [
         0,
         0
       ]
     },
+
     "timestamp": 1478282841
+
   }
 }

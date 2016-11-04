@@ -1,9 +1,9 @@
 Rails.application.routes.draw do
 
-  root "home#index"
-
   resources :challenges
+  get '/logout', to: "authentication#logout"
+  post '/login', to: "authentication#login"
+  get "/auth/github/callback" => "authentication#login"
 
-
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  root to: 'authentication#index'
 end
