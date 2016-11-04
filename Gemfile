@@ -71,3 +71,4 @@ gem "httparty"
 
 # Use oauth to make user login
 gem 'omniauth'
+gem 'omniauth-github'
