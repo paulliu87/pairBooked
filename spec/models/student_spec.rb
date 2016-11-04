@@ -30,6 +30,14 @@ RSpec.describe Student, type: :model do
     end
   end
 
+  describe "create_with_omniauth" do
+
+
+    it "has a username" do
+
+    end
+  end
+
   pending "associations" do
     let(:timeslot) {
 

@@ -9,6 +9,7 @@ class AuthenticationController < ApplicationController
       auth["uid"]
     ) || Student.create_with_omniauth(auth)
     session[:student_id] = student.id
+    # redirect_to slack_entry_url if student.slack_name == nil
     redirect_to root_url, :notice => "Signed in!"
   end
 
