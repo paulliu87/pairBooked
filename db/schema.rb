@@ -10,17 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-<<<<<<< HEAD
-ActiveRecord::Schema.define(version: 0) do
-=======
-ActiveRecord::Schema.define(version: 20161104000047) do
->>>>>>> origin/master
+ActiveRecord::Schema.define(version: 20161104004238) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-<<<<<<< HEAD
-=======
   create_table "challenges", force: :cascade do |t|
     t.datetime "due_date"
     t.string   "name"
@@ -28,5 +22,13 @@ ActiveRecord::Schema.define(version: 20161104000047) do
     t.datetime "updated_at", null: false
   end
 
->>>>>>> origin/master
+  create_table "students", force: :cascade do |t|
+    t.string   "username"
+    t.string   "fullname"
+    t.string   "email"
+    t.string   "slack_name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
 end
