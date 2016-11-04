@@ -30,11 +30,12 @@ RSpec.describe Student, type: :model do
     end
   end
 
-  pending "create_with_omniauth" do
-
+  describe "create_with_omniauth" do
+    let(:omniauth_hash) { OmniAuth.config.mock_auth[:github] }
+    let(:omniauth_student) { Student.create_with_omniauth(omniauth_hash) }
 
     it "has a username" do
-
+      expect(omniauth_student.username).to eq("sleepyhead")
     end
   end
 
