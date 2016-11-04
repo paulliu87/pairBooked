@@ -39,6 +39,7 @@ group :development, :test do
   gem 'byebug', platform: :mri
   gem 'rspec-rails'
   gem 'webmock'
+  gem 'rails-controller-testing'
 
 # For JS tests
   gem 'jasmine-rails'

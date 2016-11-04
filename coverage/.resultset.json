@@ -5,15 +5,31 @@
         1,
         null
       ],
-      "/Users/apprentice/final-project/pairBooked/app/helpers/login_helper.rb": [
+      "/Users/apprentice/Desktop/pairBooked/app/helpers/challenges_helper.rb": [
         1,
         null
       ],
-      "/Users/apprentice/final-project/pairBooked/app/channels/application_cable/channel.rb": [
+      "/Users/apprentice/Desktop/pairBooked/app/helpers/home_helper.rb": [
+        1,
+        null
+      ],
+      "/Users/apprentice/Desktop/pairBooked/app/controllers/challenges_controller.rb": [
+        1,
+        1,
         0,
-        0,
-        0,
-        0
+        null,
+        null
+      ],
+      "/Users/apprentice/Desktop/pairBooked/app/controllers/application_controller.rb": [
+        1,
+        1,
+        null
+      ],
+      "/Users/apprentice/Desktop/pairBooked/app/controllers/home_controller.rb": [
+        1,
+        1,
+        null,
+        null
       ],
       "/Users/apprentice/final-project/pairBooked/app/channels/application_cable/connection.rb": [
         0,
@@ -33,6 +49,7 @@
         0,
         0
       ],
+<<<<<<< HEAD
       "/Users/apprentice/final-project/pairBooked/app/jobs/application_job.rb": [
         0,
         0
@@ -44,12 +61,28 @@
         0
       ],
       "/Users/apprentice/final-project/pairBooked/app/models/application_record.rb": [
+=======
+      "/Users/apprentice/Desktop/pairBooked/app/jobs/application_job.rb": [
+        0,
+        0
+      ],
+      "/Users/apprentice/Desktop/pairBooked/app/mailers/application_mailer.rb": [
+        0,
+>>>>>>> origin/master
         0,
         0,
         0
       ],
+<<<<<<< HEAD
       "/Users/apprentice/final-project/pairBooked/app/models/challenge.rb": [
+=======
+      "/Users/apprentice/Desktop/pairBooked/app/models/application_record.rb": [
         0,
+>>>>>>> origin/master
+        0,
+        0
+      ],
+      "/Users/apprentice/Desktop/pairBooked/app/models/challenge.rb": [
         0,
         0
       ],
@@ -58,6 +91,10 @@
         0
       ]
     },
+<<<<<<< HEAD
     "timestamp": 1478277227
+=======
+    "timestamp": 1478282841
+>>>>>>> origin/master
   }
 }
