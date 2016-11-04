@@ -1,9 +1,9 @@
 FactoryGirl.define do
   factory :timeslot do
-    initiator_id {FactoryGirl.build_stubbed(:student).id}
+    initiator_id {FactoryGirl.create(:student).id}
     start_at {Time.now + 4.days}
     end_at {Time.now + 4.days + 2.hours}
-    challenge_id {FactoryGirl.build_stubbed(:challenge).id}
+    challenge_id {FactoryGirl.create(:challenge).id}
 
     trait :no_initiator_id do
       initiator_id nil

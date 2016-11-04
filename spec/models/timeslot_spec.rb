@@ -18,6 +18,16 @@ RSpec.describe Timeslot, type: :model do
     it "does not allow without initiator_id " do
       expect(no_challenge_id_timeslot.save).to be false
     end
+
+    it "does not allow without start_at " do
+      timeslot.start_at = nil
+      expect(timeslot.save).to be false
+    end
+
+    it "does not allow without end_at " do
+      timeslot.end_at = nil
+      expect(timeslot.save).to be false
+    end
   end
 
   describe "associations" do
@@ -30,6 +40,7 @@ RSpec.describe Timeslot, type: :model do
     end
 
     it "belongs to an acceptor" do
+      timeslot.acceptor = FactoryGirl.build_stubbed(:student)
       expect(timeslot.acceptor).to be_a (Student)
     end
   end
