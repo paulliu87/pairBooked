@@ -4,6 +4,7 @@ class AuthenticationController < ApplicationController
 
   def login
     omniauth_hash = request.env["omniauth.auth"]
+    p omniauth_hash
     student = Student.find_by(
       username: omniauth_hash["uid"]
     ) || Student.create_with_omniauth(omniauth_hash)
