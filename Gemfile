@@ -40,6 +40,8 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'webmock'
   gem 'rails-controller-testing'
+  gem 'factory_girl_rails'
+  gem 'faker'
 
 # For JS tests
   gem 'jasmine-rails'
@@ -51,7 +53,6 @@ group :development do
   gem 'listen', '~> 3.0.5'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
-  gem 'faker'
   gem 'spring-watcher-listen', '~> 2.0.0'
 end
 
@@ -61,7 +62,6 @@ group :test do
   gem 'capybara'
   gem 'launchy'
   gem 'database_cleaner'
-  gem 'factory_girl_rails'
   gem 'simplecov'
 end
 
