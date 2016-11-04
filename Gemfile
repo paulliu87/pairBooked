@@ -70,4 +70,4 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem "httparty"
 
 # Use oauth to make user login
-gem 'oauth'
+gem 'omniauth'
