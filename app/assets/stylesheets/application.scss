@@ -10,6 +10,36 @@
  * files in this directory. Styles in this file should be added after the last require_* statement.
  * It is generally better to create a new file per style scope.
  *
- *= require_tree .
- *= require_self
  */
+
+@import "bootstrap-sprockets";
+@import "bootstrap";
+@import 'navbar-fixed-side';
+
+/** { outline: 1px solid red; }*/
+
+$break-small: 767px;
+
+.navbar-header .logo {
+/*  height: 50px;*/
+  margin-top: 30px;
+  margin-bottom: 30px;
+  margin-left: 30px;
+  @media screen and (max-width: $break-small) {
+    display: none;
+  }
+}
+
+.nav-link {
+  text-align: center;
+  @media screen and (max-width: $break-small) {
+    text-align: left;
+  }
+}
+
+.navbar-header #brand {
+  display: none;
+  @media screen and (max-width: $break-small) {
+    display: unset;
+  }
+}
