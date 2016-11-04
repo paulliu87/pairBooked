@@ -1,0 +1,11 @@
+<h1>Dev Phase 0</h1>
+
+<ul class="challenges-list">
+  <% if @challenges != nil %>
+    <% @challenges.each do |challenge| %>
+      <li class="challenge">
+        <a href="/challenges/<%=challenge.id%>/timeslots"><%= challenge.name %></a>
+      </li>
+    <% end %>
+  <% end %>
+</ul>
