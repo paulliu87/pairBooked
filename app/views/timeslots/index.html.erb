@@ -1,13 +1,34 @@
 <h1><%= @challenge.name %></h1>
 <a class="btn btn-success" href='/challenges/<%= @challenge.id %>/timeslots/new'><span class="glyphicon glyphicon-plus"></span> Create</a>
+<div>
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="#Monday" aria-controls="Monday" role="tab" data-toggle="tab">Monday</a></li>
+    <li role="presentation"><a href="#Tuesday" aria-controls="Tuesday" role="tab" data-toggle="tab">Tuesday</a></li>
+    <li role="presentation"><a href="#Wednesday" aria-controls="Wednesday" role="tab" data-toggle="tab">Wednesday</a></li>
+    <li role="presentation"><a href="#Thursday" aria-controls="Thursday" role="tab" data-toggle="tab">Thursday</a></li>
+    <li role="presentation"><a href="#Friday" aria-controls="Friday" role="tab" data-toggle="tab">Friday</a></li>
+    <li role="presentation"><a href="#Saturday" aria-controls="Saturday" role="tab" data-toggle="tab">Saturday</a></li>
+    <li role="presentation"><a href="#Sunday" aria-controls="Sunday" role="tab" data-toggle="tab">Sunday</a></li>
+  </ul>
 
-<ul class="timeslots-list">
-  <% if @timeslots != nil %>
-    <% @timeslots.each do |timeslot| %>
-      <li class="timeslot btn">
-        <a href="/timeslots/<%=timeslot.challenge_id%>/timeslots/<%= timeslot.id %>"><%= timeslot.start_at.to_s %></a>
-      </li>
-    <% end %>
-  <% end %>
-</ul>
+  <div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="Monday">
+      <ul class="timeslots-list">
+        <% if @timeslots != nil %>
+          <% @timeslots.each do |timeslot| %>
+            <li class="timeslot btn">
+              <a href="/timeslots/<%=timeslot.challenge_id%>/timeslots/<%= timeslot.id %>"><%= timeslot.start_at.to_s %></a>
+            </li>
+          <% end %>
+        <% end %>
+      </ul>
+    </div>
+    <div role="tabpanel" class="tab-pane" id="Tuesday">...</div>
+    <div role="tabpanel" class="tab-pane" id="Wednesday">...</div>
+    <div role="tabpanel" class="tab-pane" id="Thursday">...</div>
+    <div role="tabpanel" class="tab-pane" id="Friday">...</div>
+    <div role="tabpanel" class="tab-pane" id="Saturday">...</div>
+    <div role="tabpanel" class="tab-pane" id="Sunday">...</div>
+  </div>
 
+</div>

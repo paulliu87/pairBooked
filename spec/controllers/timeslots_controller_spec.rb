@@ -6,7 +6,7 @@ RSpec.describe TimeslotsController, type: :controller do
 
     it 'assigns timeslots' do
       get :index, challenge_id: timeslot.challenge_id
-      expect(assigns(:timeslots)).to all(be_a(Timeslot))
+      expect(assigns(:timeslots)).to be_a(Hash)
     end
 
     it 'assigns challenge' do
@@ -32,4 +32,7 @@ RSpec.describe TimeslotsController, type: :controller do
 
   # pending 'create' do
   # end
+
+  describe 'get_timeslot' do
+  end
 end
