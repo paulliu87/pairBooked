@@ -12,23 +12,85 @@
   </ul>
 
   <div class="tab-content">
+
     <div role="tabpanel" class="tab-pane active" id="Monday">
       <ul class="timeslots-list">
         <% if @timeslots != nil %>
-          <% @timeslots.each do |timeslot| %>
-            <li class="timeslot btn">
-              <a href="/timeslots/<%=timeslot.challenge_id%>/timeslots/<%= timeslot.id %>"><%= timeslot.start_at.to_s %></a>
+          <% @timeslots[:Monday].each do |timeslot| %>
+            <li class="timeslot btn btn-primary">
+              <a href="/timeslots/<%=timeslot.challenge_id%>/timeslots/<%= timeslot.id %>"><%= timeslot.start_at.strftime("%l:%M %P") %></a>
             </li>
           <% end %>
         <% end %>
       </ul>
     </div>
-    <div role="tabpanel" class="tab-pane" id="Tuesday">...</div>
-    <div role="tabpanel" class="tab-pane" id="Wednesday">...</div>
-    <div role="tabpanel" class="tab-pane" id="Thursday">...</div>
-    <div role="tabpanel" class="tab-pane" id="Friday">...</div>
-    <div role="tabpanel" class="tab-pane" id="Saturday">...</div>
-    <div role="tabpanel" class="tab-pane" id="Sunday">...</div>
+
+    <div role="tabpanel" class="tab-pane" id="Tuesday">
+      <ul class="timeslots-list">
+        <% if @timeslots != nil %>
+          <% @timeslots[:Tuesday].each do |timeslot| %>
+            <li class="timeslot btn btn-primary">
+              <a href="/timeslots/<%=timeslot.challenge_id%>/timeslots/<%= timeslot.id %>"><%= timeslot.start_at.strftime("%l:%M %P") %></a>
+            </li>
+          <% end %>
+        <% end %>
+      </ul>
+    </div>
+    <div role="tabpanel" class="tab-pane" id="Wednesday">
+      <ul class="timeslots-list">
+        <% if @timeslots != nil %>
+          <% @timeslots[:Wednesday].each do |timeslot| %>
+            <li class="timeslot btn btn-primary">
+              <a href="/timeslots/<%=timeslot.challenge_id%>/timeslots/<%= timeslot.id %>"><%= timeslot.start_at.strftime("%l:%M %P") %></a>
+            </li>
+          <% end %>
+        <% end %>
+      </ul>
+    </div>
+    <div role="tabpanel" class="tab-pane" id="Thursday">
+      <ul class="timeslots-list">
+        <% if @timeslots != nil %>
+          <% @timeslots[:Thursday].each do |timeslot| %>
+            <li class="timeslot btn btn-primary">
+              <a href="/timeslots/<%=timeslot.challenge_id%>/timeslots/<%= timeslot.id %>"><%= timeslot.start_at.strftime("%l:%M %P") %></a>
+            </li>
+          <% end %>
+        <% end %>
+      </ul>
+    </div>
+    <div role="tabpanel" class="tab-pane" id="Friday">
+      <ul class="timeslots-list">
+        <% if @timeslots != nil %>
+          <% @timeslots[:Friday].each do |timeslot| %>
+            <li class="timeslot btn btn-primary">
+              <a href="/timeslots/<%=timeslot.challenge_id%>/timeslots/<%= timeslot.id %>"><%= timeslot.start_at.strftime("%l:%M %P") %></a>
+            </li>
+          <% end %>
+        <% end %>
+      </ul>
+    </div>
+    <div role="tabpanel" class="tab-pane" id="Saturday">
+      <ul class="timeslots-list">
+        <% if @timeslots != nil %>
+          <% @timeslots[:Saturday].each do |timeslot| %>
+            <li class="timeslot btn btn-primary">
+              <a href="/timeslots/<%=timeslot.challenge_id%>/timeslots/<%= timeslot.id %>"><%= timeslot.start_at.strftime("%l:%M %P") %></a>
+            </li>
+          <% end %>
+        <% end %>
+      </ul>
+    </div>
+    <div role="tabpanel" class="tab-pane" id="Sunday">
+      <ul class="timeslots-list">
+        <% if @timeslots != nil %>
+          <% @timeslots[:Sunday].each do |timeslot| %>
+            <li class="timeslot btn btn-primary">
+              <a href="/timeslots/<%=timeslot.challenge_id%>/timeslots/<%= timeslot.id %>"><%= timeslot.start_at.strftime("%l:%M %P") %></a>
+            </li>
+          <% end %>
+        <% end %>
+      </ul>
+    </div>
   </div>
 
 </div>

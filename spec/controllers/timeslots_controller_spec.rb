@@ -34,5 +34,19 @@ RSpec.describe TimeslotsController, type: :controller do
   # end
 
   describe 'get_timeslot' do
+    before(:each) do
+      challenge = FactoryGirl.create(:challenge)
+      FactoryGirl.create_list(:timeslot, 50, challenge_id: challenge.id)
+      get :index, challenge_id: Challenge.first.id
+    end
+
+    it "returns a hash containing timeslots" do
+      expect(assigns(:timeslots)).to include(:Monday)
+      expect(assigns(:timeslots)).to include(:Tuesday)
+      expect(assigns(:timeslots)).to include(:Wednesday)
+      expect(assigns(:timeslots)).to include(:Thursday)
+    end
+
+
   end
 end
