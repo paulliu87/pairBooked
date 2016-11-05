@@ -4,6 +4,7 @@ Rails.application.routes.draw do
     resources :timeslots
   end
 
+  get '/dashboard', to: "authentication#dashboard"
   get '/logout', to: "authentication#logout"
   post '/login', to: "authentication#login"
   get "/auth/github/callback" => "authentication#login"
