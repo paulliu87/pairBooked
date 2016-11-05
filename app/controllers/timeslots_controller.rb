@@ -28,13 +28,20 @@ class TimeslotsController < ApplicationController
   end
 
   def create
-    p params
-    @timeslot = Timeslot.new(start_at: params[:start_date], start_time: params[:start_time], end_time: params[:end_time])
+    sanitized_params = timeslots_params
+    convert_to_datetime(sanitized_params)
+    @timeslot = Timeslot.new(
+      #initiator_id: session[:id],
+      challenge_id: sanitized_params[:challenge_id],
+      start_at: sanitized_params[:start_datetime],
+      end_at: sanitized_params[:end_datetime]
+      )
     respond_to do |format|
       if @timeslot.save
         format.html { redirect_to "challenges/#{params[:challenge_id]}/timeslots", notice: 'Tweet was successfully created.' }
         format.json { render json: @timeslot, status: :created}
       else
+        @errors = @timeslot.errors.full_messages
         format.html { render action: "new" }
         format.json { render json: @timeslot.errors, status: :unprocessable_entity }
       end
@@ -80,6 +87,13 @@ class TimeslotsController < ApplicationController
   end
 
   def timeslots_params
-    params.require(:timeslots).permit(:start_date, :start_time, :end_time, :location, :season)
+    params.require(:timeslots).permit(:start_date, :start_time, :end_time)
+  end
+
+  def convert_to_datetime(params)
+    start_datetime = params[:start_date] + params[:start_time]
+    params[:start_at] = DateTime.strptime(start_datetime,'%F%H:%M')
+    end_datetime = params[:start_date] + params[:end_time]
+    params[:end_at] = DateTime.strptime(end_datetime,'%F%H:%M')
   end
 end
