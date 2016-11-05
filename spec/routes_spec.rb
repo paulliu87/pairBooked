@@ -14,3 +14,39 @@ RSpec.describe "Routing to authentication", :type => :routing do
   end
 
 end
+
+RSpec.describe "Routing to challenges", :type => :routing do
+  it "routes GET /challenges to challenges#index" do
+    expect(:get => "/challenges").to route_to("challenges#index")
+  end
+end
+
+RSpec.describe "Routing to timeslots", :type => :routing do
+  it "routes GET /challenges/:id/timeslots to challenges#index" do
+    expect(:get => "/challenges/1/timeslots").to route_to("timeslots#index", :challenge_id => "1")
+  end
+
+  it "routes GET /challenges/:id/timeslots/new to timeslots#new" do
+    expect(:get => "/challenges/1/timeslots/new").to route_to("timeslots#new", :challenge_id => "1")
+  end
+
+  it "routes POST /challenges/:id/timeslots to timeslots#create" do
+    expect(:post => "/challenges/1/timeslots").to route_to("timeslots#create", :challenge_id => "1")
+  end
+
+  it "routes GET /challenges/:id/timeslots/:id to timeslots#show" do
+    expect(:get => "/challenges/1/timeslots/1").to route_to("timeslots#show", "challenge_id"=>"1", "id"=>"1")
+  end
+
+  it "routes GET /challenges/:id/timeslots/:id/edit to timeslots#edit" do
+    expect(:get => "/challenges/1/timeslots/1/edit").to route_to("timeslots#edit", "challenge_id"=>"1", "id"=>"1")
+  end
+
+  it "routes PUT /challenges/:id/timeslots/:id/ to timeslots#update" do
+    expect(:put => "/challenges/1/timeslots/1/").to route_to("timeslots#update", "challenge_id"=>"1", "id"=>"1")
+  end
+
+  it "routes DELETE /challenges/:id/timeslots/:id to timeslots#destroy" do
+    expect(:delete => "/challenges/1/timeslots/1").to route_to("timeslots#destroy", "challenge_id"=>"1", "id"=>"1")
+  end
+end
