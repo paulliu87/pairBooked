@@ -1,0 +1,6 @@
+<h1>Pairing Confirmation for <%= @timeslot.challenge.name %></h1>
+
+<main>
+  <p>You will be pairing with <%= @timeslot.initiator.fullname %> for this assignment at <%= @timeslot.start_at.strftime("%l:%M %P on %A, %B %e") %>.</p>
+  <p><%= @timeslot.initiator.fullname %> can be contacted at: <%= @timeslot.initiator.email %><% if @timeslot.initiator.slack_name %>, or on Slack at <%= @timeslot.initiator.slack_name %><% end %>.</p>
+</main>
