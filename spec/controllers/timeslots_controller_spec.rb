@@ -29,7 +29,6 @@ RSpec.describe TimeslotsController, type: :controller do
     end
 
     it 'assigns the current student to the timeslot' do
-      p assigns(:timeslot).acceptor
       expect(assigns(:timeslot).acceptor).to eq(demo_student)
     end
   end
