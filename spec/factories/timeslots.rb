@@ -12,5 +12,10 @@ FactoryGirl.define do
     trait :no_challenge_id do
       challenge_id nil
     end
+
+    trait :first_challenge_id do
+      challenge_id 1
+    end
+
   end
 end

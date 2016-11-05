@@ -2,9 +2,11 @@ require 'rails_helper'
 
 RSpec.describe TimeslotsController, type: :controller do
   describe 'index' do
+    let(:timeslot) {FactoryGirl.create(:timeslot)}
+
     it 'assigns timeslots' do
-      get :"/challenges/1/timeslots"
-      expect(@timeslots).to all(be(Timeslot))
+      get :index, challenge_id: timeslot.id
+      expect(assigns(:timeslots)).to all(be_a(Timeslot))
     end
   end
 
