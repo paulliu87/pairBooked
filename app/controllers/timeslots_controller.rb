@@ -25,7 +25,17 @@ class TimeslotsController < ApplicationController
   end
 
   def create
-
+    p params
+    @timeslot = Timeslot.new(start_date: params[:start_date], start_time: params[:start_time], end_time: params[:end_time])
+    respond_to do |format|
+      if @timeslot.save
+        format.html { redirect_to "challenges/#{params[:challenge_id]}/timeslots", notice: 'Tweet was successfully created.' }
+        format.json { render json: @timeslot, status: :created}
+      else
+        format.html { render action: "new" }
+        format.json { render json: @timeslot.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
   private
@@ -64,5 +74,9 @@ class TimeslotsController < ApplicationController
 
     #return a hash with keys of days and values of array of time slots
     timeslots
+  end
+
+  def matches_params
+    params.require(:matches).permit(:start_time_string, :competitor1_id, :competitor2_id, :location, :season)
   end
 end
