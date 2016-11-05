@@ -18,7 +18,7 @@
         <% if @timeslots != nil %>
           <% @timeslots[:Monday].each do |timeslot| %>
             <li class="timeslot btn btn-primary">
-              <a href="/timeslots/<%=timeslot.challenge_id%>/timeslots/<%= timeslot.id %>"><%= timeslot.start_at.strftime("%l:%M %P") %></a>
+              <a href="/challenges/<%=timeslot.challenge_id%>/timeslots/<%= timeslot.id %>"><%= timeslot.start_at.strftime("%l:%M %P") %></a>
             </li>
           <% end %>
         <% end %>
@@ -30,7 +30,7 @@
         <% if @timeslots != nil %>
           <% @timeslots[:Tuesday].each do |timeslot| %>
             <li class="timeslot btn btn-primary">
-              <a href="/timeslots/<%=timeslot.challenge_id%>/timeslots/<%= timeslot.id %>"><%= timeslot.start_at.strftime("%l:%M %P") %></a>
+              <a href="/challenges/<%=timeslot.challenge_id%>/timeslots/<%= timeslot.id %>"><%= timeslot.start_at.strftime("%l:%M %P") %></a>
             </li>
           <% end %>
         <% end %>
@@ -41,7 +41,7 @@
         <% if @timeslots != nil %>
           <% @timeslots[:Wednesday].each do |timeslot| %>
             <li class="timeslot btn btn-primary">
-              <a href="/timeslots/<%=timeslot.challenge_id%>/timeslots/<%= timeslot.id %>"><%= timeslot.start_at.strftime("%l:%M %P") %></a>
+              <a href="/challenges/<%=timeslot.challenge_id%>/timeslots/<%= timeslot.id %>"><%= timeslot.start_at.strftime("%l:%M %P") %></a>
             </li>
           <% end %>
         <% end %>
@@ -52,7 +52,7 @@
         <% if @timeslots != nil %>
           <% @timeslots[:Thursday].each do |timeslot| %>
             <li class="timeslot btn btn-primary">
-              <a href="/timeslots/<%=timeslot.challenge_id%>/timeslots/<%= timeslot.id %>"><%= timeslot.start_at.strftime("%l:%M %P") %></a>
+              <a href="/challenges/<%=timeslot.challenge_id%>/timeslots/<%= timeslot.id %>"><%= timeslot.start_at.strftime("%l:%M %P") %></a>
             </li>
           <% end %>
         <% end %>
@@ -63,7 +63,7 @@
         <% if @timeslots != nil %>
           <% @timeslots[:Friday].each do |timeslot| %>
             <li class="timeslot btn btn-primary">
-              <a href="/timeslots/<%=timeslot.challenge_id%>/timeslots/<%= timeslot.id %>"><%= timeslot.start_at.strftime("%l:%M %P") %></a>
+              <a href="/challenges/<%=timeslot.challenge_id%>/timeslots/<%= timeslot.id %>"><%= timeslot.start_at.strftime("%l:%M %P") %></a>
             </li>
           <% end %>
         <% end %>
@@ -74,7 +74,7 @@
         <% if @timeslots != nil %>
           <% @timeslots[:Saturday].each do |timeslot| %>
             <li class="timeslot btn btn-primary">
-              <a href="/timeslots/<%=timeslot.challenge_id%>/timeslots/<%= timeslot.id %>"><%= timeslot.start_at.strftime("%l:%M %P") %></a>
+              <a href="/challenges/<%=timeslot.challenge_id%>/timeslots/<%= timeslot.id %>"><%= timeslot.start_at.strftime("%l:%M %P") %></a>
             </li>
           <% end %>
         <% end %>
@@ -85,7 +85,7 @@
         <% if @timeslots != nil %>
           <% @timeslots[:Sunday].each do |timeslot| %>
             <li class="timeslot btn btn-primary">
-              <a href="/timeslots/<%=timeslot.challenge_id%>/timeslots/<%= timeslot.id %>"><%= timeslot.start_at.strftime("%l:%M %P") %></a>
+              <a href="/challenges/<%=timeslot.challenge_id%>/timeslots/<%= timeslot.id %>"><%= timeslot.start_at.strftime("%l:%M %P") %></a>
             </li>
           <% end %>
         <% end %>
