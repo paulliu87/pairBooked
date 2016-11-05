@@ -10,6 +10,7 @@ class TimeslotsController < ApplicationController
   end
 
   def show
+    @timeslot = Timeslot.find(params[:id])
   end
 
   def edit
