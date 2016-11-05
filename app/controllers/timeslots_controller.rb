@@ -1,8 +1,12 @@
 class TimeslotsController < ApplicationController
 
   def index
-    @challenge = Challenge.find(params[:challenge_id])
-    @timeslots = get_timeslots(@challenge.id)
+    @challenge = Challenge.find_by_id(params[:challenge_id])
+    if @challenge
+      @timeslots = get_timeslots(@challenge.id)
+    else
+      redirect_to challenges_path
+    end
   end
 
   def show
