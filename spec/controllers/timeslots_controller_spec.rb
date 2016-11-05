@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe TimeslotsController, type: :controller do
 
   let(:demo_timeslot) {FactoryGirl.create(:timeslot)}
+  let(:demo_student) {FactoryGirl.create(:student)}
 
   describe 'index' do
 
@@ -19,11 +20,17 @@ RSpec.describe TimeslotsController, type: :controller do
 
   describe 'show' do
     before(:each) do
+      @request.session[:student_id] = demo_student.id
       get :show, challenge_id: demo_timeslot.challenge_id, id: demo_timeslot.id
     end
 
     it 'assigns the right timeslot' do
-      expect(assigns[:timeslot]).to eq(demo_timeslot)
+      expect(assigns(:timeslot)).to eq(demo_timeslot)
+    end
+
+    it 'assigns the current student to the timeslot' do
+      p assigns(:timeslot).acceptor
+      expect(assigns(:timeslot).acceptor).to eq(demo_student)
     end
   end
 

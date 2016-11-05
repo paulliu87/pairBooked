@@ -11,6 +11,8 @@ class TimeslotsController < ApplicationController
 
   def show
     @timeslot = Timeslot.find(params[:id])
+    @timeslot.acceptor = Student.find_by_id(session[:student_id])
+    @timeslot.save
   end
 
   def edit
