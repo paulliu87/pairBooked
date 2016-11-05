@@ -38,11 +38,4 @@ RSpec.describe Student, type: :model do
       expect(omniauth_student.username).to eq("sleepyhead")
     end
   end
-
-  pending "associations" do
-    let(:timeslot) {
-
-    }
-    it 'has a timeslot'
-  end
 end

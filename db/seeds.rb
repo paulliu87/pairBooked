@@ -12,3 +12,4 @@ challenge10 = Challenge.create(name: "6.6 Rspec", due_date: DateTime.new(2016,11
 challenge11 = Challenge.create(name: "7.2 Data Structure", due_date: DateTime.new(2016,11,12,12,00,00));
 challenge12 = Challenge.create(name: "8.2 One to Many", due_date: DateTime.new(2016,11,16,12,00,00));
 challenge13 = Challenge.create(name: "8.4 Many to Many", due_date: DateTime.new(2016,11,25,12,00,00));
+FactoryGirl.create_list(:timeslot, 50, challenge_id: challenge7.id)

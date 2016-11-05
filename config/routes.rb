@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
 
-  resources :challenges
+  resources :challenges, only: [:index] do
+    resources :timeslots
+  end
+
   get '/logout', to: "authentication#logout"
   post '/login', to: "authentication#login"
   get "/auth/github/callback" => "authentication#login"
