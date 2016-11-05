@@ -29,7 +29,7 @@ class TimeslotsController < ApplicationController
 
   def create
     p params
-    @timeslot = Timeslot.new(start_date: params[:start_date], start_time: params[:start_time], end_time: params[:end_time])
+    @timeslot = Timeslot.new(start_at: params[:start_date], start_time: params[:start_time], end_time: params[:end_time])
     respond_to do |format|
       if @timeslot.save
         format.html { redirect_to "challenges/#{params[:challenge_id]}/timeslots", notice: 'Tweet was successfully created.' }
@@ -79,7 +79,7 @@ class TimeslotsController < ApplicationController
     timeslots
   end
 
-  def matches_params
-    params.require(:matches).permit(:start_time_string, :competitor1_id, :competitor2_id, :location, :season)
+  def timeslots_params
+    params.require(:timeslots).permit(:start_date, :start_time, :end_time, :location, :season)
   end
 end
