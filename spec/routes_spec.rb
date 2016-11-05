@@ -13,6 +13,10 @@ RSpec.describe "Routing to authentication", :type => :routing do
     expect(:get => "/logout").to route_to("authentication#logout")
   end
 
+  it "routes GET /dashboard to authentication#dashboard" do
+    expect(:get => "/dashboard").to route_to("authentication#dashboard")
+  end
+
 end
 
 RSpec.describe "Routing to challenges", :type => :routing do

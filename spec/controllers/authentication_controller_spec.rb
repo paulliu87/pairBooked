@@ -20,9 +20,9 @@ RSpec.describe AuthenticationController, type: :controller do
       session[:student_id].should_not be_nil
     end
 
-    it "should redirect the student to the root url" do
+    it "should redirect the student to the challenges url" do
       post :login, provider: :github
-      response.should redirect_to root_url
+      response.should redirect_to challenges_path
     end
 
   end
