@@ -15,9 +15,9 @@ RSpec.describe AuthenticationController, type: :controller do
     end
 
     it "should successfully login a session" do
-      session[:student_id].should be_nil
+      current_student.should be_nil
       post :login, provider: :github
-      session[:student_id].should_not be_nil
+      current_student.should_not be_nil
     end
 
     it "should redirect the student to the root url" do
@@ -33,9 +33,9 @@ RSpec.describe AuthenticationController, type: :controller do
     end
 
     it "should clear the session" do
-      session[:student_id].should_not be_nil
+      current_student.should_not be_nil
       delete :logout
-      session[:student_id].should be_nil
+      current_student.should be_nil
     end
 
     it "should redirect to the home page" do

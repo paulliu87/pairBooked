@@ -11,7 +11,7 @@ class TimeslotsController < ApplicationController
 
   def show
     @timeslot = Timeslot.find(params[:id])
-    p @timeslot.acceptor = current_student
+    @timeslot.acceptor = current_student
     @timeslot.save
   end
 
