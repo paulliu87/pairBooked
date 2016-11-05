@@ -1,0 +1,11 @@
+<ul class="timeslots-list">
+  <% if @timeslots != nil %>
+    <% @timeslots.each do |timeslot| %>
+      <li class="timeslot btn">
+        <a href="/timeslots/<%=timeslot.challenge_id%>/timeslots/<%= timeslot.id %>"><%= timeslot.start_at.to_s %></a>
+      </li>
+    <% end %>
+  <% end %>
+</ul>
+
+<a class="btn btn-success" href='/challenges/<%= @challenge.id %>/timeslots/new'>+ Create</a>

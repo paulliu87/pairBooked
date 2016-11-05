@@ -1,6 +1,7 @@
 class TimeslotsController < ApplicationController
 
   def index
+    @challenge = Challenge.find(params[:challenge_id])
     @timeslots = Timeslot.where(challenge_id: params["challenge_id"], acceptor: nil)
   end
 

@@ -5,8 +5,13 @@ RSpec.describe TimeslotsController, type: :controller do
     let(:timeslot) {FactoryGirl.create(:timeslot)}
 
     it 'assigns timeslots' do
-      get :index, challenge_id: timeslot.id
+      get :index, challenge_id: timeslot.challenge_id
       expect(assigns(:timeslots)).to all(be_a(Timeslot))
+    end
+
+    it 'assigns challenge' do
+      get :index, challenge_id: timeslot.challenge_id
+      expect(assigns(:challenge)).to be_a Challenge
     end
   end
 
