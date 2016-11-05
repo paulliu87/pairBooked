@@ -1,3 +1,6 @@
+<h1><%= @challenge.name %></h1>
+<a class="btn btn-success" href='/challenges/<%= @challenge.id %>/timeslots/new'><span class="glyphicon glyphicon-plus"></span> Create</a>
+
 <ul class="timeslots-list">
   <% if @timeslots != nil %>
     <% @timeslots.each do |timeslot| %>
@@ -8,4 +11,3 @@
   <% end %>
 </ul>
 
-<a class="btn btn-success" href='/challenges/<%= @challenge.id %>/timeslots/new'>+ Create</a>
