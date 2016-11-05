@@ -20,5 +20,6 @@ class TimeslotsController < ApplicationController
   end
 
   def create
+
   end
 end
