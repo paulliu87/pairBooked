@@ -16,4 +16,8 @@ class AuthenticationController < ApplicationController
     session[:student_id] = nil
     redirect_to root_url, :notice => "Signed out!"
   end
+
+  def dashboard
+    @student = current_student
+  end
 end
