@@ -8,7 +8,7 @@ class AuthenticationController < ApplicationController
   def login
     omniauth_hash = request.env["omniauth.auth"]
     student = Student.find_by(
-      username: omniauth_hash["uid"]
+      username: omniauth_hash["info"]["nickname"]
     ) || Student.create_with_omniauth(omniauth_hash)
     session[:student_id] = student.id
     # redirect_to slack_entry_url if student.slack_name == nil

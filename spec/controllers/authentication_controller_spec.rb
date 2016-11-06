@@ -8,7 +8,7 @@ RSpec.describe AuthenticationController, type: :controller do
 
   describe "#login" do
 
-    it "should successfully login a student" do
+    it "should successfully login a new student" do
       expect {
         post :login, provider: :github
       }.to change{ Student.count }.by(1)
