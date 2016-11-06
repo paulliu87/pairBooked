@@ -29,6 +29,7 @@ RSpec.describe AuthenticationController, type: :controller do
 
   describe "#logout" do
     before do
+      @request.session[:student_id] = FactoryGirl.create(:student).id
       post :login, provider: :github
     end
 
