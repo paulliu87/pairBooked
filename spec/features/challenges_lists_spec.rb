@@ -1,4 +1,5 @@
-feature "students can see challenges list" do
+require "rails_helper"
+RSpec.feature "students can see challenges list" do
   context "when students visit the challenge index page" do
     let!(:challenge1) { Challenge.create(name: "2.2 Links, Images, and Layouts", due_date: DateTime.new(2016,10,12,12,00,00)) }
     let(:challenge2) { Challenge.create(name: "2.4 Forms", due_date: DateTime.new(2016,10,15,12,00,00)) }
