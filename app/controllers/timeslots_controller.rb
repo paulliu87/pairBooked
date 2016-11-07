@@ -29,7 +29,9 @@ class TimeslotsController < ApplicationController
 
   def create
     sanitized_params = timeslots_params
-    convert_to_datetime(sanitized_params)
+    if sanitized_params[:start_date] != "" && sanitized_params[:start_time] != "" && sanitized_params[:end_time] != ""
+      convert_to_datetime(sanitized_params)
+    end
     @timeslot = Timeslot.new(
       initiator_id: session[:student_id],
       challenge_id: params[:challenge_id],

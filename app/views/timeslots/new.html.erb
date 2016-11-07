@@ -13,7 +13,7 @@
     <div class="form-group row">
       <%= f.label :start_date, :class => "col-xs-2 col-form-label" %>
       <div class="col-xs-10 col-sm-4 col-md-3 col-lg-2">
-        <%= f.datetime_local_field :start_date, class: "form-control", :value => @match.try(:start_date), :type =>"date", :id => "example-date-input", :required => true %>
+        <%= f.datetime_local_field :start_date, class: "form-control", :value => @match.try(:start_date), :type =>"date", :id => "example-date-input"%>
       </div>
     </div>
 
