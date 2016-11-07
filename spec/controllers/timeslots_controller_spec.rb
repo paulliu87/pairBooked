@@ -4,6 +4,10 @@ RSpec.describe TimeslotsController, type: :controller do
 
   let(:demo_timeslot) {FactoryGirl.create(:timeslot)}
   let(:demo_student) {FactoryGirl.create(:student)}
+  
+  before(:each) do
+    @request.session[:student_id] = demo_student.id
+  end
 
   describe 'index' do
 
@@ -20,7 +24,6 @@ RSpec.describe TimeslotsController, type: :controller do
 
   describe 'show' do
     before(:each) do
-      @request.session[:student_id] = demo_student.id
       get :show, challenge_id: demo_timeslot.challenge_id, id: demo_timeslot.id
     end
 

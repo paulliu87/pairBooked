@@ -1,7 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe ChallengesController, type: :controller do
-
+  
+  before(:each) do
+    @request.session[:student_id] = FactoryGirl.create(:student).id
+  end
+  
   describe "GET #index" do
     it "returns http success" do
       get :index
