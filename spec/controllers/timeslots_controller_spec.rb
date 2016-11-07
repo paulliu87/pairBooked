@@ -45,8 +45,32 @@ RSpec.describe TimeslotsController, type: :controller do
   # pending 'new' do
   # end
 
-  # pending 'create' do
-  # end
+  describe 'create' do
+    context "when valid params are passed" do
+      it "responds with status code 302" do
+        post(:create, { timeslots: {start_date: "2016-10-31", start_time: "09:00", end_time: "10:00"}, challenge_id: 1})
+        expect(response).to have_http_status(302)
+      end
+
+      it "redirects to the admin dashboard" do
+        post(:create, { timeslots: {start_date: "2016-10-31", start_time: "09:00", end_time: "10:00" }, challenge_id: 1})
+        expect(response).to redirect_to(challenge_timeslots_index_path)
+      end
+    end
+
+    context "when invalid params are passed" do
+      it "responds with status code 200" do
+        post(:create, { timeslots: {start_date: "2016-10-31", start_time: "09:00", end_time: "10:00"}, challenge_id: 1})
+        expect(response).to have_http_status 200
+      end
+
+      it "redirects to the new competitor page" do
+        post(:create, { timeslots: {start_date: "2016-10-31", start_time: "09:00", end_time: "10:00"}, challenge_id: 1})
+        expect(response).to render_template("new")
+      end
+    end
+
+  end
 
   describe 'get_timeslot' do
     before(:each) do
@@ -61,7 +85,5 @@ RSpec.describe TimeslotsController, type: :controller do
       expect(assigns(:timeslots)).to include(:Wednesday)
       expect(assigns(:timeslots)).to include(:Thursday)
     end
-
-
   end
 end
