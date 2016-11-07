@@ -44,4 +44,15 @@ RSpec.describe AuthenticationController, type: :controller do
       response.should redirect_to root_url
     end
   end
+
+  describe '#timezone' do
+    before do
+      @request.session[:student_id] = FactoryGirl.create(:student).id
+      post :timezone, {timezone_id: 3}
+    end
+
+    it 'changes the timezone for the student' do
+      expect(Student.find(session[:student_id]).time_zone).to eq("Eastern Time (US & Canada)")
+    end
+  end
 end

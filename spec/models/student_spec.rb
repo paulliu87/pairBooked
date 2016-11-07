@@ -31,13 +31,13 @@ RSpec.describe Student, type: :model do
 
     it 'sets a timezone if one is not given' do
       student.save
-      expect(student.time_zone).to eq(ActiveSupport::TimeZone.new("Pacific Time (US & Canada)").to_s)
+      expect(student.time_zone).to eq("Pacific Time (US & Canada)")
     end
 
     it 'can have other timezones' do
-      student.time_zone = ActiveSupport::TimeZone.new("Eastern Time (US & Canada)").to_s
+      student.time_zone = "Eastern Time (US & Canada)"
       student.save
-      expect(student.time_zone).to eq(ActiveSupport::TimeZone.new("Eastern Time (US & Canada)").to_s)
+      expect(student.time_zone).to eq("Eastern Time (US & Canada)")
     end
 
   end

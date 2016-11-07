@@ -13,7 +13,7 @@ class Student < ApplicationRecord
   end
 
   def time_zone
-    @time_zone ||= ActiveSupport::TimeZone.new("Pacific Time (US & Canada)").to_s
+    @time_zone ||= "Pacific Time (US & Canada)"
   end
 
 end
