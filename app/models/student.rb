@@ -1,4 +1,5 @@
 class Student < ApplicationRecord
+  attr_writer :time_zone
   validates_presence_of :username, :email
   validates_uniqueness_of :username, :email
   has_many :timeslots
@@ -11,5 +12,8 @@ class Student < ApplicationRecord
     })
   end
 
+  def time_zone
+    @time_zone ||= ActiveSupport::TimeZone.new("Pacific Time (US & Canada)").to_s
+  end
 
 end

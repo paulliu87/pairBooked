@@ -29,17 +29,6 @@ RSpec.describe Timeslot, type: :model do
       expect(timeslot.save).to be false
     end
 
-    it 'sets a timezone if one is not given' do
-      timeslot.save
-      expect(timeslot.time_zone).to eq(ActiveSupport::TimeZone.new("Pacific Time (US & Canada)"))
-    end
-
-    it 'can have other timezones' do
-      timeslot.time_zone = "Eastern Time (US & Canada)"
-      timeslot.save
-      expect(timeslot.time_zone).to eq(ActiveSupport::TimeZone.new("Eastern Time (US & Canada)"))
-    end
-
   end
 
   describe "associations" do
@@ -51,10 +40,11 @@ RSpec.describe Timeslot, type: :model do
       expect(timeslot.initiator).to be_a (Student)
     end
 
-    it "has the same time_zone as the initiator" do
-      timeslot.initiator.time_zone = ActiveSupport::TimeZone.new("Eastern Time (US & Canada)")
-      timeslot.save
-      expect(timeslot.time_zone).to eq(timeslot.initiator.time_zone)
+    it "can update timezone through the initiator" do
+      timeslot.initiator.update_attribute(
+        :time_zone, "Eastern Time (US & Canada)"
+      )
+      expect(timeslot.time_zone).to eq("Eastern Time (US & Canada)")
     end
 
     it "belongs to an acceptor" do
