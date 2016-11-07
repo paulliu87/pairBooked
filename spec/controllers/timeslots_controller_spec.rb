@@ -4,7 +4,7 @@ RSpec.describe TimeslotsController, type: :controller do
 
   let(:demo_timeslot) {FactoryGirl.create(:timeslot)}
   let(:demo_student) {FactoryGirl.create(:student)}
-  
+
   before(:each) do
     @request.session[:student_id] = demo_student.id
   end
@@ -52,7 +52,7 @@ RSpec.describe TimeslotsController, type: :controller do
     context "when valid params are passed" do
       before(:each) do
         @request.session[:student_id] = demo_student.id
-        post :create, timeslots: {start_date: "2016-10-31", start_time: "09:00", end_time: "10:00"}, challenge_id: demo_timeslot.challenge_id
+        post :create, timeslots: {start_date: "2017-10-31", start_time: "09:00", end_time: "10:00"}, challenge_id: demo_timeslot.challenge_id
       end
       it "responds with status code 302" do
         expect(response).to have_http_status(302)
@@ -64,7 +64,7 @@ RSpec.describe TimeslotsController, type: :controller do
 
       it "creates a new timeslot" do
         expect {
-          post :create, timeslots: {start_date: "2016-10-31", start_time: "09:00", end_time: "10:00"}, challenge_id: demo_timeslot.challenge_id
+          post :create, timeslots: {start_date: "2017-10-31", start_time: "09:00", end_time: "10:00"}, challenge_id: demo_timeslot.challenge_id
         }.to change(Timeslot,:count).by(1)
       end
     end
@@ -79,7 +79,7 @@ RSpec.describe TimeslotsController, type: :controller do
         expect(response).to have_http_status 200
       end
 
-      it "redirects to the new timeslot page" do
+      it "renders the new timeslot page" do
         post(:create, { timeslots: {start_date: "", start_time: "09:00", end_time: "10:00"}, challenge_id: demo_timeslot.challenge_id})
         expect(response).to render_template("new")
       end
@@ -91,6 +91,39 @@ RSpec.describe TimeslotsController, type: :controller do
       end
     end
 
+    context "when a past date is submitted" do
+      it "renders the form page" do
+        post(:create, { timeslots: {start_date: "2015-01-01", start_time: "09:00", end_time: "10:00"}, challenge_id: demo_timeslot.challenge_id})
+        expect(response).to render_template("new")
+      end
+
+      it "respond with status code 200" do
+        post(:create, { timeslots: {start_date: "2015-01-01", start_time: "09:00", end_time: "10:00"}, challenge_id: demo_timeslot.challenge_id})
+        expect(response).to have_http_status 200
+      end
+
+      it "does not create a new timeslot" do
+        post(:create, { timeslots: {start_date: "2016-11-06", start_time: "09:00", end_time: "10:00"}, challenge_id: demo_timeslot.challenge_id})
+        expect(Timeslot.last.start_at).to_not eq("Sat, 06 Nov 2016 09:00:00 UTC +00:00")
+      end
+    end
+
+    context "when an end time is before the start time" do
+      it "renders the form page" do
+        post(:create, { timeslots: {start_date: "2117-01-01", start_time: "09:00", end_time: "08:00"}, challenge_id: demo_timeslot.challenge_id})
+        expect(response).to render_template("new")
+      end
+
+      it "respond with status code 200" do
+        post(:create, { timeslots: {start_date: "2117-01-01", start_time: "09:00", end_time: "08:00"}, challenge_id: demo_timeslot.challenge_id})
+        expect(response).to have_http_status 200
+      end
+
+      it "does not create a new timeslot" do
+        post(:create, { timeslots: {start_date: "2016-11-06", start_time: "09:00", end_time: "10:00"}, challenge_id: demo_timeslot.challenge_id})
+        expect(Timeslot.last.start_at).to_not eq("Sat, 06 Nov 2016 09:00:00 UTC +00:00")
+      end
+    end
   end
 
   describe 'get_timeslot' do
