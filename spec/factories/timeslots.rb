@@ -13,6 +13,9 @@ FactoryGirl.define do
       challenge_id nil
     end
 
+    trait :old_start_at_date do
+      start_at DateTime.now.days_ago(10)
+    end
 
   end
 end
