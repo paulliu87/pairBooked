@@ -34,6 +34,12 @@ RSpec.describe Student, type: :model do
       expect(student.time_zone).to eq(ActiveSupport::TimeZone.new("Pacific Time (US & Canada)"))
     end
 
+    it 'can have other timezones' do
+      student.time_zone = "Eastern Time (US & Canada)"
+      student.save
+      expect(student.time_zone).to eq(ActiveSupport::TimeZone.new("Eastern Time (US & Canada)"))
+    end
+
   end
 
   describe "create_with_omniauth" do
