@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   get '/dashboard', to: "authentication#dashboard"
   get '/logout', to: "authentication#logout"
   post '/login', to: "authentication#login"
-  get "/auth/github/callback" => "authentication#login"
+  match "/auth/github/callback" => "authentication#login", :via => [:get, :post]
 
   root to: 'authentication#index'
 end

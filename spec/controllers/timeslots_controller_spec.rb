@@ -48,8 +48,50 @@ RSpec.describe TimeslotsController, type: :controller do
   # pending 'new' do
   # end
 
-  # pending 'create' do
-  # end
+  describe 'create' do
+    context "when valid params are passed" do
+      before(:each) do
+        @request.session[:student_id] = demo_student.id
+        post :create, timeslots: {start_date: "2016-10-31", start_time: "09:00", end_time: "10:00"}, challenge_id: demo_timeslot.challenge_id
+      end
+      it "responds with status code 302" do
+        expect(response).to have_http_status(302)
+      end
+
+      it "redirects to the timeslots page" do
+        expect(response).to redirect_to(challenge_timeslots_path)
+      end
+
+      it "creates a new timeslot" do
+        expect {
+          post :create, timeslots: {start_date: "2016-10-31", start_time: "09:00", end_time: "10:00"}, challenge_id: demo_timeslot.challenge_id
+        }.to change(Timeslot,:count).by(1)
+      end
+    end
+
+    context "when invalid params are passed" do
+      before(:each) do
+        @request.session[:student_id] = demo_student.id
+        post :create, timeslots: {start_date: "", start_time: "09:00", end_time: "10:00"}, challenge_id: demo_timeslot.challenge_id
+      end
+      it "responds with status code 200" do
+        post(:create, { timeslots: {start_date: "", start_time: "09:00", end_time: "10:00"}, challenge_id: demo_timeslot.challenge_id})
+        expect(response).to have_http_status 200
+      end
+
+      it "redirects to the new timeslot page" do
+        post(:create, { timeslots: {start_date: "", start_time: "09:00", end_time: "10:00"}, challenge_id: demo_timeslot.challenge_id})
+        expect(response).to render_template("new")
+      end
+
+      it "does not create a new timeslot" do
+        expect {
+          post(:create, { timeslots: {start_date: "", start_time: "09:00", end_time: "10:00"}, challenge_id: demo_timeslot.challenge_id})
+        }.to_not change(Timeslot,:count)
+      end
+    end
+
+  end
 
   describe 'get_timeslot' do
     before(:each) do
@@ -64,7 +106,5 @@ RSpec.describe TimeslotsController, type: :controller do
       expect(assigns(:timeslots)).to include(:Wednesday)
       expect(assigns(:timeslots)).to include(:Thursday)
     end
-
-
   end
 end

@@ -17,7 +17,7 @@
 @import 'navbar-fixed-side';
 @import 'timeslots';
 
-/** { outline: 1px solid red; }*/
+// * { outline: 1px solid red; }
 
 $break-small: 767px;
 
@@ -25,7 +25,10 @@ $break-small: 767px;
 /*  height: 50px;*/
   margin-top: 30px;
   margin-bottom: 30px;
-  margin-left: 30px;
+
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
   @media screen and (max-width: $break-small) {
     display: none;
   }

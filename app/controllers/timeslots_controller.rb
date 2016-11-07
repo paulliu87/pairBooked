@@ -28,11 +28,40 @@ class TimeslotsController < ApplicationController
   end
 
   def create
+    sanitized_params = timeslots_params
+    if sanitized_params[:start_date] != "" && sanitized_params[:start_time] != "" && sanitized_params[:end_time] != ""
+      convert_to_datetime(sanitized_params)
+    end
+
+    @challenge = Challenge.find_by_id(params[:challenge_id])
+
+    @timeslot = @challenge.timeslots.new(
+      start_at:     sanitized_params[:start_at],
+      end_at:       sanitized_params[:end_at]
+      )
+
+    @timeslot.initiator = current_student
+
+    # @timeslot = Timeslot.new(
+    #   initiator_id: session[:student_id],
+    #   challenge_id: params[:challenge_id],
+    #   start_at:     sanitized_params[:start_at],
+    #   end_at:       sanitized_params[:end_at]
+    #   )
+    respond_to do |format|
+      if @timeslot.save
+        format.html { redirect_to "/challenges/#{params[:challenge_id]}/timeslots", notice: 'Tweet was successfully created.' }
+        format.json { render json: @timeslot, status: :created}
+      else
+        @errors = @timeslot.errors.full_messages
+        format.html { render action: "new" }
+        format.json { render json: @timeslot.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
   private
   def get_timeslots(challenge_id)
-    #take a challenge id
     all_timeslots = Timeslot.where(challenge_id: challenge_id, acceptor: nil)
     timeslots = {}
 
@@ -66,5 +95,16 @@ class TimeslotsController < ApplicationController
 
     #return a hash with keys of days and values of array of time slots
     timeslots
+  end
+
+  def timeslots_params
+    params.require(:timeslots).permit( :start_date, :start_time, :end_time)
+  end
+
+  def convert_to_datetime(params)
+    start_datetime = params[:start_date] + params[:start_time]
+    params[:start_at] = DateTime.strptime(start_datetime,'%F%H:%M')
+    end_datetime = params[:start_date] + params[:end_time]
+    params[:end_at] = DateTime.strptime(end_datetime,'%F%H:%M')
   end
 end
