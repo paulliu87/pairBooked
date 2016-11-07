@@ -5,7 +5,7 @@ class Student < ApplicationRecord
 
   def self.create_with_omniauth(omniauth_hash)
     create! do |student|
-      student.username = omniauth_hash["uid"]
+      student.username = omniauth_hash["info"]["nickname"]
       student.fullname = omniauth_hash["info"]["name"]
       student.email = omniauth_hash["info"]["email"]
     end
