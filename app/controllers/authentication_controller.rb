@@ -1,12 +1,13 @@
 class AuthenticationController < ApplicationController
-  
+
   skip_before_action :require_login, only: [:index, :login]
-  
+
   def index
   end
 
   def login
     omniauth_hash = request.env["omniauth.auth"]
+    p omniauth_hash
     student = Student.find_by(
       username: omniauth_hash["info"]["nickname"]
     ) || Student.create_with_omniauth(omniauth_hash)

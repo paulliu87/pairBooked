@@ -35,7 +35,7 @@ RSpec.describe Student, type: :model do
     let(:omniauth_student) { Student.create_with_omniauth(omniauth_hash) }
 
     it "has a username" do
-      expect(omniauth_student.username).to eq("sleepyhead")
+      expect(omniauth_student.username).to eq("SunjayH")
     end
   end
 end
