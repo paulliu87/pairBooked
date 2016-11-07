@@ -8,6 +8,7 @@ require 'rspec/rails'
 require 'capybara/rails'
 
 require 'webmock/rspec'
+require_relative 'support/oauth_hash'
 WebMock.disable_net_connect!(allow_localhost: true)
 
 # RSpec.configure do |config|
@@ -102,14 +103,9 @@ end
 
 # For doing OAuth-related tests
 OmniAuth.config.test_mode = true
-  omniauth_hash = {
-    'provider' => 'github',
-    'uid' => '46723875',
-    'info' => {
-      'name' => 'Rip van Winkle',
-      'email' => 'sleepyheadzzz@gmail.com',
-      'nickname' => 'sleepyhead'}
-  }
+  omniauth_hash = OmniAuth::AuthHash.new( oauth_response_stub )
+
+
 OmniAuth.config.add_mock(:github, omniauth_hash)
 
 RSpec.configure do |config|
