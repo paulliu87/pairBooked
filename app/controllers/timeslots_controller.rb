@@ -32,12 +32,22 @@ class TimeslotsController < ApplicationController
     if sanitized_params[:start_date] != "" && sanitized_params[:start_time] != "" && sanitized_params[:end_time] != ""
       convert_to_datetime(sanitized_params)
     end
-    @timeslot = Timeslot.new(
-      initiator_id: session[:student_id],
-      challenge_id: params[:challenge_id],
+
+    @challenge = Challenge.find_by_id(params[:challenge_id])
+
+    @timeslot = @challenge.timeslots.new(
       start_at:     sanitized_params[:start_at],
       end_at:       sanitized_params[:end_at]
       )
+
+    @timeslot.initiator = current_student
+
+    # @timeslot = Timeslot.new(
+    #   initiator_id: session[:student_id],
+    #   challenge_id: params[:challenge_id],
+    #   start_at:     sanitized_params[:start_at],
+    #   end_at:       sanitized_params[:end_at]
+    #   )
     respond_to do |format|
       if @timeslot.save
         format.html { redirect_to "/challenges/#{params[:challenge_id]}/timeslots", notice: 'Tweet was successfully created.' }
@@ -88,7 +98,7 @@ class TimeslotsController < ApplicationController
   end
 
   def timeslots_params
-    params.require(:timeslots).permit( :start_date, :start_time, :end_time )
+    params.require(:timeslots).permit( :start_date, :start_time, :end_time)
   end
 
   def convert_to_datetime(params)
