@@ -6,7 +6,7 @@ abort("The Rails environment is running in production mode!") if Rails.env.produ
 require 'spec_helper'
 require 'rspec/rails'
 require 'capybara/rails'
-
+require "rack_session_access/capybara"
 require 'webmock/rspec'
 require_relative 'support/oauth_hash'
 WebMock.disable_net_connect!(allow_localhost: true)

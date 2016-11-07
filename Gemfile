@@ -42,6 +42,7 @@ group :development, :test do
   gem 'rails-controller-testing'
   gem 'factory_girl_rails'
   gem 'faker'
+  gem 'rack_session_access'
 
 # For JS tests
   gem 'jasmine-rails'
