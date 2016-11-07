@@ -10,4 +10,6 @@ class Student < ApplicationRecord
       email: omniauth_hash["info"]["email"]
     })
   end
+
+
 end

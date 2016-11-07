@@ -28,6 +28,12 @@ RSpec.describe Student, type: :model do
       student.email = nil
       expect(student.save).to be false
     end
+
+    it 'sets a timezone if one is not given' do
+      student.save
+      expect(student.time_zone).to eq(ActiveSupport::TimeZone.new("Pacific Time (US & Canada)"))
+    end
+
   end
 
   describe "create_with_omniauth" do

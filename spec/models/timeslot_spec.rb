@@ -28,6 +28,11 @@ RSpec.describe Timeslot, type: :model do
       timeslot.end_at = nil
       expect(timeslot.save).to be false
     end
+
+    it 'sets a timezone if one is not given' do
+      timeslot.save
+      expect(timeslot.time_zone).to eq(ActiveSupport::TimeZone.new("Pacific Time (US & Canada)"))
+    end
   end
 
   describe "associations" do
