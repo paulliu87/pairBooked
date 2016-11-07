@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   get '/logout', to: "authentication#logout"
   post '/login', to: "authentication#login"
   match "/auth/github/callback" => "authentication#login", :via => [:get, :post]
+  post '/timezone', to: "authentication#timezone"
 
   root to: 'authentication#index'
 end

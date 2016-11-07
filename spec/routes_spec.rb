@@ -16,7 +16,9 @@ RSpec.describe "Routing to authentication", :type => :routing do
   it "routes GET /dashboard to authentication#dashboard" do
     expect(:get => "/dashboard").to route_to("authentication#dashboard")
   end
-
+  it "routes post /timezone to authentication#timezone" do
+    expect(:post => "/timezone").to route_to("authentication#timezone")
+  end
 end
 
 RSpec.describe "Routing to challenges", :type => :routing do
