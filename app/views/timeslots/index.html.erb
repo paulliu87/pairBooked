@@ -19,9 +19,11 @@
       <ul class="timeslots-list">
         <% if @timeslots != nil %>
           <% @timeslots[:Monday].each do |timeslot| %>
-            <li class="timeslot">
-              <a class="btn btn-primary" href="/challenges/<%=timeslot.challenge_id%>/timeslots/<%= timeslot.id %>"><%= timeslot.start_at.strftime("%Y %b %d %l:%M %P") + " - " + timeslot.end_at.strftime("%l:%M %P")%></a>
-            </li>
+            <% if timeslot.start_at.to_date >= DateTime.now.to_date %>
+              <li class="timeslot">
+                <a class="btn btn-primary" href="/challenges/<%=timeslot.challenge_id%>/timeslots/<%= timeslot.id %>"><%= timeslot.start_at.strftime("%Y %b %d %l:%M %P") + " - " + timeslot.end_at.strftime("%l:%M %P")%></a>
+              </li>
+            <% end %>
           <% end %>
         <% end %>
       </ul>

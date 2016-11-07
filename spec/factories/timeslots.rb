@@ -14,7 +14,7 @@ FactoryGirl.define do
     end
 
     trait :old_start_at_date do
-      start_at DateTime.now.days_ago(10)
+      start_at DateTime.now.days_ago(1)
     end
 
   end

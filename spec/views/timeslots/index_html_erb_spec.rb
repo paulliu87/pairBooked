@@ -5,7 +5,11 @@ RSpec.describe "challenges/1/timeslots/index.html.erb", type: :view do
     let!(:timeslot1) { FactoryGirl.create(:timeslot) }
     let!(:timeslot2) { FactoryGirl.create(:timeslot) }
     let!(:timeslot3) { FactoryGirl.create(:timeslot) }
-
+    let!(:demo_old_timeslot) {
+      t = FactoryGirl.build(:timeslot, :old_start_at_date)
+      t.save(:validate => false)
+      t
+    }
     before(:each) do
       @timeslots = {
         Monday: Timeslot.all,
@@ -24,6 +28,11 @@ RSpec.describe "challenges/1/timeslots/index.html.erb", type: :view do
       rendered.should match(/Create/)
       rendered.should match(Regexp.new timeslot1.start_at.strftime("%l:%M %P"))
       rendered.should match(Regexp.new timeslot2.start_at.strftime("%l:%M %P"))
+    end
+
+    it 'does not show the old timeslot' do
+      rendered.should_not include("href=\"/challenges/#{@challenge.id}/timeslots/#{demo_old_timeslot.id}\"")
+      rendered.should include("href=\"/challenges/#{@challenge.id}/timeslots/#{timeslot1.id}\"")
     end
   end
 end

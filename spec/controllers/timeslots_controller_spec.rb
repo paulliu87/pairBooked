@@ -4,11 +4,7 @@ RSpec.describe TimeslotsController, type: :controller do
 
   let(:demo_timeslot) {FactoryGirl.create(:timeslot)}
   let(:demo_student) {FactoryGirl.create(:student)}
-  let!(:demo_old_timeslot) {
-    t = FactoryGirl.build(:timeslot, :old_start_at_date)
-    t.save(:validate => false)
-    t
-  }
+
   before(:each) do
     @request.session[:student_id] = demo_student.id
   end
@@ -27,13 +23,6 @@ RSpec.describe TimeslotsController, type: :controller do
         expect(assigns(:challenge)).to be_a Challenge
       end
     end
-
-    context 'when there is a old timeslot in the datebase' do
-      it 'does not show the old timeslot' do
-        p Timeslot.find_by_id(demo_old_timeslot.id)
-      end
-    end
-
   end
 
   describe 'show' do
