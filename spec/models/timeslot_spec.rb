@@ -57,6 +57,13 @@ RSpec.describe Timeslot, type: :model do
       expect(timeslot.initiator).to be_a (Student)
     end
 
+    it "can update timezone through the initiator" do
+      timeslot.initiator.update_attribute(
+        :time_zone, "Eastern Time (US & Canada)"
+      )
+      expect(timeslot.time_zone).to eq("Eastern Time (US & Canada)")
+    end
+
     it "belongs to an acceptor" do
       timeslot.acceptor = FactoryGirl.build_stubbed(:student)
       expect(timeslot.acceptor).to be_a (Student)

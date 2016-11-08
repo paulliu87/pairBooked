@@ -44,4 +44,36 @@ RSpec.describe AuthenticationController, type: :controller do
       response.should redirect_to root_url
     end
   end
+
+  describe "#dashboard" do
+    let!(:student) {FactoryGirl.create(:student)}
+    let(:acceptor) { Student.find(student.id) }
+    let(:initiator) { FactoryGirl.create(:student) }
+    let!(:paired_timeslot) {
+      timeslot = FactoryGirl.create(:timeslot)
+      timeslot.update_attributes(acceptor: acceptor, initiator: initiator)
+      timeslot
+    }
+    let!(:unpaired_timeslot) {
+      timeslot = FactoryGirl.create(:timeslot)
+      timeslot.update_attributes(acceptor: nil, initiator: Student.find(student.id))
+      timeslot
+    }
+
+    before(:each) do
+      @request.session[:student_id] = student.id
+      get :dashboard
+    end
+
+    it "knows which timeslots you're paired in" do
+      # paired_timeslot
+
+      expect(assigns(:paired_timeslots)).to include(paired_timeslot)
+    end
+
+    it "knows your empty timeslots" do
+      # unpaired_timeslot
+      expect(assigns(:unpaired_timeslots)).to include(unpaired_timeslot)
+    end
+  end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161104214248) do
+ActiveRecord::Schema.define(version: 20161107184436) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,8 +27,9 @@ ActiveRecord::Schema.define(version: 20161104214248) do
     t.string   "fullname"
     t.string   "email"
     t.string   "slack_name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",                                        null: false
+    t.datetime "updated_at",                                        null: false
+    t.string   "time_zone",  default: "Pacific Time (US & Canada)"
   end
 
   create_table "timeslots", force: :cascade do |t|

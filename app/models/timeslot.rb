@@ -6,6 +6,10 @@ class Timeslot < ApplicationRecord
   validates_presence_of :initiator_id, :challenge_id, :start_at, :end_at
   validate :date, :check_duplicate_timeslot
 
+  def time_zone
+    self.initiator.time_zone
+  end
+
   def date
     if start_at && end_at
       if start_at.to_date < DateTime.now.to_date

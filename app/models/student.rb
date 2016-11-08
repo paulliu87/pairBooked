@@ -1,7 +1,8 @@
 class Student < ApplicationRecord
   validates_presence_of :username, :email
   validates_uniqueness_of :username, :email
-  has_many :timeslots
+  has_many :accepted_timeslots, class_name: :Timeslot, foreign_key: :acceptor_id
+  has_many :initiated_timeslots, class_name: :Timeslot, foreign_key: :initiator_id
 
   def self.create_with_omniauth(omniauth_hash)
     create!({
@@ -10,4 +11,5 @@ class Student < ApplicationRecord
       email: omniauth_hash["info"]["email"]
     })
   end
+
 end
