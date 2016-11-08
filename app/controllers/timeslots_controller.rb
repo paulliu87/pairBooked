@@ -95,8 +95,8 @@ class TimeslotsController < ApplicationController
 
   def convert_to_datetime(params)
     start_datetime = params[:start_date] + params[:start_time]
-    params[:start_at] = DateTime.strptime(start_datetime,'%F%H:%M').utc
+    params[:start_at] = DateTime.strptime(start_datetime + Time.zone.to_s[-3..-1],'%F%H:%M %Z')
     end_datetime = params[:start_date] + params[:end_time]
-    params[:end_at] = DateTime.strptime(end_datetime,'%F%H:%M').utc
+    params[:end_at] = DateTime.strptime(end_datetime + Time.zone.to_s[-3..-1],'%F%H:%M %Z')
   end
 end
