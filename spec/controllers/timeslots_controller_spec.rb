@@ -29,18 +29,18 @@ RSpec.describe TimeslotsController, type: :controller do
   describe 'show' do
     it 'assigns the right timeslot' do
       demo_timeslot = FactoryGirl.create(:timeslot)
-      get :show, challenge_id: demo_timeslot.challenge_id, id: demo_timeslot.id
+      get :show, params: {challenge_id: demo_timeslot.challenge_id, id: demo_timeslot.id}
       expect(assigns(:timeslot)).to eq(demo_timeslot)
     end
 
     it 'assigns the current student to the timeslot' do
       demo_timeslot = FactoryGirl.create(:timeslot)
-      get :show, challenge_id: demo_timeslot.challenge_id, id: demo_timeslot.id
+      get :show, params: {challenge_id: demo_timeslot.challenge_id, id: demo_timeslot.id}
       expect(assigns(:timeslot).acceptor).to eq(demo_student)
     end
 
     it 'renders the confirmation page' do
-      get :show, challenge_id: demo_timeslot.challenge_id, id: demo_timeslot.id
+      get :show, params: {challenge_id: demo_timeslot.challenge_id, id: demo_timeslot.id}
       expect(response).to render_template(:show)
     end
 
@@ -52,7 +52,7 @@ RSpec.describe TimeslotsController, type: :controller do
         initiator_id: demo_timeslot.initiator_id
       )
 
-      get :show, challenge_id: demo_timeslot.challenge_id, id: demo_timeslot.id
+      get :show, params: {challenge_id: demo_timeslot.challenge_id, id: demo_timeslot.id}
       expect(
         Timeslot.where(challenge_id: demo_timeslot.challenge_id, initiator_id:demo_timeslot.initiator_id).count
       ).to eq(1)
@@ -66,7 +66,7 @@ RSpec.describe TimeslotsController, type: :controller do
         initiator_id: demo_timeslot.initiator_id
       )
 
-      get :show, challenge_id: demo_timeslot.challenge_id, id: demo_timeslot.id
+      get :show, params: {challenge_id: demo_timeslot.challenge_id, id: demo_timeslot.id}
       expect(
         Timeslot.where(
           challenge_id: demo_timeslot.challenge_id, initiator_id:demo_timeslot.initiator_id, acceptor_id: nil
@@ -81,12 +81,6 @@ RSpec.describe TimeslotsController, type: :controller do
       expect(response).to render_template(:new)
     end
   end
-
-  # pending 'edit' do
-  # end
-
-  # pending 'update' do
-  # end
 
   describe 'destroy' do
     it 'deletes the timeslot from the database' do
@@ -193,11 +187,19 @@ RSpec.describe TimeslotsController, type: :controller do
     end
   end
 
-  describe 'get_timeslot' do
+  describe 'get_timeslots' do
+
+    let(:same_acceptor_timeslot) {
+      timeslot = FactoryGirl.create(:timeslot)
+      timeslot.acceptor = demo_student
+      timeslot.save
+    }
+
     before(:each) do
       challenge = FactoryGirl.create(:challenge)
-      FactoryGirl.create_list(:timeslot, 50, challenge_id: challenge.id)
-      get :index, challenge_id: Challenge.first.id
+      list = FactoryGirl.create_list(:timeslot, 50, challenge_id: challenge.id)
+      same_acceptor_timeslot
+      get :index, params: {challenge_id: Challenge.first.id}
     end
 
     it "returns a hash containing timeslots" do
@@ -205,6 +207,10 @@ RSpec.describe TimeslotsController, type: :controller do
       expect(assigns(:timeslots)).to include(:Tuesday)
       expect(assigns(:timeslots)).to include(:Wednesday)
       expect(assigns(:timeslots)).to include(:Thursday)
+    end
+
+    it 'does not display a students own times' do
+      expect(assigns(:timeslots).flatten).to_not include(same_acceptor_timeslot)
     end
   end
 end
