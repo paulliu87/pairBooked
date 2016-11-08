@@ -12,7 +12,6 @@ class AuthenticationController < ApplicationController
       username: omniauth_hash["info"]["nickname"]
     ) || Student.create_with_omniauth(omniauth_hash)
     session[:student_id] = student.id
-    set_time_zone unless student.time_zone
     Time.zone = student.time_zone
     # redirect_to slack_entry_url if student.slack_name == nil
     redirect_to challenges_path, :notice => "Signed in!"
@@ -29,17 +28,6 @@ class AuthenticationController < ApplicationController
     @unpaired_timeslots = Timeslot.where(initiator: @student, acceptor: nil)
     @paired_timeslots = Timeslot.where(initiator: @student, acceptor: !nil) + @student.accepted_timeslots
     p @paired_timeslots, @unpaired_timeslots
-  end
-
-  def timezone
-    student = Student.find(session[:student_id])
-    student.update_attribute(:time_zone, params[:timezone_str])
-    Time.zone = params[:timezone_str]
-    redirect_to challenges_path
-  end
-
-  def timezone_form
-    render :'authentication/timezone.html'
   end
 
 end

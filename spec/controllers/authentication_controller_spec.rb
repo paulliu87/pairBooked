@@ -45,20 +45,6 @@ RSpec.describe AuthenticationController, type: :controller do
     end
   end
 
-  describe '#timezone' do
-    let(:student) {FactoryGirl.create(:student)}
-
-    before do
-      @request.session[:student_id] = student.id
-      post :timezone, {timezone_str: "Eastern Time (US & Canada)"}
-    end
-
-    it 'changes the timezone for the student' do
-      student = Student.find(session[:student_id])
-      expect(student.time_zone).to eq("Eastern Time (US & Canada)")
-    end
-  end
-
   describe "#dashboard" do
     let!(:student) {FactoryGirl.create(:student)}
     let(:acceptor) { Student.find(student.id) }

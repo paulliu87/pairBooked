@@ -17,6 +17,5 @@ class ApplicationController < ActionController::Base
 
   def set_time_zone
     Time.zone = current_student.time_zone if current_student
-    redirect_to timezone_path
   end
 end
