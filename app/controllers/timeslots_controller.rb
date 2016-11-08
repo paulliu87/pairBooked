@@ -22,6 +22,8 @@ class TimeslotsController < ApplicationController
   end
 
   def destroy
+    Timeslot.destroy(params[:id])
+    redirect_to dashboard_path
   end
 
   def new

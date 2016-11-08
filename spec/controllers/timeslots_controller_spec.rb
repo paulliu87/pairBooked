@@ -37,6 +37,11 @@ RSpec.describe TimeslotsController, type: :controller do
     it 'assigns the current student to the timeslot' do
       expect(assigns(:timeslot).acceptor).to eq(demo_student)
     end
+
+    it 'renders the confirmation page' do
+      expect(response).to render_template(:show)
+    end
+
   end
 
   # pending 'edit' do
@@ -45,8 +50,24 @@ RSpec.describe TimeslotsController, type: :controller do
   # pending 'update' do
   # end
 
-  # pending 'destroy' do
-  # end
+  describe 'destroy' do
+    it 'deletes the timeslot from the database' do
+      demo_timeslot
+      expect{
+        delete :destroy,
+          {
+            challenge_id: demo_timeslot.challenge_id,
+            id: demo_timeslot.id
+          }
+        }.to change(Timeslot, :count).by(-1)
+    end
+
+    it 'returns to the dashboard page' do
+      delete :destroy, challenge_id: demo_timeslot.challenge_id, id: demo_timeslot.id
+      expect(response).to redirect_to dashboard_path
+    end
+
+  end
 
   # pending 'new' do
   # end
