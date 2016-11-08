@@ -21,7 +21,8 @@
         <%= button_to 'I can no longer make this time',
           challenge_timeslot_path(timeslot.challenge_id, timeslot.id),
           method: :delete,
-          data: { confirm: 'Are you sure?' } %>
+          data: { confirm: 'Are you sure?' },
+          class: "btn-danger" %>
       </li>
     <% end %>
   <% end %>
