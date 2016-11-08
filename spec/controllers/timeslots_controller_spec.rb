@@ -186,7 +186,7 @@ RSpec.describe TimeslotsController, type: :controller do
   describe 'get_timeslots' do
 
     let(:same_acceptor_timeslot) {
-      timeslot = FactoryGirl.create(:timeslot)
+      timeslot = FactoryGirl.create(:timeslot, :monday)
       timeslot.acceptor = demo_student
       timeslot.challenge = FactoryGirl.create(:challenge)
       timeslot.save
@@ -200,16 +200,20 @@ RSpec.describe TimeslotsController, type: :controller do
       get :index, params: {challenge_id: challenge.id}
     end
 
-    it "returns a hash containing timeslots" do
+    it "returns a hash containing days" do
       expect(assigns(:timeslots)).to include(:Monday)
       expect(assigns(:timeslots)).to include(:Tuesday)
       expect(assigns(:timeslots)).to include(:Wednesday)
       expect(assigns(:timeslots)).to include(:Thursday)
     end
 
+    it 'has days containing timeslots' do
+      expect(assigns(:timeslots)[:Monday]).to all(be_a Timeslot)
+    end
+
     it 'does not display a students own times' do
       expect(Timeslot.first).to eq(same_acceptor_timeslot)
-      expect(assigns(:timeslots).flatten).to_not include(same_acceptor_timeslot)
+      expect(assigns(:timeslots)[:Thursday]).not_to include(same_acceptor_timeslot)
     end
   end
 end
