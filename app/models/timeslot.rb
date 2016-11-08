@@ -34,7 +34,7 @@ class Timeslot < ApplicationRecord
         end
         break
       end
-     end
+    end
   end
 
   def self.clean_up

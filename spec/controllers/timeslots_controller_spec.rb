@@ -28,7 +28,18 @@ RSpec.describe TimeslotsController, type: :controller do
 
   describe 'show' do
     before(:each) do
+      demo_timeslot = FactoryGirl.create(:timeslot)
+      demo_timeslot_1 = FactoryGirl.create(
+        :timeslot,
+        challenge_id: demo_timeslot.challenge_id,
+        initiator_id: demo_timeslot.initiator_id
+      )
+
+      p "^^^^^^^^^^^^^^^^^^^^^^^^"
+      p Timeslot.all
       get :show, challenge_id: demo_timeslot.challenge_id, id: demo_timeslot.id
+      p "11111111111111111111111111"
+      p Timeslot.all
     end
 
     it 'assigns the right timeslot' do
@@ -38,6 +49,23 @@ RSpec.describe TimeslotsController, type: :controller do
     it 'assigns the current student to the timeslot' do
       expect(assigns(:timeslot).acceptor).to eq(demo_student)
     end
+
+    it 'only keeps the timeslot that has an acceptor' do
+      t = Timeslot.all
+      p Timeslot.where(challenge_id: demo_timeslot.challenge_id, initiator_id:demo_timeslot.initiator_id)
+      expect(
+        Timeslot.where(challenge_id: demo_timeslot.challenge_id, initiator_id:demo_timeslot.initiator_id).count
+      ).to eq(1)
+    end
+
+    it 'removes all other timeslots that does not have an acceptor' do
+      expect(
+        Timeslot.where(
+          challenge_id: demo_timeslot.challenge_id, initiator_id:demo_timeslot.initiator_id, acceptor_id: demo_student.id
+        ).count
+      ).to eq(0)
+    end
+
   end
 
   # pending 'edit' do
