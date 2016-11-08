@@ -5,7 +5,7 @@ RSpec.describe "challenges/1/timeslots/index.html.erb", type: :view do
     let!(:timeslot1) { FactoryGirl.create(:timeslot) }
     let!(:timeslot2) { FactoryGirl.create(:timeslot) }
     let!(:timeslot3) { FactoryGirl.create(:timeslot) }
-    let!(:demo_old_timeslot) {
+    let(:demo_old_timeslot) {
       t = FactoryGirl.build(:timeslot, :old_start_at_date)
       t.save(:validate => false)
       t
