@@ -4,7 +4,6 @@ class TimeslotsController < ApplicationController
     @challenge = Challenge.find_by_id(params[:challenge_id])
     if @challenge
       @timeslots = get_timeslots(@challenge.id)
-      p @timeslots.class
     else
       redirect_to challenges_path
     end
@@ -14,6 +13,7 @@ class TimeslotsController < ApplicationController
     @timeslot = Timeslot.find(params[:id])
     @timeslot.acceptor = current_student
     @timeslot.save
+
   end
 
   def edit

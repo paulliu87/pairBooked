@@ -28,6 +28,24 @@ RSpec.describe Timeslot, type: :model do
       timeslot.end_at = nil
       expect(timeslot.save).to be false
     end
+
+    it "does not create a new timeslot" do
+      slot = FactoryGirl.build(:timeslot)
+      slot.start_at=  100.hours.ago
+      slot.end_at=  99.hours.ago
+      expect(slot.save).to be false
+    end
+
+    it "does not allow the timeslot is partially overlap the exited ones" do
+      timeslot.save
+      slot = FactoryGirl.build(:timeslot)
+      slot.start_at=  100.hours.ago
+
+    end
+
+    it "does not allow the timeslot is fully overlap the exited ones" do
+
+    end
   end
 
   describe "associations" do
