@@ -27,7 +27,6 @@ class AuthenticationController < ApplicationController
     @initiated_timeslots = @student.initiated_timeslots
     @unpaired_timeslots = Timeslot.where(initiator: @student, acceptor: nil)
     @paired_timeslots = Timeslot.where(initiator: @student, acceptor: !nil) + @student.accepted_timeslots
-    p @paired_timeslots, @unpaired_timeslots
   end
 
 end
