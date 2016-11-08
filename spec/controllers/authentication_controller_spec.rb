@@ -60,30 +60,33 @@ RSpec.describe AuthenticationController, type: :controller do
   end
 
   describe "#dashboard" do
-    let(:acceptor) { Student.find(session[:student_id]) }
+    let!(:student) {FactoryGirl.create(:student)}
+    let(:acceptor) { Student.find(student.id) }
     let(:initiator) { FactoryGirl.create(:student) }
-    let(:paired_timeslot) {
+    let!(:paired_timeslot) {
       timeslot = FactoryGirl.create(:timeslot)
       timeslot.update_attributes(acceptor: acceptor, initiator: initiator)
       timeslot
     }
-    let(:unpaired_timeslot) {
+    let!(:unpaired_timeslot) {
       timeslot = FactoryGirl.create(:timeslot)
-      timeslot.update_attributes(acceptor: nil, initiator: Student.find(session[:student_id]))
+      timeslot.update_attributes(acceptor: nil, initiator: Student.find(student.id))
       timeslot
     }
 
-    before do
-      @request.session[:student_id] = FactoryGirl.create(:student).id
+    before(:each) do
+      @request.session[:student_id] = student.id
+      get :dashboard
     end
 
     it "knows which timeslots you're paired in" do
-      paired_timeslot
+      # paired_timeslot
+
       expect(assigns(:paired_timeslots)).to include(paired_timeslot)
     end
 
     it "knows your empty timeslots" do
-      unpaired_timeslot
+      # unpaired_timeslot
       expect(assigns(:unpaired_timeslots)).to include(unpaired_timeslot)
     end
   end
