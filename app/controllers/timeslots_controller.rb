@@ -38,9 +38,19 @@ class TimeslotsController < ApplicationController
       convert_to_datetime(sanitized_params)
     end
     @challenge = Challenge.find_by_id(params[:challenge_id])
+
+    temp_start_at = sanitized_params[:start_at]
+    temp_end_at = sanitized_params[:end_at]
+
+    #if the period is greater than 1 hour
+      #set the temp_start_at
+
+
+    #else
+      #
     @timeslot = @challenge.timeslots.new(
-      start_at:     sanitized_params[:start_at],
-      end_at:       sanitized_params[:end_at]
+      start_at:     temp_start_at,
+      end_at:       temp_end_at
       )
 
     @timeslot.initiator = current_student
