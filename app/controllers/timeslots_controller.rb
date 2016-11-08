@@ -42,12 +42,6 @@ class TimeslotsController < ApplicationController
 
     @timeslot.initiator = current_student
 
-    # @timeslot = Timeslot.new(
-    #   initiator_id: session[:student_id],
-    #   challenge_id: params[:challenge_id],
-    #   start_at:     sanitized_params[:start_at],
-    #   end_at:       sanitized_params[:end_at]
-    #   )
     respond_to do |format|
       if @timeslot.save
         format.html { redirect_to "/challenges/#{params[:challenge_id]}/timeslots", notice: 'Tweet was successfully created.' }
