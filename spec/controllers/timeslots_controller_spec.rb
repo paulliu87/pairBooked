@@ -69,9 +69,6 @@ RSpec.describe TimeslotsController, type: :controller do
 
   end
 
-  # pending 'new' do
-  # end
-
   describe 'create' do
     context "when valid params are passed" do
       before(:each) do
