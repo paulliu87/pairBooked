@@ -121,11 +121,6 @@ RSpec.describe TimeslotsController, type: :controller do
         }.to change(Timeslot,:count).by(1)
       end
 
-      xit "should not create a duplicate timeslot" do
-        expect {
-          post :create, params: { timeslots: {start_date: "2017-10-31", start_time: "09:00", end_time: "10:00"}, challenge_id: demo_challenge.id}
-        }.to_not change(Timeslot,:count)
-      end
     end
 
     context "when invalid params are passed" do
@@ -193,14 +188,16 @@ RSpec.describe TimeslotsController, type: :controller do
     let(:same_acceptor_timeslot) {
       timeslot = FactoryGirl.create(:timeslot)
       timeslot.acceptor = demo_student
+      timeslot.challenge = FactoryGirl.create(:challenge)
       timeslot.save
+      timeslot
     }
 
     before(:each) do
-      challenge = FactoryGirl.create(:challenge)
-      list = FactoryGirl.create_list(:timeslot, 50, challenge_id: challenge.id)
       same_acceptor_timeslot
-      get :index, params: {challenge_id: Challenge.first.id}
+      challenge = same_acceptor_timeslot.challenge
+      list = FactoryGirl.create_list(:timeslot, 50, challenge_id: challenge.id)
+      get :index, params: {challenge_id: challenge.id}
     end
 
     it "returns a hash containing timeslots" do
@@ -211,6 +208,7 @@ RSpec.describe TimeslotsController, type: :controller do
     end
 
     it 'does not display a students own times' do
+      expect(Timeslot.first).to eq(same_acceptor_timeslot)
       expect(assigns(:timeslots).flatten).to_not include(same_acceptor_timeslot)
     end
   end

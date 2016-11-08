@@ -17,9 +17,5 @@ FactoryGirl.define do
       start_at DateTime.now.days_ago(1).beginning_of_hour
     end
 
-    trait :standard do
-      start_at
-    end
-
   end
 end
