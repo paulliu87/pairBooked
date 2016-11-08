@@ -6,7 +6,7 @@ RSpec.describe TimeslotsController, type: :controller do
   let(:demo_student) {FactoryGirl.create(:student)}
   let(:demo_challenge) {FactoryGirl.create(:challenge)}
 
-  before(:each) do
+  before do
     @request.session[:student_id] = demo_student.id
   end
 
@@ -39,6 +39,11 @@ RSpec.describe TimeslotsController, type: :controller do
       expect(assigns(:timeslot).acceptor).to eq(demo_student)
     end
 
+    it 'renders the confirmation page' do
+      get :show, challenge_id: demo_timeslot.challenge_id, id: demo_timeslot.id
+      expect(response).to render_template(:show)
+    end
+
     it 'only keeps the timeslot that has an acceptor' do
       demo_timeslot = FactoryGirl.create(:timeslot)
       demo_timeslot_1 = FactoryGirl.create(
@@ -68,7 +73,13 @@ RSpec.describe TimeslotsController, type: :controller do
         ).count
       ).to eq(0)
     end
+  end
 
+  describe 'new' do
+    it 'renders the confirmation page' do
+      get :new, challenge_id: demo_timeslot.challenge_id
+      expect(response).to render_template(:new)
+    end
   end
 
   # pending 'edit' do
@@ -77,11 +88,24 @@ RSpec.describe TimeslotsController, type: :controller do
   # pending 'update' do
   # end
 
-  # pending 'destroy' do
-  # end
+  describe 'destroy' do
+    it 'deletes the timeslot from the database' do
+      demo_timeslot
+      expect{
+        delete :destroy,
+          {
+            challenge_id: demo_timeslot.challenge_id,
+            id: demo_timeslot.id
+          }
+        }.to change(Timeslot, :count).by(-1)
+    end
 
-  # pending 'new' do
-  # end
+    it 'returns to the dashboard page' do
+      delete :destroy, challenge_id: demo_timeslot.challenge_id, id: demo_timeslot.id
+      expect(response).to redirect_to dashboard_path
+    end
+
+  end
 
   describe 'create' do
     context "when valid params are passed" do
