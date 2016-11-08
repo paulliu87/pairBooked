@@ -1,9 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe "Routing to authentication", :type => :routing do
-  it "routes GET / to authentication#index" do
-    expect(:get => "/").to route_to("authentication#index")
-  end
 
   it "routes POST /login to authentication#login" do
     expect(:post => "/login").to route_to("authentication#login")
@@ -17,6 +14,17 @@ RSpec.describe "Routing to authentication", :type => :routing do
     expect(:get => "/dashboard").to route_to("authentication#dashboard")
   end
 
+  it "routes POST /timezone to authentication#timezone" do
+    expect(:post => "/timezone").to route_to("authentication#timezone")
+  end
+
+  it "routes GET /timezone to authentication#timezone" do
+    expect(:get => "/timezone").to route_to("authentication#timezone_form")
+  end
+
+  it "routes GET / to authentication#index" do
+    expect(:get => "/").to route_to("authentication#index")
+  end
 end
 
 RSpec.describe "Routing to challenges", :type => :routing do

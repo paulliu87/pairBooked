@@ -4,7 +4,6 @@ class TimeslotsController < ApplicationController
     @challenge = Challenge.find_by_id(params[:challenge_id])
     if @challenge
       @timeslots = get_timeslots(@challenge.id)
-      p @timeslots.class
     else
       redirect_to challenges_path
     end
@@ -40,6 +39,7 @@ class TimeslotsController < ApplicationController
       )
 
     @timeslot.initiator = current_student
+
     respond_to do |format|
       if @timeslot.save
         format.html { redirect_to "/challenges/#{params[:challenge_id]}/timeslots", notice: 'Tweet was successfully created.' }
@@ -95,8 +95,8 @@ class TimeslotsController < ApplicationController
 
   def convert_to_datetime(params)
     start_datetime = params[:start_date] + params[:start_time]
-    params[:start_at] = DateTime.strptime(start_datetime,'%F%H:%M')
+    params[:start_at] = DateTime.strptime(start_datetime + Time.zone.to_s[-3..-1],'%F%H:%M %Z')
     end_datetime = params[:start_date] + params[:end_time]
-    params[:end_at] = DateTime.strptime(end_datetime,'%F%H:%M')
+    params[:end_at] = DateTime.strptime(end_datetime + Time.zone.to_s[-3..-1],'%F%H:%M %Z')
   end
 end

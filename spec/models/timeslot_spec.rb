@@ -28,6 +28,7 @@ RSpec.describe Timeslot, type: :model do
       timeslot.end_at = nil
       expect(timeslot.save).to be false
     end
+
   end
 
   describe "associations" do
@@ -37,6 +38,13 @@ RSpec.describe Timeslot, type: :model do
 
     it "belongs to an initiator" do
       expect(timeslot.initiator).to be_a (Student)
+    end
+
+    it "can update timezone through the initiator" do
+      timeslot.initiator.update_attribute(
+        :time_zone, "Eastern Time (US & Canada)"
+      )
+      expect(timeslot.time_zone).to eq("Eastern Time (US & Canada)")
     end
 
     it "belongs to an acceptor" do
