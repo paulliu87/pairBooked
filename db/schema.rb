@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161107184448) do
+ActiveRecord::Schema.define(version: 20161107184436) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -38,9 +38,8 @@ ActiveRecord::Schema.define(version: 20161107184448) do
     t.integer  "challenge_id"
     t.datetime "start_at"
     t.datetime "end_at"
-    t.datetime "created_at",                                          null: false
-    t.datetime "updated_at",                                          null: false
-    t.string   "time_zone",    default: "Pacific Time (US & Canada)"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
   end
 
 end
