@@ -13,7 +13,7 @@ RSpec.describe TimeslotsController, type: :controller do
   describe 'index' do
     context 'when all timeslots are current' do
       before(:each) do
-        get :index, challenge_id: demo_timeslot.challenge_id
+        get :index, params: {challenge_id: demo_timeslot.challenge_id}
       end
 
       it 'assigns timeslots' do
@@ -77,7 +77,7 @@ RSpec.describe TimeslotsController, type: :controller do
 
   describe 'new' do
     it 'renders the confirmation page' do
-      get :new, challenge_id: demo_timeslot.challenge_id
+      get :new, params: {challenge_id: demo_timeslot.challenge_id}
       expect(response).to render_template(:new)
     end
   end
@@ -86,7 +86,7 @@ RSpec.describe TimeslotsController, type: :controller do
     it 'deletes the timeslot from the database' do
       demo_timeslot
       expect{
-        delete :destroy,
+        delete :destroy, params:
           {
             challenge_id: demo_timeslot.challenge_id,
             id: demo_timeslot.id
@@ -95,7 +95,7 @@ RSpec.describe TimeslotsController, type: :controller do
     end
 
     it 'returns to the dashboard page' do
-      delete :destroy, challenge_id: demo_timeslot.challenge_id, id: demo_timeslot.id
+      delete :destroy, params: {challenge_id: demo_timeslot.challenge_id, id: demo_timeslot.id}
       expect(response).to redirect_to dashboard_path
     end
 
@@ -105,7 +105,7 @@ RSpec.describe TimeslotsController, type: :controller do
     context "when valid params are passed" do
       before(:each) do
         @request.session[:student_id] = demo_student.id
-        post :create, timeslots: {start_date: "2017-10-31", start_time: "09:00", end_time: "10:00"}, challenge_id: demo_challenge.id
+        post :create, params: { timeslots: {start_date: "2017-10-31", start_time: "09:00", end_time: "10:00"}, challenge_id: demo_challenge.id}
       end
       it "responds with status code 302" do
         expect(response).to have_http_status(302)
@@ -117,13 +117,13 @@ RSpec.describe TimeslotsController, type: :controller do
 
       it "creates a new timeslot" do
         expect {
-          post :create, timeslots: {start_date: "2017-10-30", start_time: "09:00", end_time: "10:00"}, challenge_id: demo_challenge.id
+          post :create, params: { timeslots: {start_date: "2017-10-30", start_time: "09:00", end_time: "10:00"}, challenge_id: demo_challenge.id}
         }.to change(Timeslot,:count).by(1)
       end
 
       xit "should not create a duplicate timeslot" do
         expect {
-          post :create, timeslots: {start_date: "2017-10-31", start_time: "09:00", end_time: "10:00"}, challenge_id: demo_challenge.id
+          post :create, params: { timeslots: {start_date: "2017-10-31", start_time: "09:00", end_time: "10:00"}, challenge_id: demo_challenge.id}
         }.to_not change(Timeslot,:count)
       end
     end
@@ -131,57 +131,58 @@ RSpec.describe TimeslotsController, type: :controller do
     context "when invalid params are passed" do
       before(:each) do
         @request.session[:student_id] = demo_student.id
-        post :create, timeslots: {start_date: "", start_time: "09:00", end_time: "10:00"}, challenge_id: demo_challenge.id
+        post :create, params: { timeslots: {start_date: "", start_time: "09:00", end_time: "10:00"}, challenge_id: demo_challenge.id}
       end
+
       it "responds with status code 200" do
-        post(:create, { timeslots: {start_date: "", start_time: "09:00", end_time: "10:00"}, challenge_id: demo_challenge.id})
+        post(:create, params: { timeslots: {start_date: "", start_time: "09:00", end_time: "10:00"}, challenge_id: demo_challenge.id})
         expect(response).to have_http_status 200
       end
 
       it "renders the new timeslot page" do
-        post(:create, { timeslots: {start_date: "", start_time: "09:00", end_time: "10:00"}, challenge_id: demo_challenge.id})
+        post(:create, params: { timeslots: {start_date: "", start_time: "09:00", end_time: "10:00"}, challenge_id: demo_challenge.id})
         expect(response).to render_template("new")
       end
 
       it "does not create a new timeslot" do
         expect {
-          post(:create, { timeslots: {start_date: "", start_time: "09:00", end_time: "10:00"}, challenge_id: demo_challenge.id})
+          post(:create, params: { timeslots: {start_date: "", start_time: "09:00", end_time: "10:00"}, challenge_id: demo_challenge.id})
         }.to_not change(Timeslot,:count)
       end
     end
 
     context "when a past date is submitted" do
       it "renders the form page" do
-        post(:create, { timeslots: {start_date: "2015-01-01", start_time: "09:00", end_time: "10:00"}, challenge_id: demo_challenge.id})
+        post(:create, params: { timeslots: {start_date: "2015-01-01", start_time: "09:00", end_time: "10:00"}, challenge_id: demo_challenge.id})
         expect(response).to render_template("new")
       end
 
       it "respond with status code 200" do
-        post(:create, { timeslots: {start_date: "2015-01-01", start_time: "09:00", end_time: "10:00"}, challenge_id: demo_challenge.id})
+        post(:create, params: { timeslots: {start_date: "2015-01-01", start_time: "09:00", end_time: "10:00"}, challenge_id: demo_challenge.id})
         expect(response).to have_http_status 200
       end
 
       it "does not create a new timeslot" do
         expect {
-          post(:create, { timeslots: {start_date: "2015-01-01", start_time: "09:00", end_time: "10:00"}, challenge_id: demo_challenge.id})
+          post(:create, params: { timeslots: {start_date: "2015-01-01", start_time: "09:00", end_time: "10:00"}, challenge_id: demo_challenge.id})
         }.to_not change{ Timeslot.count }
       end
     end
 
     context "when an end time is before the start time" do
       it "renders the form page" do
-        post(:create, { timeslots: {start_date: "2117-01-01", start_time: "09:00", end_time: "08:00"}, challenge_id: demo_challenge.id})
+        post(:create, params: { timeslots: {start_date: "2117-01-01", start_time: "09:00", end_time: "08:00"}, challenge_id: demo_challenge.id})
         expect(response).to render_template("new")
       end
 
       it "respond with status code 200" do
-        post(:create, { timeslots: {start_date: "2117-01-01", start_time: "09:00", end_time: "08:00"}, challenge_id: demo_challenge.id})
+        post(:create, params: { timeslots: {start_date: "2117-01-01", start_time: "09:00", end_time: "08:00"}, challenge_id: demo_challenge.id})
         expect(response).to have_http_status 200
       end
 
       it "does not create a new timeslot" do
         expect {
-          post(:create, { timeslots: {start_date: "2016-11-06", start_time: "09:00", end_time: "10:00"}, challenge_id: demo_challenge.id})
+          post(:create, params: { timeslots: {start_date: "2016-11-06", start_time: "09:00", end_time: "10:00"}, challenge_id: demo_challenge.id})
         }.to_not change{ Timeslot.count }
       end
     end
