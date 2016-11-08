@@ -10,9 +10,14 @@ class TimeslotsController < ApplicationController
   end
 
   def show
-    @timeslot = Timeslot.find(params[:id])
+    @timeslot = Timeslot.find_by_id(params[:id])
     @timeslot.acceptor = current_student
-    @timeslot.save
+    @timeslot.save!
+
+    empty_timeslots = Timeslot.where(initiator_id: @timeslot.initiator_id, challenge_id: @timeslot.challenge_id, acceptor_id: nil)
+    empty_timeslots.each do |timeslot|
+      timeslot.destroy
+    end
   end
 
   def edit
