@@ -75,6 +75,13 @@ RSpec.describe TimeslotsController, type: :controller do
     end
   end
 
+  describe 'new' do
+    it 'renders the confirmation page' do
+      get :new, challenge_id: demo_timeslot.challenge_id
+      expect(response).to render_template(:new)
+    end
+  end
+
   # pending 'edit' do
   # end
 
