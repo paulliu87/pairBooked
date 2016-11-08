@@ -50,4 +50,21 @@ RSpec.describe Student, type: :model do
       expect(omniauth_student.username).to eq("SunjayH")
     end
   end
+
+  describe "associations" do
+    let(:acceptor) { FactoryGirl.create(:student) }
+    let(:initiator) { FactoryGirl.create(:student) }
+    let(:timeslot) {
+      timeslot = FactoryGirl.create(:timeslot)
+      timeslot.update_attributes(acceptor: acceptor, initiator: initiator)
+      timeslot
+    }
+
+    it "has many accepted timeslots" do
+      expect(acceptor.accepted_timeslots).to include(timeslot)
+    end
+    it "has many initiated timeslots" do
+      expect(initiator.initiated_timeslots).to include(timeslot)
+    end
+  end
 end
