@@ -25,6 +25,9 @@ class AuthenticationController < ApplicationController
 
   def dashboard
     @student = current_student
+    @initiated_timeslots = @student.initiated_timeslots
+    @unpaired_timeslots = Timeslot.where(initiator: @student, acceptor: nil)
+    @paired_timeslots = Timeslot.where(initiator: @student, acceptor: !nil) + @student.accepted_timeslots
   end
 
   def timezone

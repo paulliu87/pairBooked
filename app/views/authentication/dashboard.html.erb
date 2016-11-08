@@ -1,5 +1,24 @@
-<h1>Open Timeslots</h1>
+<h1>Hello, <%= @student.fullname %></h1>
+<h2>Open Timeslots</h2>
 
-<div id="pairs-list">
+<ul id="paired-list">
+  <% if @paired_timeslots != nil %>
+    <% @paired_timeslots.each do |timeslot| %>
+      <li class="timeslot">
+        <%= timeslot.initiator.fullname %> is pairing with <%= timeslot.acceptor.fullname %> at <%= timeslot.start_at.strftime("%l:%M %P on %A, %B %e") %>.
+      </li>
+    <% end %>
+  <% end %>
+</ul>
 
-</div>
+<h2>You are available to pair at:</h2>
+
+<ul id="unpaired-list">
+  <% if @unpaired_timeslots != nil %>
+    <% @unpaired_timeslots.each do |timeslot| %>
+      <li class="timeslot">
+        <%= timeslot.start_at.strftime("%l:%M %P on %A, %B %e") %>
+      </li>
+    <% end %>
+  <% end %>
+</ul>
