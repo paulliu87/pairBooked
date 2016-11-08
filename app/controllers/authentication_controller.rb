@@ -30,9 +30,6 @@ class AuthenticationController < ApplicationController
   def timezone
     student = Student.find(session[:student_id])
     student.update_attribute(:time_zone, params[:timezone_str])
-    student.save
-    p student
-    p student.time_zone
     Time.zone = params[:timezone_str]
     redirect_to challenges_path
   end
