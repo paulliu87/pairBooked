@@ -1,6 +1,6 @@
 class AuthenticationController < ApplicationController
 
-  skip_before_action :require_login, only: [:index, :login, :timezone_form]
+  skip_before_action :require_login, only: [:index, :login]
 
   def index
     redirect_to challenges_path if current_student
