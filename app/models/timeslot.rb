@@ -18,4 +18,10 @@ class Timeslot < ApplicationRecord
       end
     end
   end
+
+  def self.clean_up
+    self.where( start_at:(Time.now.midnight - 7.days)..Time.now.midnight).each do |timeslot|
+      timeslot.destroy
+    end
+  end
 end

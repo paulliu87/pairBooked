@@ -10,15 +10,18 @@ RSpec.describe TimeslotsController, type: :controller do
   end
 
   describe 'index' do
+    context 'when all timeslots are current' do
+      before(:each) do
+        get :index, challenge_id: demo_timeslot.challenge_id
+      end
 
-    it 'assigns timeslots' do
-      get :index, challenge_id: demo_timeslot.challenge_id
-      expect(assigns(:timeslots)).to be_a(Hash)
-    end
+      it 'assigns timeslots' do
+        expect(assigns(:timeslots)).to be_a(Hash)
+      end
 
-    it 'assigns challenge' do
-      get :index, challenge_id: demo_timeslot.challenge_id
-      expect(assigns(:challenge)).to be_a Challenge
+      it 'assigns challenge' do
+        expect(assigns(:challenge)).to be_a Challenge
+      end
     end
   end
 
