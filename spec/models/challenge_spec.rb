@@ -28,8 +28,8 @@ RSpec.describe Challenge, type: :model do
     it 'does not allow if no due date' do
       expect(invalid_challenge_2.save).to be false
     end
-
   end
+
 end
 
 

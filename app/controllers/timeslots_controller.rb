@@ -3,7 +3,7 @@ class TimeslotsController < ApplicationController
   def index
     @challenge = Challenge.find_by_id(params[:challenge_id])
     if @challenge
-      @timeslots = get_timeslots(@challenge.id)
+      @timeslots = @challenge.get_timeslots(current_student)
     else
       redirect_to challenges_path
     end

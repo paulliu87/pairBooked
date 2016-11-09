@@ -4,6 +4,9 @@ class Timeslot < ApplicationRecord
   belongs_to :acceptor, class_name: :Student, foreign_key: :acceptor_id, required: false
   validates_presence_of :initiator_id, :challenge_id, :start_at, :end_at
   validate :must_start_before_end, :acceptor_must_be_diff_person
+  scope :future, -> { where("start_at > ?", Time.now) }
+  scope :not_mine, -> (student) { where("initiator_id != ?", student.id) }
+  default_scope { order(start_at: :asc) }
 
   def self.clean_up
     self.where( start_at:(Time.now.midnight - 7.days)..Time.now.midnight).each do |timeslot|
@@ -32,11 +35,5 @@ class Timeslot < ApplicationRecord
     if self.acceptor == self.initiator
       errors.add(:acceptor, "cannot accept own timeslot")
     end
-  end
-
-  include ApplicationHelper
-
-  def future_and_other_person?
-    self.initiator != current_student && self.start_at.to_date >= DateTime.now.to_date
   end
 end
