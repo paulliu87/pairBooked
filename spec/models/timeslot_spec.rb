@@ -65,4 +65,33 @@ RSpec.describe Timeslot, type: :model do
     end
   end
 
+  describe 'future_and_other_person?' do
+    let(:other_student) { FactoryGirl.create(:student) }
+    let(:past_timeslot) {
+      timeslot = FactoryGirl.create(:timeslot)
+      timeslot.initiator = other_student
+      timeslot.start_at = 3.days.ago.beginning_of_hour
+      timeslot.save(validate: false)
+      timeslot
+    }
+    before do
+      allow(timeslot).to receive(:current_student) {other_student}
+      allow(past_timeslot).to receive(:current_student) {other_student}
+    end
+
+    it 'returns true if timeslot is future and other student' do
+      expect(timeslot.future_and_other_person?).to be true
+    end
+
+    it 'returns false if timeslot is past' do
+      expect(past_timeslot.future_and_other_person?).to be false
+    end
+
+    it 'returns false if timeslot belongs to current_student' do
+      timeslot.initiator = other_student
+      expect(timeslot.future_and_other_person?).to be false
+    end
+  end
+
+
 end
