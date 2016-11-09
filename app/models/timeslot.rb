@@ -2,15 +2,14 @@ class Timeslot < ApplicationRecord
   belongs_to :challenge
   belongs_to :initiator, class_name: :Student, foreign_key: :initiator_id
   belongs_to :acceptor, class_name: :Student, foreign_key: :acceptor_id, required: false
-
   validates_presence_of :initiator_id, :challenge_id, :start_at, :end_at
-  validate :date
+  validate :must_start_before_end, :acceptor_must_be_diff_person
 
   def time_zone
     self.initiator.time_zone
   end
 
-  def date
+  def must_start_before_end
     if start_at && end_at
       if start_at.to_date < DateTime.now.to_date
         errors.add(:start_date, "must be after #{DateTime.now.to_date}.")
@@ -23,23 +22,11 @@ class Timeslot < ApplicationRecord
     end
   end
 
-  # def check_duplicate_timeslot
-  #   timeslots = Timeslot.where(initiator_id: initiator_id)
-  #   timeslots.each do |timeslot|
-  #     if timeslot.start_at.to_date == start_at.to_date
-  #       if timeslot.start_at.to_time >= start_at.to_time && timeslot.start_at.to_time < end_at.to_time && timeslot.end_at.to_time > end_at.to_time
-  #         errors.add(:end_time, "must be before #{timeslot.start_at.strftime('%H:%M %p')}.")
-  #       elsif timeslot.start_at.to_time <= start_at.to_time && timeslot.end_at.to_time >= end_at.to_time
-  #         errors.add(:start_time, "must be after #{timeslot.end_at.strftime('%H:%M %p')} or end time must be before #{timeslot.start_at.strftime('%H:%M %p')}.")
-  #       elsif timeslot.end_at.to_time > start_at.to_time && timeslot.end_at.to_time <= end_at.to_time && timeslot.start_at.to_time < start_at.to_time
-  #         errors.add(:start_time, "must be after #{timeslot.end_at.strftime('%H:%M %p')}.")
-  #       elsif timeslot.start_at.to_time > start_at.to_time && timeslot.end_at.to_time < end_at.to_time
-  #         errors.add(:end_time, "must be before #{timeslot.start_at.strftime('%H:%M %p')} or start time must be after #{timeslot.end_at.strftime('%H:%M %p')}.")
-  #       end
-  #       break
-  #     end
-  #   end
-  # end
+  def acceptor_must_be_diff_person
+    if self.acceptor == self.initiator
+      errors.add(:acceptor, "cannot accept own timeslot")
+    end
+  end
 
   def self.clean_up
     self.where( start_at:(Time.now.midnight - 7.days)..Time.now.midnight).each do |timeslot|

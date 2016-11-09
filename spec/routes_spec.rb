@@ -50,14 +50,6 @@ RSpec.describe "Routing to timeslots", :type => :routing do
     expect(:get => "/challenges/1/timeslots/1").to route_to("timeslots#show", "challenge_id"=>"1", "id"=>"1")
   end
 
-  it "routes GET /challenges/:id/timeslots/:id/edit to timeslots#edit" do
-    expect(:get => "/challenges/1/timeslots/1/edit").to route_to("timeslots#edit", "challenge_id"=>"1", "id"=>"1")
-  end
-
-  it "routes PUT /challenges/:id/timeslots/:id/ to timeslots#update" do
-    expect(:put => "/challenges/1/timeslots/1/").to route_to("timeslots#update", "challenge_id"=>"1", "id"=>"1")
-  end
-
   it "routes DELETE /challenges/:id/timeslots/:id to timeslots#destroy" do
     expect(:delete => "/challenges/1/timeslots/1").to route_to("timeslots#destroy", "challenge_id"=>"1", "id"=>"1")
   end
