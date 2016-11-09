@@ -6,6 +6,8 @@ class Timeslot < ApplicationRecord
   validate :must_start_before_end, :acceptor_must_be_diff_person
   scope :future, -> { where("start_at > ?", Time.now) }
   scope :not_mine, -> (student) { where("initiator_id != ?", student.id) }
+  scope :soon, -> { where("start_at < ?", Time.now + 2.hours)}
+  scope :not_soon, -> { where("start_at > ?", Time.now + 2.hours)}
   default_scope { order(start_at: :asc) }
 
   def self.clean_up
