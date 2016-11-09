@@ -8,6 +8,7 @@ class Timeslot < ApplicationRecord
   scope :not_mine, -> (student) { where("initiator_id != ?", student.id) }
   scope :soon, -> { where("start_at < ?", Time.now + 2.hours)}
   scope :not_soon, -> { where("start_at > ?", Time.now + 2.hours)}
+  scope :no_pair, -> { where("acceptor_id IS NULL")}
   default_scope { order(start_at: :asc) }
 
   def self.clean_up

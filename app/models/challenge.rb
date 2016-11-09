@@ -5,14 +5,14 @@ class Challenge < ApplicationRecord
   def get_soon_timeslots(student)
     timeslots_hash = Hash.new
     day = Time.now.strftime("%A").to_sym
-    soon_timeslots = self.timeslots.soon.order("start_at ASC").future.not_mine(student)
+    soon_timeslots = self.timeslots.no_pair.soon.order("start_at ASC").future.not_mine(student)
     timeslots_hash[day] = soon_timeslots
     timeslots_hash
   end
 
   def get_not_soon_timeslots(student)
     timeslots_hash = {}
-    not_soon_timeslots = self.timeslots.not_soon.order("start_at ASC").future.not_mine(student)
+    not_soon_timeslots = self.timeslots.no_pair.not_soon.order("start_at ASC").future.not_mine(student)
 
     #Puts in not_soon times
     timeslots_hash[:Monday] = not_soon_timeslots.select do |timeslot|
