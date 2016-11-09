@@ -29,7 +29,10 @@ class AuthenticationController < ApplicationController
   end
 
   def timezone
-
+    @student = current_student
+    Time.zone = params[:timezone]
+    @student.time_zone = params[:timezone]
+    @student.save
   end
 
 end

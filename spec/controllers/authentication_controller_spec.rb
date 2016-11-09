@@ -76,4 +76,19 @@ RSpec.describe AuthenticationController, type: :controller do
       expect(assigns(:unpaired_timeslots)).to include(unpaired_timeslot)
     end
   end
+
+  describe 'timezone' do
+    before do
+      @request.session[:student_id] = FactoryGirl.create(:student).id
+      post :timezone, params: {timezone: "Central Time (US & Canada)"}
+    end
+
+    it "changes the server timezone" do
+      expect(Time.zone).to eq(ActiveSupport::TimeZone.new("Central Time (US & Canada)"))
+    end
+
+    it "changes the student timezone" do
+      expect(Student.find_by_id(@request.session[:student_id]).time_zone).to eq("Central Time (US & Canada)")
+    end
+  end
 end
