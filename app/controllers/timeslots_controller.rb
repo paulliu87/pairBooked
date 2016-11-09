@@ -38,6 +38,9 @@ class TimeslotsController < ApplicationController
     if sanitized_params[:end_at] <= sanitized_params[:start_at]
       @errors = ["Start time must before end time."]
       render action: "new"
+    elsif sanitized_params[:start_at] <= DateTime.now
+      @errors = ["Start time must after the current time."]
+      render action: "new"
       # render json: @timeslot.errors, status: :unprocessable_entity
     else
       create_timeslots(sanitized_params[:start_at],sanitized_params[:end_at],current_student.id, @challenge)
