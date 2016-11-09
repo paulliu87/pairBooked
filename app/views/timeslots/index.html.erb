@@ -20,6 +20,13 @@
         <% if @timeslots != nil %>
           <% @timeslots[:Monday].each do |timeslot| %>
               <li class="timeslot">
+                <a class="btn btn-warning" href="/challenges/<%=timeslot.challenge_id%>/timeslots/<%= timeslot.id %>"><%= timeslot_string(timeslot)%></a>
+              </li>
+          <% end %>
+        <% end %>
+        <% if @timeslots != nil %>
+          <% @timeslots[:Monday].each do |timeslot| %>
+              <li class="timeslot">
                 <a class="btn btn-primary" href="/challenges/<%=timeslot.challenge_id%>/timeslots/<%= timeslot.id %>"><%= timeslot_string(timeslot)%></a>
               </li>
           <% end %>
