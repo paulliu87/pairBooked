@@ -64,5 +64,4 @@ RSpec.describe Timeslot, type: :model do
       expect(timeslot.acceptor).to be_a (Student)
     end
   end
-
 end
