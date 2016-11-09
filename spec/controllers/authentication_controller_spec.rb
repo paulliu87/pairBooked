@@ -10,19 +10,19 @@ RSpec.describe AuthenticationController, type: :controller do
 
     it "should successfully login a new student" do
       expect {
-        post :login, provider: :github
+        post :login, params: {provider: :github}
       }.to change{ Student.count }.by(1)
     end
 
     it "should successfully login a session" do
-      session[:student_id].should be_nil
-      post :login, provider: :github
-      session[:student_id].should_not be_nil
+      expect(session[:student_id]).to be_nil
+      post :login, params: {provider: :github}
+      expect(session[:student_id]).to_not be_nil
     end
 
-    it "should redirect the student to the challenges url" do
-      post :login, provider: :github
-      response.should redirect_to challenges_path
+    it "redirects the student to the challenges url" do
+      post :login, params: {provider: :github}
+      expect(response).to redirect_to challenges_path
     end
 
   end
@@ -30,18 +30,18 @@ RSpec.describe AuthenticationController, type: :controller do
   describe "#logout" do
     before do
       @request.session[:student_id] = FactoryGirl.create(:student).id
-      post :login, provider: :github
+      post :login, params: {provider: :github}
     end
 
     it "should clear the session" do
-      session[:student_id].should_not be_nil
+      expect(session[:student_id]).to_not be_nil
       delete :logout
-      session[:student_id].should be_nil
+      expect(session[:student_id]).to be_nil
     end
 
     it "should redirect to the home page" do
       delete :logout
-      response.should redirect_to root_url
+      expect(response).to redirect_to root_url
     end
   end
 
@@ -74,6 +74,17 @@ RSpec.describe AuthenticationController, type: :controller do
     it "knows your empty timeslots" do
       # unpaired_timeslot
       expect(assigns(:unpaired_timeslots)).to include(unpaired_timeslot)
+    end
+  end
+
+  describe 'timezone' do
+    before do
+      @request.session[:student_id] = FactoryGirl.create(:student).id
+      post :timezone, params: {timezone: {time_zone: "Central Time (US & Canada)"}}
+    end
+
+    it "changes the student timezone" do
+      expect(Student.find_by_id(@request.session[:student_id]).time_zone).to eq("Central Time (US & Canada)")
     end
   end
 end

@@ -54,13 +54,13 @@ RSpec.describe "challenges/1/timeslots/index.html.erb", type: :view do
     end
 
     it "displays unpaired list" do
-      rendered.should match(Regexp.new "10:00 am on Thursday, November 10")
-      rendered.should match(Regexp.new "10:00 am on Wednesday, November 16")
+      rendered.should match(Regexp.new "10:00 am to 11:00 am")
+      rendered.should match(Regexp.new "10:00 am to 11:00 am")
     end
 
     it 'displays paired list' do
-      rendered.should match(Regexp.new "10:00 am on Saturday, November 12")
-      rendered.should match(Regexp.new "10:00 am on Monday, November 14")
+      rendered.should match(Regexp.new "November 12")
+      rendered.should match(Regexp.new "November 14")
     end
   end
 end
