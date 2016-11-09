@@ -18,10 +18,6 @@ RSpec.describe "Routing to authentication", :type => :routing do
     expect(:post => "/timezone").to route_to("authentication#timezone")
   end
 
-  it "routes GET /timezone to authentication#timezone" do
-    expect(:get => "/timezone").to route_to("authentication#timezone_form")
-  end
-
   it "routes GET / to authentication#index" do
     expect(:get => "/").to route_to("authentication#index")
   end

@@ -28,4 +28,8 @@ class AuthenticationController < ApplicationController
     @paired_timeslots = Timeslot.where(initiator: @student, acceptor: !nil) + @student.accepted_timeslots
   end
 
+  def timezone
+
+  end
+
 end
