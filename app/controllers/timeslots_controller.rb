@@ -12,20 +12,21 @@ class TimeslotsController < ApplicationController
   def show
     @timeslot = Timeslot.find_by_id(params[:id])
     @timeslot.acceptor = current_student
-    @timeslot.save!
+    if @timeslot.save
 
-    empty_timeslots = Timeslot.where(initiator_id: @timeslot.initiator_id, challenge_id: @timeslot.challenge_id, acceptor_id: nil)
-    empty_timeslots.each do |timeslot|
-      timeslot.destroy
+      empty_timeslots = Timeslot.where(initiator_id: @timeslot.initiator_id, challenge_id: @timeslot.challenge_id, acceptor_id: nil)
+      empty_timeslots.each do |timeslot|
+        timeslot.destroy
+      end
+
+      overlap_timeslots = Timeslot.where(initiator_id: @timeslot.initiator_id, start_at: @timeslot.start_at, acceptor_id: nil)
+      overlap_timeslots.each do |timeslot|
+        timeslot.destroy
+      end
+
+      StudentMailer.confirmation_email(@timeslot.initiator).deliver_now
+      StudentMailer.confirmation_email(@timeslot.acceptor).deliver_now
     end
-
-    overlap_timeslots = Timeslot.where(initiator_id: @timeslot.initiator_id, start_at: @timeslot.start_at, acceptor_id: nil)
-    overlap_timeslots.each do |timeslot|
-      timeslot.destroy
-    end
-
-
-
   end
 
   def destroy

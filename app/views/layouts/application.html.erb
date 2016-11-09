@@ -41,19 +41,21 @@
                     <% end %>
                   </li>
                   <li>
-                    <% unless current_student.slack_name.present? %>
-                      <%= form_for :slack_name, :url => slack_name_path do |f| %>
-                        <%= f.label :slack_name %>
-                        <%= f.submit "Update Slack username", method: "post", class: "btn btn-info" %>
-                        <%= f.text_field :slack_name %>
-                      <% end %>
-                    <% else %>
-                      <span>Your current Slack Username is <%= current_student.slack_name %>.</span>
-                      <button id="slack-edit-button btn btn-info">Click to update</button>
-                      <%= form_for :slack_name, :url => slack_name_path, method: "post", class: "hidden" do |f| %>
-                        <%= f.submit "Update Slack username", class: "btn btn-info" %>
-                        <%= f.label :slack_name %>
-                        <%= f.text_field :slack_name %>
+                    <% if current_student %>
+                      <% unless current_student.slack_name.present? %>
+                        <%= form_for :slack_name, :url => slack_name_path do |f| %>
+                          <%= f.label :slack_name %>
+                          <%= f.submit "Update Slack username", method: "post", class: "btn btn-info" %>
+                          <%= f.text_field :slack_name %>
+                        <% end %>
+                      <% else %>
+                        <span>Your current Slack Username is <%= current_student.slack_name %>.</span>
+                        <button id="slack-edit-button btn btn-info">Click to update</button>
+                        <%= form_for :slack_name, :url => slack_name_path, method: "post", class: "hidden" do |f| %>
+                          <%= f.submit "Update Slack username", class: "btn btn-info" %>
+                          <%= f.label :slack_name %>
+                          <%= f.text_field :slack_name %>
+                        <% end %>
                       <% end %>
                     <% end %>
                   </li>
