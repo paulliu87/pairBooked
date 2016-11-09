@@ -18,6 +18,14 @@ class TimeslotsController < ApplicationController
     empty_timeslots.each do |timeslot|
       timeslot.destroy
     end
+
+    overlap_timeslots = Timeslot.where(initiator_id: @timeslot.initiator_id, start_at: @timeslot.start_at, acceptor_id: nil)
+    overlap_timeslots.each do |timeslot|
+      timeslot.destroy
+    end
+
+
+
   end
 
   def destroy
@@ -47,20 +55,6 @@ class TimeslotsController < ApplicationController
       redirect_to "/challenges/#{params[:challenge_id]}/timeslots", notice: 'Tweet was successfully created.'
       # render json: @timeslot, status: :created
     end
-
-
-
-
-    # respond_to do |format|
-    #   if @timeslot.save
-    #     format.html { redirect_to "/challenges/#{params[:challenge_id]}/timeslots", notice: 'Tweet was successfully created.' }
-    #     format.json { render json: @timeslot, status: :created}
-    #   else
-    #     @errors = @timeslot.errors.full_messages
-    #     format.html { render action: "new" }
-    #     format.json { render json: @timeslot.errors, status: :unprocessable_entity }
-    #   end
-    # end
   end
 
   private
