@@ -34,6 +34,12 @@
                   <li class="nav-link"><a href="/dashboard">Dashboard</a></li>
                   <li class="nav-link"><a href="/challenges">Challenges</a></li>
                   <li class="nav-link"><a href="/logout">Log Out</a></li>
+                  <li>
+                    <%= form_for :timezone, :url => timezone_path do |f| %>
+                      <%= f.time_zone_select :time_zone, ActiveSupport::TimeZone.us_zones %>
+                      <%= f.submit "Update Timezone", class: "btn btn-info" %>
+                    <%end%>
+                  </li>
                 </ul>
               </div><!-- /.navbar-collapse -->
             </div><!-- /.container-fluid -->

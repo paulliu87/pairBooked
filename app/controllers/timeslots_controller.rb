@@ -106,9 +106,9 @@ class TimeslotsController < ApplicationController
 
   def convert_to_datetime(params)
     start_datetime = params[:start_date] + params[:start_time]
-    params[:start_at] = DateTime.strptime(start_datetime + Time.zone.to_s[-3..-1],'%F%H:%M %Z')
+    params[:start_at] = DateTime.strptime(start_datetime + current_time_zone.to_s[-3..-1],'%F%H:%M %Z')
     end_datetime = params[:start_date] + params[:end_time]
-    params[:end_at] = DateTime.strptime(end_datetime + Time.zone.to_s[-3..-1],'%F%H:%M %Z')
+    params[:end_at] = DateTime.strptime(end_datetime + current_time_zone.to_s[-3..-1],'%F%H:%M %Z')
   end
 
   def create_timeslots(start_at, end_at, initiator_id, challenge)
