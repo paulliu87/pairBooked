@@ -34,23 +34,33 @@ class TimeslotsController < ApplicationController
       convert_to_datetime(sanitized_params)
     end
     @challenge = Challenge.find_by_id(params[:challenge_id])
-    @timeslot = @challenge.timeslots.new(
-      start_at:     sanitized_params[:start_at],
-      end_at:       sanitized_params[:end_at]
-      )
 
-    @timeslot.initiator = current_student
-
-    respond_to do |format|
-      if @timeslot.save
-        format.html { redirect_to "/challenges/#{params[:challenge_id]}/timeslots", notice: 'Tweet was successfully created.' }
-        format.json { render json: @timeslot, status: :created}
-      else
-        @errors = @timeslot.errors.full_messages
-        format.html { render action: "new" }
-        format.json { render json: @timeslot.errors, status: :unprocessable_entity }
-      end
+    if sanitized_params[:end_at] <= sanitized_params[:start_at]
+      @errors = ["Start time must before end time."]
+      render action: "new"
+    elsif sanitized_params[:start_at] <= DateTime.now
+      @errors = ["Start time must after the current time."]
+      render action: "new"
+      # render json: @timeslot.errors, status: :unprocessable_entity
+    else
+      create_timeslots(sanitized_params[:start_at],sanitized_params[:end_at],current_student.id, @challenge)
+      redirect_to "/challenges/#{params[:challenge_id]}/timeslots", notice: 'Tweet was successfully created.'
+      # render json: @timeslot, status: :created
     end
+
+
+
+
+    # respond_to do |format|
+    #   if @timeslot.save
+    #     format.html { redirect_to "/challenges/#{params[:challenge_id]}/timeslots", notice: 'Tweet was successfully created.' }
+    #     format.json { render json: @timeslot, status: :created}
+    #   else
+    #     @errors = @timeslot.errors.full_messages
+    #     format.html { render action: "new" }
+    #     format.json { render json: @timeslot.errors, status: :unprocessable_entity }
+    #   end
+    # end
   end
 
   private
@@ -99,5 +109,28 @@ class TimeslotsController < ApplicationController
     params[:start_at] = DateTime.strptime(start_datetime + Time.zone.to_s[-3..-1],'%F%H:%M %Z')
     end_datetime = params[:start_date] + params[:end_time]
     params[:end_at] = DateTime.strptime(end_datetime + Time.zone.to_s[-3..-1],'%F%H:%M %Z')
+  end
+
+  def create_timeslots(start_at, end_at, initiator_id, challenge)
+    temp_start_at = start_at + 1.hour
+    if duration_greater_than_hour(start_at, end_at)
+      create_timeslot(start_at, temp_start_at, initiator_id, challenge)
+      create_timeslots(temp_start_at, end_at, initiator_id, challenge)
+    else
+      create_timeslot(start_at, temp_start_at, initiator_id, challenge)
+    end
+  end
+
+  def create_timeslot(start_at, end_at, initiator_id, challenge)
+    timeslot = challenge.timeslots.new(
+      start_at:     start_at,
+      end_at:       end_at
+      )
+    timeslot.initiator_id = initiator_id
+    timeslot.save
+  end
+
+  def duration_greater_than_hour(start_at, end_at)
+    (((end_at.to_time - start_at.to_time) / 3600).round) > 1
   end
 end
