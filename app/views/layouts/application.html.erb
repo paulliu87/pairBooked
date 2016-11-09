@@ -38,23 +38,23 @@
                     <%= form_for :timezone, :url => timezone_path do |f| %>
                       <%= f.time_zone_select :time_zone, ActiveSupport::TimeZone.us_zones %>
                       <%= f.submit "Update Timezone", class: "btn btn-info" %>
-                    <%end%>
+                    <% end %>
                   </li>
                   <li>
-                    <% if current_student.slack_name.nil? %>
+                    <% unless current_student.slack_name.present? %>
                       <%= form_for :slack_name, :url => slack_name_path do |f| %>
                         <%= f.label :slack_name %>
-                        <%= f.submit "Update Slack username", class: "btn btn-info" %>
+                        <%= f.submit "Update Slack username", method: "post", class: "btn btn-info" %>
                         <%= f.text_field :slack_name %>
-                      <%end%>
+                      <% end %>
                     <% else %>
                       <span>Your current Slack Username is <%= current_student.slack_name %>.</span>
                       <button id="slack-edit-button btn btn-info">Click to update</button>
-                      <%= form_for :slack_name, class: "hidden", :url => slack_name_path do |f| %>
+                      <%= form_for :slack_name, :url => slack_name_path, method: "post", class: "hidden" do |f| %>
                         <%= f.submit "Update Slack username", class: "btn btn-info" %>
                         <%= f.label :slack_name %>
                         <%= f.text_field :slack_name %>
-                      <%end%>
+                      <% end %>
                     <% end %>
                   </li>
                 </ul>
