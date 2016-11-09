@@ -31,14 +31,12 @@ class AuthenticationController < ApplicationController
     @student = current_student
     @student.time_zone = params[:timezone][:time_zone]
     @student.save
-    redirect_to :back
   end
 
   def slack_name
     @student = current_student
     @student.slack_name = params[:slack_name][:slack_name]
     @student.save
-    redirect_to :back
   end
 
 end
