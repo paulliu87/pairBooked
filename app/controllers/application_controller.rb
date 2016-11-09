@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
-  before_action :require_login, :set_time_zone
+  before_action :require_login
 
   private
 
@@ -14,8 +14,6 @@ class ApplicationController < ActionController::Base
   def current_student
     @current_student ||= Student.find_by_id(session[:student_id]) if session[:student_id]
   end
+  helper_method :current_student #make this method available in views
 
-  def set_time_zone
-    Time.zone = current_student.time_zone if current_student
-  end
 end
