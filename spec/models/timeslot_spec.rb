@@ -36,16 +36,11 @@ RSpec.describe Timeslot, type: :model do
       expect(slot.save).to be false
     end
 
-    it "does not allow the timeslot is partially overlap the exited ones" do
-      timeslot.save
-      slot = FactoryGirl.build(:timeslot)
-      slot.start_at=  100.hours.ago
-
+    it 'does allow acceptor to be the initiator' do
+      timeslot.acceptor = timeslot.initiator
+      expect(timeslot.save).to be false
     end
 
-    it "does not allow the timeslot is fully overlap the exited ones" do
-
-    end
   end
 
   describe "associations" do

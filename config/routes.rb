@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
 
   resources :challenges, only: [:index] do
-    resources :timeslots
+    resources :timeslots, except: [:edit, :update]
   end
 
   get '/dashboard', to: "authentication#dashboard"
