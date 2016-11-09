@@ -40,6 +40,23 @@
                       <%= f.submit "Update Timezone", class: "btn btn-info" %>
                     <%end%>
                   </li>
+                  <li>
+                    <% if current_student.slack_name.nil? %>
+                      <%= form_for :slack_name, :url => slack_name_path do |f| %>
+                        <%= f.label :slack_name %>
+                        <%= f.submit "Update Slack username", class: "btn btn-info" %>
+                        <%= f.text_field :slack_name %>
+                      <%end%>
+                    <% else %>
+                      <span>Your current Slack Username is <%= current_student.slack_name %>.</span>
+                      <button id="slack-edit-button btn btn-info">Click to update</button>
+                      <%= form_for :slack_name, class: "hidden", :url => slack_name_path do |f| %>
+                        <%= f.submit "Update Slack username", class: "btn btn-info" %>
+                        <%= f.label :slack_name %>
+                        <%= f.text_field :slack_name %>
+                      <%end%>
+                    <% end %>
+                  </li>
                 </ul>
               </div><!-- /.navbar-collapse -->
             </div><!-- /.container-fluid -->
