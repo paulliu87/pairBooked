@@ -80,11 +80,7 @@ RSpec.describe AuthenticationController, type: :controller do
   describe 'timezone' do
     before do
       @request.session[:student_id] = FactoryGirl.create(:student).id
-      post :timezone, params: {timezone: "Central Time (US & Canada)"}
-    end
-
-    it "changes the server timezone" do
-      expect(Time.zone).to eq(ActiveSupport::TimeZone.new("Central Time (US & Canada)"))
+      post :timezone, params: {timezone: {time_zone: "Central Time (US & Canada)"}}
     end
 
     it "changes the student timezone" do
