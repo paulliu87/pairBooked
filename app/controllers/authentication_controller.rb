@@ -12,7 +12,6 @@ class AuthenticationController < ApplicationController
       username: omniauth_hash["info"]["nickname"]
     ) || Student.create_with_omniauth(omniauth_hash)
     session[:student_id] = student.id
-    # redirect_to slack_entry_url if student.slack_name == nil
     redirect_to challenges_path, :notice => "Signed in!"
   end
 
