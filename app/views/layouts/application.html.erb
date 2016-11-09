@@ -37,7 +37,7 @@
                   <li>
                     <%= form_for :timezone, :url => timezone_path do |f| %>
                       <%= f.time_zone_select :time_zone, ActiveSupport::TimeZone.us_zones %>
-                      <%= f.submit "Submit", class: "btn btn-info" %>
+                      <%= f.submit "Update Timezon", class: "btn btn-info" %>
                     <%end%>
                   </li>
                 </ul>
