@@ -87,4 +87,31 @@ RSpec.describe AuthenticationController, type: :controller do
       expect(Student.find_by_id(@request.session[:student_id]).time_zone).to eq("Central Time (US & Canada)")
     end
   end
+
+  describe 'slack_name' do
+
+    let(:slacker) {FactoryGirl.create(:student)}
+
+    it 'sets the current students slack name if they have none' do
+      @request.session[:student_id] = slacker.id
+      post :slack_name, params: {
+        slackname:
+          {slack_name: "RipWinkle"}
+      }
+      expect(slacker.slack_name).to eq("RipWinkle")
+    end
+
+    it 'updates the current students slack name if they have one' do
+      slacker.slack_name = "sleepyhead"
+      slacker.save
+      @request.session[:student_id] = slacker.id
+      post :slack_name, params: {
+        slackname:
+          {slack_name: "RipWinkle"}
+      }
+      expect(slacker.slack_name).to eq("RipWinkle")
+    end
+
+  end
+
 end
