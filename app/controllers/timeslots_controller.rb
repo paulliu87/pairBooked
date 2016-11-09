@@ -24,9 +24,6 @@ class TimeslotsController < ApplicationController
     overlap_timeslots.each do |timeslot|
       timeslot.destroy
     end
-
-
-
   end
 
   def destroy
