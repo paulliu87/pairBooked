@@ -35,7 +35,7 @@ class AuthenticationController < ApplicationController
 
   def slack_name
     @student = current_student
-    @student.slack_name = params[:slackname][:slack_name]
+    @student.slack_name = params[:slack_name][:slack_name]
     @student.save
   end
 

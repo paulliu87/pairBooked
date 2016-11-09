@@ -95,10 +95,10 @@ RSpec.describe AuthenticationController, type: :controller do
     it 'sets the current students slack name if they have none' do
       @request.session[:student_id] = slacker.id
       post :slack_name, params: {
-        slackname:
+        slack_name:
           {slack_name: "RipWinkle"}
       }
-      expect(slacker.slack_name).to eq("RipWinkle")
+      expect(Student.find(slacker.id).slack_name).to eq("RipWinkle")
     end
 
     it 'updates the current students slack name if they have one' do
@@ -106,10 +106,10 @@ RSpec.describe AuthenticationController, type: :controller do
       slacker.save
       @request.session[:student_id] = slacker.id
       post :slack_name, params: {
-        slackname:
+        slack_name:
           {slack_name: "RipWinkle"}
       }
-      expect(slacker.slack_name).to eq("RipWinkle")
+      expect(Student.find(slacker.id).slack_name).to eq("RipWinkle")
     end
 
   end
