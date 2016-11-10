@@ -24,8 +24,7 @@ class TimeslotsController < ApplicationController
         timeslot.destroy
       end
 
-      StudentMailer.confirmation_email(@timeslot.initiator).deliver_now
-      StudentMailer.confirmation_email(@timeslot.acceptor).deliver_now
+      send_confirmation(@timeslot)
     end
   end
 
@@ -92,5 +91,19 @@ class TimeslotsController < ApplicationController
 
   def duration_greater_than_hour(start_at, end_at)
     (((end_at.to_time - start_at.to_time) / 3600).round) > 1
+  end
+
+  def send_confirmation(timeslot)
+    mail = Mail.new do
+        from      'bobolinkpairbook@gmail.com'
+        subject   'Pairing Confirmation'
+    end
+
+    mail.delivery_method :sendmail
+    mail[:to] = timeslot.initiator.email
+    mail.deliver
+
+    mail[:to] = timeslot.acceptor.email
+    mail.deliver
   end
 end

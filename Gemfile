@@ -34,6 +34,7 @@ gem 'jbuilder', '~> 2.5'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 gem "figaro"
+gem "mail"
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri
@@ -44,6 +45,7 @@ group :development, :test do
   gem 'faker'
   gem 'rack_session_access'
   gem "figaro"
+  gem "mail"
 
 # For JS tests
   gem 'jasmine-rails'
