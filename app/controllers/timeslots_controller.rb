@@ -55,9 +55,9 @@ class TimeslotsController < ApplicationController
     end
   end
 
-  def cancel(timeslot)
+  def cancel
     # controller = self
-
+    timeslot = Timeslot.find(params[:id])
     mail = Mail.new do
       from    'bobolinkpairbook@gmail.com'
       subject   "CANCELLED pairBook #{timeslot.challenge.name}"
@@ -80,7 +80,8 @@ class TimeslotsController < ApplicationController
       mail[:to] = email
       mail.deliver
     end
-    destroy
+    timeslot.destroy
+    redirect_to dashboard_path
   end
 
   private

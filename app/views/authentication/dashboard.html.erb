@@ -7,7 +7,7 @@
       <li class="timeslot">
           <%= timeslot.initiator.fullname %> is pairing with <%= timeslot.acceptor.fullname %> at <%= timeslot_string(timeslot) %>.
           <%= button_to 'Cancel',
-            cancel_challenge_timeslot(timeslot.challenge_id, timeslot.id),
+            cancel_challenge_timeslot_path(timeslot.challenge_id, timeslot.id),
             method: :post,
             data: { confirm: 'Are you sure?' },
             class: "btn btn-danger" %>
