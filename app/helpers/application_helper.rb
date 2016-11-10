@@ -1,8 +1,7 @@
 module ApplicationHelper
   def current_student
-    @current_student ||= Student.find(session[:student_id]) if session[:student_id]
+    @current_student ||= Student.find_by_id(session[:student_id]) if session[:student_id]
   end
-
 
   def current_time_zone
     if current_student

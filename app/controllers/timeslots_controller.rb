@@ -3,7 +3,8 @@ class TimeslotsController < ApplicationController
   def index
     @challenge = Challenge.find_by_id(params[:challenge_id])
     if @challenge
-      @timeslots = @challenge.get_timeslots(current_student)
+      @not_soon_timeslots = @challenge.get_not_soon_timeslots(current_student)
+      @soon_timeslots = @challenge.get_soon_timeslots(current_student)
     else
       redirect_to challenges_path
     end
@@ -12,6 +13,7 @@ class TimeslotsController < ApplicationController
   def show
     @timeslot = Timeslot.find_by_id(params[:id])
     @timeslot.acceptor = current_student
+
     if @timeslot.save
 
       empty_timeslots = Timeslot.where(initiator_id: @timeslot.initiator_id, challenge_id: @timeslot.challenge_id, acceptor_id: nil)
