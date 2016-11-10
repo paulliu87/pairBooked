@@ -103,6 +103,7 @@ class TimeslotsController < ApplicationController
 
     mail.delivery_method :sendmail
     mail[:to] = timeslot.initiator.email
+    mail[:body] =File.read('')
     mail.deliver
 
     mail[:to] = timeslot.acceptor.email
