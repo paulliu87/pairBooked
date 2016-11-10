@@ -5,7 +5,12 @@
   <% if @paired_timeslots != nil %>
     <% @paired_timeslots.each do |timeslot| %>
       <li class="timeslot">
-        <%= timeslot.initiator.fullname %> is pairing with <%= timeslot.acceptor.fullname %> at <%= timeslot_string(timeslot) %>.
+          <%= timeslot.initiator.fullname %> is pairing with <%= timeslot.acceptor.fullname %> at <%= timeslot_string(timeslot) %>.
+          <%= button_to 'Cancel',
+            cancel_challenge_timeslot_path(timeslot.challenge_id, timeslot.id),
+            method: :post,
+            data: { confirm: 'Are you sure?' },
+            class: "btn btn-danger" %>
       </li>
     <% end %>
   <% end %>
@@ -18,11 +23,11 @@
     <% @unpaired_timeslots.each do |timeslot| %>
       <li class="timeslot">
         <%= timeslot_string(timeslot) %>
-        <%= button_to 'I can no longer make this time',
+        <%= button_to 'Delete',
           challenge_timeslot_path(timeslot.challenge_id, timeslot.id),
           method: :delete,
           data: { confirm: 'Are you sure?' },
-          class: "btn-danger" %>
+          class: "btn btn-warning" %>
       </li>
     <% end %>
   <% end %>

@@ -1,7 +1,10 @@
 Rails.application.routes.draw do
 
   resources :challenges, only: [:index] do
-    resources :timeslots, except: [:edit, :update]
+    resources :timeslots, except: [:edit, :update] do
+      post 'cancel', on: :member
+      post 'accept', on: :member
+    end
   end
 
   get '/dashboard', to: "authentication#dashboard"

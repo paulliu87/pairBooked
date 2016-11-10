@@ -10,20 +10,27 @@ class TimeslotsController < ApplicationController
     end
   end
 
-  def show
+  def accept
     @timeslot = Timeslot.find_by_id(params[:id])
     @timeslot.acceptor = current_student
-    @timeslot.save!
+    if @timeslot.save
+      empty_timeslots = Timeslot.where(initiator_id: @timeslot.initiator_id, challenge_id: @timeslot.challenge_id, acceptor_id: nil)
+      empty_timeslots.each do |timeslot|
+        timeslot.destroy
+      end
 
-    empty_timeslots = Timeslot.where(initiator_id: @timeslot.initiator_id, challenge_id: @timeslot.challenge_id, acceptor_id: nil)
-    empty_timeslots.each do |timeslot|
-      timeslot.destroy
+      overlap_timeslots = Timeslot.where(initiator_id: @timeslot.initiator_id, start_at: @timeslot.start_at, acceptor_id: nil)
+      overlap_timeslots.each do |timeslot|
+        timeslot.destroy
+      end
+      send_confirmation(@timeslot)
     end
+    redirect_to challenge_timeslot_path(@timeslot.challenge_id, @timeslot)
+  end
 
-    overlap_timeslots = Timeslot.where(initiator_id: @timeslot.initiator_id, start_at: @timeslot.start_at, acceptor_id: nil)
-    overlap_timeslots.each do |timeslot|
-      timeslot.destroy
-    end
+  def show
+    @timeslot = Timeslot.find_by_id(params[:id])
+    @page_title = @timeslot.challenge.name + " timeslots"
   end
 
   def destroy
@@ -53,6 +60,35 @@ class TimeslotsController < ApplicationController
       redirect_to "/challenges/#{params[:challenge_id]}/timeslots", notice: 'Tweet was successfully created.'
       # render json: @timeslot, status: :created
     end
+  end
+
+  def cancel
+    # controller = self
+    timeslot = Timeslot.find(params[:id])
+    mail = Mail.new do
+      from    'bobolinkpairbook@gmail.com'
+      subject   "CANCELLED pairBook #{timeslot.challenge.name}"
+      delivery_method :sendmail
+
+      text_part do
+        body "Your pairing on #{timeslot_string(timeslot)} was cancelled. Please re-input your availability for this challenge."
+      end
+
+      # html_part do
+      #   content_type 'text/html; charset=UTF-8'
+      #   body controller.render_to_string(
+      #     :locals => {:@timeslot => timeslot},
+      #     :template => :'timeslots/show.html'
+      #   )
+      # end
+    end
+
+    [timeslot.initiator.email, timeslot.acceptor.email].each do |email|
+      mail[:to] = email
+      mail.deliver
+    end
+    timeslot.destroy
+    redirect_to dashboard_path
   end
 
   private
@@ -89,5 +125,30 @@ class TimeslotsController < ApplicationController
 
   def duration_greater_than_hour(start_at, end_at)
     (((end_at.to_time - start_at.to_time) / 3600).round) > 1
+  end
+
+  def send_confirmation(timeslot)
+
+   controller = self
+
+    mail = Mail.new do
+      from    'bobolinkpairbook@gmail.com'
+      subject   "pairBook #{timeslot.challenge.name}"
+      delivery_method :sendmail
+
+      html_part do
+        content_type 'text/html; charset=UTF-8'
+        body controller.render_to_string(
+          :locals => {:@timeslot => timeslot},
+          :template => :'timeslots/show.html'
+        )
+      end
+    end
+
+    [timeslot.initiator.email, timeslot.acceptor.email].each do |email|
+      mail[:to] = email
+      mail.deliver
+    end
+
   end
 end
