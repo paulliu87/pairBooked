@@ -48,29 +48,6 @@
                         </div>
                       <% end %>
                     </li>
-                    <li class="nav-form">
-                      <% unless current_student.slack_name.present? %>
-                        <%= form_for :slack_name, :url => slack_name_path do |f| %>
-                          <%= f.label :slack_name %>
-                          <div class="row" id="timezone-form">
-                            <div class="col-lg-8">
-                            <%= f.text_field :slack_name, class: "form-control form-control-sm" %>
-                            </div>
-                            <div class="col-lg-4">
-                            <%= f.submit "Update", method: "post", class: "btn btn-primary" %>
-                            </div>
-                        <% end %>
-
-                      <% else %>
-                        <div>Your current Slack Username is <span id="slack_name"><%= current_student.slack_name %></span>.</div>
-                        <button id="slack-edit-button" class= "btn btn-primary">Click to change</button>
-                        <%= form_for :slack_name, :url => slack_name_path, method: "post", html: { id: "update-slack", class: "hidden" } do |f| %>
-                          <%= f.label :slack_name %>
-                          <%= f.text_field :slack_name %>
-                          <%= f.submit "Update Slack username", class: "btn btn-primary" %>
-                        <% end %>
-                      <% end %>
-                    </li>
                   <%end%>
                 </ul>
               </div><!-- /.navbar-collapse -->

@@ -1,7 +1,15 @@
-#unpaired-list, #paired-list {
-  list-style: none;
+div.list {
+  min-height: 3em;
+  padding-bottom: 2em;
+}
+
+div.list {
   form {
     font-size: .8em;
     display: inline;
   }
+}
+
+.timeslot td {
+  padding-left: 1em;
 }

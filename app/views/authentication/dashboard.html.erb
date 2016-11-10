@@ -1,34 +1,61 @@
 <h1>Hello, <%= @student.fullname %></h1>
-<h2>Open Timeslots</h2>
+<% if @paired_timeslots.present? %>
+  <h2>Open Timeslots</h2>
+  <div class="list">
+    <table id="paired-list">
+        <% @paired_timeslots.each do |timeslot| %>
+          <tr class="timeslot">
+              <td><%= timeslot.initiator.fullname %> is pairing with <%= timeslot.acceptor.fullname %> at <%= timeslot_string(timeslot) %>.</td>
+              <td><%= button_to 'Cancel',
+                cancel_challenge_timeslot_path(timeslot.challenge_id, timeslot.id),
+                method: :post,
+                data: { confirm: 'Are you sure?' },
+                class: "btn btn-danger" %></td>
+          </tr>
+        <% end %>
+    </table>
+  </div>
+<% end %>
 
-<ul id="paired-list">
-  <% if @paired_timeslots != nil %>
-    <% @paired_timeslots.each do |timeslot| %>
-      <li class="timeslot">
-          <%= timeslot.initiator.fullname %> is pairing with <%= timeslot.acceptor.fullname %> at <%= timeslot_string(timeslot) %>.
-          <%= button_to 'Cancel',
-            cancel_challenge_timeslot_path(timeslot.challenge_id, timeslot.id),
-            method: :post,
-            data: { confirm: 'Are you sure?' },
-            class: "btn btn-danger" %>
-      </li>
+<% if @unpaired_timeslots.present?%>
+  <h2>You are available to pair at:</h2>
+  <div class="list">
+    <table id="unpaired-list">
+        <% @unpaired_timeslots.each do |timeslot| %>
+          <tr class="timeslot">
+            <td><%= timeslot_string(timeslot) %></td>
+            <td><%= button_to 'Delete',
+              challenge_timeslot_path(timeslot.challenge_id, timeslot.id),
+              method: :delete,
+              data: { confirm: 'Are you sure?' },
+              class: "btn btn-warning" %></td>
+          </tr>
+        <% end %>
+    </table>
+  </div>
+<% end %>
+
+
+<div class="slack-form">
+  <% unless current_student.slack_name.present? %>
+    <%= form_for :slack_name, :url => slack_name_path do |f| %>
+      <%= f.label :slack_name %>
+      <div class="row" id="timezone-form">
+        <div class="col-lg-8">
+        <%= f.text_field :slack_name, class: "form-control form-control-sm" %>
+        </div>
+        <div class="col-lg-4">
+        <%= f.submit "Update", method: "post", class: "btn btn-primary" %>
+        </div>
+    <% end %>
+
+  <% else %>
+    <h2>Your current Slack Username is <span id="slack_name"><%= current_student.slack_name %></span>.
+    <button id="slack-edit-button" class= "btn btn-primary">Click to change</button></h2>
+    <%= form_for :slack_name, :url => slack_name_path, method: "post", html: { id: "update-slack", class: "hidden" } do |f| %>
+      <%= f.label :slack_name %>
+      <%= f.text_field :slack_name %>
+      <%= f.submit "Update Slack username", class: "btn btn-primary" %>
     <% end %>
   <% end %>
-</ul>
-
-<h2>You are available to pair at:</h2>
-
-<ul id="unpaired-list">
-  <% if @unpaired_timeslots != nil %>
-    <% @unpaired_timeslots.each do |timeslot| %>
-      <li class="timeslot">
-        <%= timeslot_string(timeslot) %>
-        <%= button_to 'Delete',
-          challenge_timeslot_path(timeslot.challenge_id, timeslot.id),
-          method: :delete,
-          data: { confirm: 'Are you sure?' },
-          class: "btn btn-warning" %>
-      </li>
-    <% end %>
-  <% end %>
-</ul>
+</div>
