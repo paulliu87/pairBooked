@@ -63,7 +63,7 @@ RSpec.describe TimeslotsController, type: :controller do
 
     it 'assigns the current student to the timeslot' do
       demo_timeslot = FactoryGirl.create(:timeslot)
-      get :accept, params: {challenge_id: demo_timeslot.challenge_id, id: demo_timeslot.id}
+      post :accept, params: {challenge_id: demo_timeslot.challenge_id, id: demo_timeslot.id}
       expect(assigns(:timeslot).acceptor).to eq(demo_student)
     end
 
@@ -74,7 +74,7 @@ RSpec.describe TimeslotsController, type: :controller do
         challenge_id: demo_timeslot.challenge_id,
         initiator_id: demo_timeslot.initiator_id
       )
-      get :accept, params: {challenge_id: demo_timeslot.challenge_id, id: demo_timeslot.id}
+      post :accept, params: {challenge_id: demo_timeslot.challenge_id, id: demo_timeslot.id}
       expect(
         Timeslot.where(challenge_id: demo_timeslot.challenge_id, initiator_id:demo_timeslot.initiator_id).count
       ).to eq(1)
@@ -87,7 +87,7 @@ RSpec.describe TimeslotsController, type: :controller do
         challenge_id: demo_timeslot.challenge_id,
         initiator_id: demo_timeslot.initiator_id
       )
-      get :accept, params: {challenge_id: demo_timeslot.challenge_id, id: demo_timeslot.id}
+      post :accept, params: {challenge_id: demo_timeslot.challenge_id, id: demo_timeslot.id}
       expect(
         Timeslot.where(
           challenge_id: demo_timeslot.challenge_id, initiator_id:demo_timeslot.initiator_id, acceptor_id: nil
