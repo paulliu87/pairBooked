@@ -1,11 +1,20 @@
-<h1>Pairing Confirmation for <%= @timeslot.challenge.name %></h1>
+<h1>Pairing Booking for <%= @timeslot.challenge.name %></h1>
 
 <main>
-  <p>You will be pairing with <%= @timeslot.initiator.fullname %> for this assignment at <%= @timeslot.start_at.strftime("%l:%M %P on %A, %B %e") %>.</p>
+  <%if @timeslot.acceptor.blank? %>
+    <p><%= @timeslot.initiator.fullname %> is looking for a pair
+  <% else %>
+    <p><%=@timeslot.initiator.fullname%> will be pairing with <%= @timeslot.acceptor.fullname%>
+  <% end %>
+  for this assignment at <%= @timeslot.start_at.strftime("%l:%M %P on %A, %B %e") %>.</p>
+  <% unless @timeslot.acceptor.blank? %>
+    <p><%= @timeslot.acceptor.fullname %> can be contacted at: <%= @timeslot.acceptor.email %><% if @timeslot.acceptor.slack_name %>, or on Slack at <%= @timeslot.acceptor.slack_name %><% end %>.</p>
+  <% end %>
   <p><%= @timeslot.initiator.fullname %> can be contacted at: <%= @timeslot.initiator.email %><% if @timeslot.initiator.slack_name %>, or on Slack at <%= @timeslot.initiator.slack_name %><% end %>.</p>
   <% if(@timeslot.acceptor.blank? && @timeslot.initiator != current_student) %>
     <%= form_for(:accept_timeslot, url: accept_challenge_timeslot_path(@timeslot.challenge, @timeslot)) do |f| %>
-      <%= f.submit "Book!", class: "btn btn-info" %>
+      <%= f.submit "Book Timeslot", class: "btn btn-success" %>
     <% end %>
+
   <% end %>
 </main>

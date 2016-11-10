@@ -1,5 +1,6 @@
 class TimeslotsController < ApplicationController
   include TimeslotsHelper
+  include Mail
   def index
     @challenge = Challenge.find_by_id(params[:challenge_id])
     if @challenge
