@@ -35,18 +35,30 @@
                   <li class="nav-link"><a href="/challenges">Challenges</a></li>
                   <% if current_student.present?%>
                     <li class="nav-link"><a href="/logout">Log Out</a></li>
-                    <li>
+                    <li class="nav-form">
                       <%= form_for :timezone, :url => timezone_path do |f| %>
-                        <%= f.time_zone_select :time_zone, ActiveSupport::TimeZone.us_zones %>
-                        <%= f.submit "Update Timezone", class: "btn btn-info" %>
+                        <%= f.label :time_zone %>
+                        <div class="row" id="timezone-form">
+                          <div class="col-lg-8">
+                          <%= f.time_zone_select :time_zone, ActiveSupport::TimeZone.us_zones, {}, class: "form-control form-control-sm" %>
+                          </div>
+                          <div class="col-lg-4">
+                          <%= f.submit "Update", class: "btn btn-info" %>
+                          </div>
+                        </div>
                       <% end %>
                     </li>
-                    <li>
+                    <li class="nav-form">
                       <% unless current_student.slack_name.present? %>
                         <%= form_for :slack_name, :url => slack_name_path do |f| %>
                           <%= f.label :slack_name %>
-                          <%= f.text_field :slack_name %>
-                          <%= f.submit "Update Slack username", method: "post", class: "btn btn-info" %>
+                          <div class="row" id="timezone-form">
+                            <div class="col-lg-8">
+                            <%= f.text_field :slack_name, class: "form-control form-control-sm" %>
+                            </div>
+                            <div class="col-lg-4">
+                            <%= f.submit "Update", method: "post", class: "btn btn-info" %>
+                            </div>
                         <% end %>
                       <% else %>
                         <span>Your current Slack Username is <%= current_student.slack_name %>.</span>

@@ -62,6 +62,35 @@ class TimeslotsController < ApplicationController
     end
   end
 
+  def cancel
+    # controller = self
+    timeslot = Timeslot.find(params[:id])
+    mail = Mail.new do
+      from    'bobolinkpairbook@gmail.com'
+      subject   "CANCELLED pairBook #{timeslot.challenge.name}"
+      delivery_method :sendmail
+
+      text_part do
+        body "Your pairing on #{timeslot_string(timeslot)} was cancelled. Please re-input your availability for this challenge."
+      end
+
+      # html_part do
+      #   content_type 'text/html; charset=UTF-8'
+      #   body controller.render_to_string(
+      #     :locals => {:@timeslot => timeslot},
+      #     :template => :'timeslots/show.html'
+      #   )
+      # end
+    end
+
+    [timeslot.initiator.email, timeslot.acceptor.email].each do |email|
+      mail[:to] = email
+      mail.deliver
+    end
+    timeslot.destroy
+    redirect_to dashboard_path
+  end
+
   private
 
   def timeslots_params

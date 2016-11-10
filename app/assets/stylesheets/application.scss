@@ -49,3 +49,21 @@ $break-small: 767px;
     display: unset;
   }
 }
+
+.nav-form{
+  padding-top: 3em;
+  // outline: 2px solid blue;
+}
+
+.nav-form label {
+  margin-left: 13px;
+}
+
+.nav-form div {
+  padding-left: 13px;
+  padding-right: 13px;
+}
+
+#timezone-form div > * {
+  float: left;
+}
