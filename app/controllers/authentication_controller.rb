@@ -3,6 +3,7 @@ class AuthenticationController < ApplicationController
   skip_before_action :require_login, only: [:index, :login]
 
   def index
+    @page_title = "Login"
     redirect_to challenges_path if current_student
   end
 
@@ -21,6 +22,7 @@ class AuthenticationController < ApplicationController
   end
 
   def dashboard
+    @page_title = "Dashboard"
     @student = current_student
     @initiated_timeslots = @student.initiated_timeslots
     @unpaired_timeslots = Timeslot.where(initiator: @student, acceptor: nil)
