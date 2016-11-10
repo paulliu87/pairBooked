@@ -41,6 +41,12 @@ RSpec.describe Timeslot, type: :model do
       expect(timeslot.save).to be false
     end
 
+    it 'does not allow end_at before start_at' do
+      timeslot.start_at = DateTime.now + 3.hours
+      timeslot.end_at = DateTime.now + 2.hours
+      expect(timeslot.save).to be false
+    end
+
   end
 
   describe "associations" do
