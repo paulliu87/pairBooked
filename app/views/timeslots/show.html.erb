@@ -13,7 +13,7 @@
   <p><%= @timeslot.initiator.fullname %> can be contacted at: <%= @timeslot.initiator.email %><% if @timeslot.initiator.slack_name %>, or on Slack at <%= @timeslot.initiator.slack_name %><% end %>.</p>
   <% if(@timeslot.acceptor.blank? && @timeslot.initiator != current_student) %>
     <%= form_for(:accept_timeslot, url: accept_challenge_timeslot_path(@timeslot.challenge, @timeslot)) do |f| %>
-      <%= f.submit "Book Timeslot", class: "btn btn-success" %>
+      <%= f.submit "Book Timeslot", class: "btn btn-success", id: "book-button" %>
     <% end %>
 
   <% end %>

@@ -7,8 +7,13 @@
   display: none;
 }
 
+main {
+  display: flex;
+  flex-direction: column;
+}
+
 #login-button {
-  margin-top: 2em;
+  margin: 0 auto;
   font-size: 4em;
 }
 
@@ -17,3 +22,4 @@
   font-family: 'Josefin Slab', serif;
 }
 
+// * {outline: 2px solid red;}
