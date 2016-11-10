@@ -17,7 +17,7 @@ FactoryGirl.define do
       start_at DateTime.now.days_ago(1).beginning_of_hour
     end
 
-    trait :monday do
+    trait :thursday do
       start_at {
         date = Date.today
         date += 1 + ((3-date.wday) % 7) + 7.days

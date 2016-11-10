@@ -3,7 +3,8 @@ class TimeslotsController < ApplicationController
   def index
     @challenge = Challenge.find_by_id(params[:challenge_id])
     if @challenge
-      @timeslots = get_timeslots(@challenge.id)
+      @not_soon_timeslots = @challenge.get_not_soon_timeslots(current_student)
+      @soon_timeslots = @challenge.get_soon_timeslots(current_student)
     else
       redirect_to challenges_path
     end
@@ -23,9 +24,6 @@ class TimeslotsController < ApplicationController
     overlap_timeslots.each do |timeslot|
       timeslot.destroy
     end
-
-
-
   end
 
   def destroy
@@ -58,41 +56,6 @@ class TimeslotsController < ApplicationController
   end
 
   private
-  def get_timeslots(challenge_id)
-    timeslots = {}
-    all_timeslots = Timeslot.where(challenge_id: challenge_id, acceptor: nil).order("start_at ASC")
-
-    timeslots[:Monday] = all_timeslots.select do |timeslot|
-      timeslot.start_at.strftime("%a") == "Mon" && timeslot.initiator != current_student
-    end
-
-    timeslots[:Tuesday] = all_timeslots.select do |timeslot|
-      timeslot.start_at.strftime("%a") == "Tue" && timeslot.initiator != current_student
-    end
-
-    timeslots[:Wednesday] = all_timeslots.select do |timeslot|
-      timeslot.start_at.strftime("%a") == "Wed" && timeslot.initiator != current_student
-    end
-
-    timeslots[:Thursday] = all_timeslots.select do |timeslot|
-      timeslot.start_at.strftime("%a") == "Thu" && timeslot.initiator != current_student
-    end
-
-    timeslots[:Friday] = all_timeslots.select do |timeslot|
-      timeslot.start_at.strftime("%a") == "Fri" && timeslot.initiator != current_student
-    end
-
-    timeslots[:Saturday] = all_timeslots.select do |timeslot|
-      timeslot.start_at.strftime("%a") == "Sat" && timeslot.initiator != current_student
-    end
-
-    timeslots[:Sunday] = all_timeslots.select do |timeslot|
-      timeslot.start_at.strftime("%a") == "Sun" && timeslot.initiator != current_student
-    end
-
-    #return a hash with keys of days and values of array of time slots
-    timeslots
-  end
 
   def timeslots_params
     params.require(:timeslots).permit( :start_date, :start_time, :end_time)

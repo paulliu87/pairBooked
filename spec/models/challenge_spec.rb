@@ -5,10 +5,10 @@ RSpec.describe Challenge, type: :model do
   let(:invalid_challenge_1) { Challenge.new( due_date: DateTime.new(2016,11,25,12,00,00)) }
   let(:invalid_challenge_2) { Challenge.new(name: "2.2 Links, Images, and Layouts") }
 
-  pending 'associations' do
+  describe 'associations' do
     before(:each) do
-      challenge.save
-      challenge.timeslots = time_slots
+      valid_challenge.save
+      valid_challenge.timeslots = FactoryGirl.create_list(:timeslot, 20)
     end
 
     it 'has many time slots' do
@@ -28,8 +28,8 @@ RSpec.describe Challenge, type: :model do
     it 'does not allow if no due date' do
       expect(invalid_challenge_2.save).to be false
     end
-
   end
+
 end
 
 

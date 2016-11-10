@@ -16,13 +16,50 @@ RSpec.describe TimeslotsController, type: :controller do
         get :index, params: {challenge_id: demo_timeslot.challenge_id}
       end
 
-      it 'assigns timeslots' do
-        expect(assigns(:timeslots)).to be_a(Hash)
+      it 'assigns not soon timeslots' do
+        expect(assigns(:not_soon_timeslots)).to be_a(Hash)
+      end
+
+      it 'assigns soon timeslots' do
+        expect(assigns(:soon_timeslots)).to be_a(Hash)
       end
 
       it 'assigns challenge' do
         expect(assigns(:challenge)).to be_a Challenge
       end
+    end
+
+    describe 'get_not_soon_timeslots' do
+
+      let(:same_acceptor_timeslot) {
+        timeslot = FactoryGirl.create(:timeslot, :thursday)
+        timeslot.acceptor = demo_student
+        timeslot.challenge = FactoryGirl.create(:challenge)
+        timeslot.save
+        timeslot
+      }
+
+      before(:each) do
+        same_acceptor_timeslot
+        challenge = same_acceptor_timeslot.challenge
+        list = FactoryGirl.create_list(:timeslot, 50, challenge_id: challenge.id)
+        get :index, params: {challenge_id: challenge.id}
+      end
+
+      it "returns a hash containing days" do
+        expect(assigns(:not_soon_timeslots)).to include(:Monday)
+        expect(assigns(:not_soon_timeslots)).to include(:Tuesday)
+        expect(assigns(:not_soon_timeslots)).to include(:Wednesday)
+        expect(assigns(:not_soon_timeslots)).to include(:Thursday)
+      end
+
+      it 'has days containing timeslots' do
+        expect(assigns(:not_soon_timeslots)[:Monday]).to all(be_a Timeslot)
+      end
+
+      # it 'does not display a students own times' do
+      #   expect(assigns(:timeslots)[:Thursday]).not_to include(same_acceptor_timeslot)
+      # end
     end
   end
 
@@ -183,37 +220,4 @@ RSpec.describe TimeslotsController, type: :controller do
     end
   end
 
-  describe 'get_timeslots' do
-
-    let(:same_acceptor_timeslot) {
-      timeslot = FactoryGirl.create(:timeslot, :monday)
-      timeslot.acceptor = demo_student
-      timeslot.challenge = FactoryGirl.create(:challenge)
-      timeslot.save
-      timeslot
-    }
-
-    before(:each) do
-      same_acceptor_timeslot
-      challenge = same_acceptor_timeslot.challenge
-      list = FactoryGirl.create_list(:timeslot, 50, challenge_id: challenge.id)
-      get :index, params: {challenge_id: challenge.id}
-    end
-
-    it "returns a hash containing days" do
-      expect(assigns(:timeslots)).to include(:Monday)
-      expect(assigns(:timeslots)).to include(:Tuesday)
-      expect(assigns(:timeslots)).to include(:Wednesday)
-      expect(assigns(:timeslots)).to include(:Thursday)
-    end
-
-    it 'has days containing timeslots' do
-      expect(assigns(:timeslots)[:Monday]).to all(be_a Timeslot)
-    end
-
-    it 'does not display a students own times' do
-      expect(Timeslot.first).to eq(same_acceptor_timeslot)
-      expect(assigns(:timeslots)[:Thursday]).not_to include(same_acceptor_timeslot)
-    end
-  end
 end

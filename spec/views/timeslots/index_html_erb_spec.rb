@@ -11,7 +11,7 @@ RSpec.describe "challenges/1/timeslots/index.html.erb", type: :view do
       t
     }
     before(:each) do
-      @timeslots = {
+      @not_soon_timeslots = {
         Monday: Timeslot.all,
         Tuesday: Timeslot.all,
         Wednesday: Timeslot.all,
@@ -19,6 +19,15 @@ RSpec.describe "challenges/1/timeslots/index.html.erb", type: :view do
         Friday: Timeslot.all,
         Saturday: Timeslot.all,
         Sunday: Timeslot.all
+      }
+      @soon_timeslots = {
+        Monday: nil,
+        Tuesday: nil,
+        Wednesday: nil,
+        Thursday: nil,
+        Friday: nil,
+        Saturday: nil,
+        Sunday: nil
       }
       @challenge = timeslot1.challenge
       render :template => "/timeslots/index.html.erb"

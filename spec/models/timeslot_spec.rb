@@ -65,4 +65,26 @@ RSpec.describe Timeslot, type: :model do
     end
   end
 
+  xdescribe 'scopes' do
+    let(:old_slot) {FactoryGirl.build(:timeslot, start_at: Time.zone.now.beginning_of_hour - 3.days)}
+    let(:soon_slot) {FactoryGirl.create(:timeslot, start_at: Time.zone.now.beginning_of_hour + 1.hour)}
+    let(:future_slot) {FactoryGirl.create(:timeslot, start_at: Time.zone.now.beginning_of_hour + 3.hour)}
+
+    before do
+      old_slot.save(validate: false); soon_slot; future_slot
+    end
+
+    it 'shows soon scopes' do
+      expect(Timeslot.future.soon).to include(soon_slot)
+      expect(Timeslot.future.soon).not_to include(future_slot)
+      expect(Timeslot.future.soon).not_to include(old_slot)
+    end
+
+    it 'shows old scopes' do
+      expect(Timeslot.future).to include(future_slot)
+      expect(Timeslot.future).to include(soon_slot)
+      expect(Timeslot.future).not_to include(old_slot)
+    end
+  end
+
 end

@@ -18,6 +18,10 @@ RSpec.describe "Routing to authentication", :type => :routing do
     expect(:post => "/timezone").to route_to("authentication#timezone")
   end
 
+  it "routes POST /slack_name to authentication#slack_name" do
+    expect(:post => "/slack_name").to route_to("authentication#slack_name")
+  end
+
   it "routes GET / to authentication#index" do
     expect(:get => "/").to route_to("authentication#index")
   end

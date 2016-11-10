@@ -14,7 +14,7 @@ RSpec.describe Student, type: :model do
       expect(student.save).to be true
     end
 
-    it "saves without a slackname" do
+    it "saves without a slack_name" do
       student.slack_name = nil
       expect(student.save).to be true
     end
