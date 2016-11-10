@@ -3,7 +3,8 @@ class TimeslotsController < ApplicationController
   def index
     @challenge = Challenge.find_by_id(params[:challenge_id])
     if @challenge
-      @timeslots = @challenge.get_timeslots(current_student)
+      @not_soon_timeslots = @challenge.get_not_soon_timeslots(current_student)
+      @soon_timeslots = @challenge.get_soon_timeslots(current_student)
     else
       redirect_to challenges_path
     end
@@ -23,9 +24,6 @@ class TimeslotsController < ApplicationController
     overlap_timeslots.each do |timeslot|
       timeslot.destroy
     end
-
-
-
   end
 
   def destroy
