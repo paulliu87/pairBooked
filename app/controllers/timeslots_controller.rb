@@ -10,12 +10,10 @@ class TimeslotsController < ApplicationController
     end
   end
 
-  def show
+  def accept
     @timeslot = Timeslot.find_by_id(params[:id])
     @timeslot.acceptor = current_student
-
     if @timeslot.save
-
       empty_timeslots = Timeslot.where(initiator_id: @timeslot.initiator_id, challenge_id: @timeslot.challenge_id, acceptor_id: nil)
       empty_timeslots.each do |timeslot|
         timeslot.destroy
@@ -25,9 +23,14 @@ class TimeslotsController < ApplicationController
       overlap_timeslots.each do |timeslot|
         timeslot.destroy
       end
-
       send_confirmation(@timeslot)
     end
+    redirect_to challenge_timeslot_path(@timeslot.challenge_id, @timeslot)
+  end
+
+  def show
+    @timeslot = Timeslot.find_by_id(params[:id])
+    @page_title = @timeslot.challenge.name + " timeslots"
   end
 
   def destroy
@@ -96,17 +99,27 @@ class TimeslotsController < ApplicationController
   end
 
   def send_confirmation(timeslot)
+
+   controller = self
+
     mail = Mail.new do
-        from      'bobolinkpairbook@gmail.com'
-        subject   'Pairing Confirmation'
+      from    'bobolinkpairbook@gmail.com'
+      subject   "pairBook #{timeslot.challenge.name}"
+      delivery_method :sendmail
+
+      html_part do
+        content_type 'text/html; charset=UTF-8'
+        body controller.render_to_string(
+          :locals => {:@timeslot => timeslot},
+          :template => :'timeslots/show.html'
+        )
+      end
     end
 
-    mail.delivery_method :sendmail
-    mail[:to] = timeslot.initiator.email
-    mail[:body] =File.read('')
-    mail.deliver
+    [timeslot.initiator.email, timeslot.acceptor.email].each do |email|
+      mail[:to] = email
+      mail.deliver
+    end
 
-    mail[:to] = timeslot.acceptor.email
-    mail.deliver
   end
 end
