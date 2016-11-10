@@ -104,9 +104,7 @@ class TimeslotsController < ApplicationController
   end
 
   def send_confirmation(timeslot)
-
-   controller = self
-
+    controller = self
     mail = Mail.new do
       from    'bobolinkpairbook@gmail.com'
       subject   "pairBook #{timeslot.challenge.name}"
@@ -125,7 +123,6 @@ class TimeslotsController < ApplicationController
       mail[:to] = email
       mail.deliver
     end
-
   end
 
   def send_cancellation(timeslot)

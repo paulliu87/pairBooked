@@ -8,6 +8,7 @@ require 'rspec/rails'
 require 'capybara/rails'
 require "rack_session_access/capybara"
 require 'webmock/rspec'
+require 'mail'
 require_relative 'support/oauth_hash'
 WebMock.disable_net_connect!(allow_localhost: true)
 
@@ -136,4 +137,9 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
+end
+
+# Has shoulda matchers for Mail
+Mail.defaults do
+  delivery_method :test
 end

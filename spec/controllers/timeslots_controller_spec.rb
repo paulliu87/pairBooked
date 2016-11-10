@@ -94,6 +94,17 @@ RSpec.describe TimeslotsController, type: :controller do
         ).count
       ).to eq(0)
     end
+
+    it 'sends email'do
+      expect_any_instance_of(Mail.new.class).to receive(:deliver).twice
+
+      post :accept,
+        params: {
+          challenge_id: demo_timeslot.challenge_id,
+          id: demo_timeslot.id
+        }
+    end
+
   end
 
   describe 'show' do
@@ -152,9 +163,22 @@ RSpec.describe TimeslotsController, type: :controller do
     end
 
     it 'returns to the dashboard page' do
-      post :cancel, params: {challenge_id: demo_timeslot.challenge_id, id: demo_timeslot.id}
+      post :cancel, params: {
+        challenge_id: demo_timeslot.challenge_id,
+        id: demo_timeslot.id
+      }
       expect(response).to redirect_to dashboard_path
     end
+
+    it 'sends email'do
+      expect_any_instance_of(Mail.new.class).to receive(:deliver).twice
+
+      post :cancel, params: {
+          challenge_id: demo_timeslot.challenge_id,
+          id: demo_timeslot.id
+        }
+    end
+
   end
 
   describe 'create' do
