@@ -5,6 +5,7 @@ RSpec.describe TimeslotsController, type: :controller do
   let(:demo_timeslot) {FactoryGirl.create(:timeslot)}
   let(:demo_student) {FactoryGirl.create(:student)}
   let(:demo_challenge) {FactoryGirl.create(:challenge)}
+  let(:demo_challenge_1) {FactoryGirl.create(:challenge)}
 
   before do
     @request.session[:student_id] = demo_student.id
@@ -105,6 +106,19 @@ RSpec.describe TimeslotsController, type: :controller do
         }
     end
 
+    it 'removes the timeslot that overlaps the acceptor joined' do
+      demo_timeslot = FactoryGirl.create(:timeslot)
+      demo_timeslot_1 = FactoryGirl.create(
+        :timeslot,
+        challenge_id: demo_challenge_1.id,
+        initiator_id: demo_timeslot.initiator_id,
+        start_at:     demo_timeslot.start_at,
+        end_at:       demo_timeslot.end_at
+      )
+      expect(Timeslot.count).to eq(2)
+      post :accept, params: {challenge_id: demo_timeslot.challenge_id, id: demo_timeslot.id}
+      expect(Timeslot.count).to eq(1)
+    end
   end
 
   describe 'show' do
@@ -237,5 +251,14 @@ RSpec.describe TimeslotsController, type: :controller do
         }.to_not change{ Timeslot.count }
       end
     end
+
+    context 'create multiple timeslots' do
+      it 'creates two 1 hour long timeslots' do
+        expect {
+            post(:create, params: { timeslots: {start_date: "3000-01-01", start_time: "09:00", end_time: "11:00"}, challenge_id: demo_challenge.id})
+          }.to change{ Timeslot.count }.by(2)
+      end
+    end
   end
+
 end

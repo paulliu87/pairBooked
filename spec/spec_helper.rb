@@ -1,4 +1,3 @@
-
 require 'simplecov'
 SimpleCov.start
 
@@ -101,3 +100,4 @@ RSpec.configure do |config|
   Kernel.srand config.seed
 =end
 end
+
