@@ -3,10 +3,13 @@ div.list {
   padding-bottom: 2em;
 }
 
-div.list ul {
-  list-style: none;
+div.list {
   form {
     font-size: .8em;
     display: inline;
   }
+}
+
+.timeslot td {
+  padding-left: 1em;
 }
