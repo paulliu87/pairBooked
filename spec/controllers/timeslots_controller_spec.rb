@@ -56,29 +56,15 @@ RSpec.describe TimeslotsController, type: :controller do
       it 'has days containing timeslots' do
         expect(assigns(:not_soon_timeslots)[:Monday]).to all(be_a Timeslot)
       end
-
-      # it 'does not display a students own times' do
-      #   expect(assigns(:timeslots)[:Thursday]).not_to include(same_acceptor_timeslot)
-      # end
     end
   end
 
-  describe 'show' do
-    it 'assigns the right timeslot' do
-      demo_timeslot = FactoryGirl.create(:timeslot)
-      get :show, params: {challenge_id: demo_timeslot.challenge_id, id: demo_timeslot.id}
-      expect(assigns(:timeslot)).to eq(demo_timeslot)
-    end
+  describe 'accept' do
 
     it 'assigns the current student to the timeslot' do
       demo_timeslot = FactoryGirl.create(:timeslot)
-      get :show, params: {challenge_id: demo_timeslot.challenge_id, id: demo_timeslot.id}
+      get :accept, params: {challenge_id: demo_timeslot.challenge_id, id: demo_timeslot.id}
       expect(assigns(:timeslot).acceptor).to eq(demo_student)
-    end
-
-    it 'renders the confirmation page' do
-      get :show, params: {challenge_id: demo_timeslot.challenge_id, id: demo_timeslot.id}
-      expect(response).to render_template(:show)
     end
 
     it 'only keeps the timeslot that has an acceptor' do
@@ -88,8 +74,7 @@ RSpec.describe TimeslotsController, type: :controller do
         challenge_id: demo_timeslot.challenge_id,
         initiator_id: demo_timeslot.initiator_id
       )
-
-      get :show, params: {challenge_id: demo_timeslot.challenge_id, id: demo_timeslot.id}
+      get :accept, params: {challenge_id: demo_timeslot.challenge_id, id: demo_timeslot.id}
       expect(
         Timeslot.where(challenge_id: demo_timeslot.challenge_id, initiator_id:demo_timeslot.initiator_id).count
       ).to eq(1)
@@ -102,13 +87,26 @@ RSpec.describe TimeslotsController, type: :controller do
         challenge_id: demo_timeslot.challenge_id,
         initiator_id: demo_timeslot.initiator_id
       )
-
-      get :show, params: {challenge_id: demo_timeslot.challenge_id, id: demo_timeslot.id}
+      get :accept, params: {challenge_id: demo_timeslot.challenge_id, id: demo_timeslot.id}
       expect(
         Timeslot.where(
           challenge_id: demo_timeslot.challenge_id, initiator_id:demo_timeslot.initiator_id, acceptor_id: nil
         ).count
       ).to eq(0)
+    end
+  end
+
+  describe 'show' do
+
+    it 'assigns the right timeslot' do
+      demo_timeslot = FactoryGirl.create(:timeslot)
+      get :show, params: {challenge_id: demo_timeslot.challenge_id, id: demo_timeslot.id}
+      expect(assigns(:timeslot)).to eq(demo_timeslot)
+    end
+
+    it 'renders the confirmation page' do
+      get :show, params: {challenge_id: demo_timeslot.challenge_id, id: demo_timeslot.id}
+      expect(response).to render_template(:show)
     end
   end
 
@@ -135,7 +133,6 @@ RSpec.describe TimeslotsController, type: :controller do
       delete :destroy, params: {challenge_id: demo_timeslot.challenge_id, id: demo_timeslot.id}
       expect(response).to redirect_to dashboard_path
     end
-
   end
 
   describe 'create' do
@@ -157,7 +154,6 @@ RSpec.describe TimeslotsController, type: :controller do
           post :create, params: { timeslots: {start_date: "2017-10-30", start_time: "09:00", end_time: "10:00"}, challenge_id: demo_challenge.id}
         }.to change(Timeslot,:count).by(1)
       end
-
     end
 
     xcontext "when invalid params are passed" do
@@ -219,5 +215,4 @@ RSpec.describe TimeslotsController, type: :controller do
       end
     end
   end
-
 end
