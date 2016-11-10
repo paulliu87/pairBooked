@@ -12,7 +12,7 @@ class Timeslot < ApplicationRecord
   default_scope { order(start_at: :asc) }
 
   def self.clean_up
-    self.where( start_at:(Time.now.midnight - 7.days)..Time.now.midnight).each do |timeslot|
+    self.where( start_at:(Time.now.midnight - 30.days)..Time.now.midnight).each do |timeslot|
       timeslot.destroy
     end
   end
