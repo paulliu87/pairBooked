@@ -63,7 +63,7 @@ RSpec.describe TimeslotsController, type: :controller do
 
     it 'assigns the current student to the timeslot' do
       demo_timeslot = FactoryGirl.create(:timeslot)
-      get :accept, params: {challenge_id: demo_timeslot.challenge_id, id: demo_timeslot.id}
+      post :accept, params: {challenge_id: demo_timeslot.challenge_id, id: demo_timeslot.id}
       expect(assigns(:timeslot).acceptor).to eq(demo_student)
     end
 
@@ -74,7 +74,7 @@ RSpec.describe TimeslotsController, type: :controller do
         challenge_id: demo_timeslot.challenge_id,
         initiator_id: demo_timeslot.initiator_id
       )
-      get :accept, params: {challenge_id: demo_timeslot.challenge_id, id: demo_timeslot.id}
+      post :accept, params: {challenge_id: demo_timeslot.challenge_id, id: demo_timeslot.id}
       expect(
         Timeslot.where(challenge_id: demo_timeslot.challenge_id, initiator_id:demo_timeslot.initiator_id).count
       ).to eq(1)
@@ -87,13 +87,24 @@ RSpec.describe TimeslotsController, type: :controller do
         challenge_id: demo_timeslot.challenge_id,
         initiator_id: demo_timeslot.initiator_id
       )
-      get :accept, params: {challenge_id: demo_timeslot.challenge_id, id: demo_timeslot.id}
+      post :accept, params: {challenge_id: demo_timeslot.challenge_id, id: demo_timeslot.id}
       expect(
         Timeslot.where(
           challenge_id: demo_timeslot.challenge_id, initiator_id:demo_timeslot.initiator_id, acceptor_id: nil
         ).count
       ).to eq(0)
     end
+
+    it 'sends email'do
+      expect_any_instance_of(Mail.new.class).to receive(:deliver).twice
+
+      post :accept,
+        params: {
+          challenge_id: demo_timeslot.challenge_id,
+          id: demo_timeslot.id
+        }
+    end
+
   end
 
   describe 'show' do
@@ -135,6 +146,41 @@ RSpec.describe TimeslotsController, type: :controller do
     end
   end
 
+  describe 'cancel' do
+    before do
+      demo_timeslot.acceptor =  FactoryGirl.create(:student)
+      demo_timeslot.save
+    end
+
+    it 'deletes the timeslot from the database' do
+      expect{
+        post :cancel, params:
+          {
+            challenge_id: demo_timeslot.challenge_id,
+            id: demo_timeslot.id
+          }
+        }.to change(Timeslot, :count).by(-1)
+    end
+
+    it 'returns to the dashboard page' do
+      post :cancel, params: {
+        challenge_id: demo_timeslot.challenge_id,
+        id: demo_timeslot.id
+      }
+      expect(response).to redirect_to dashboard_path
+    end
+
+    it 'sends email'do
+      expect_any_instance_of(Mail.new.class).to receive(:deliver).twice
+
+      post :cancel, params: {
+          challenge_id: demo_timeslot.challenge_id,
+          id: demo_timeslot.id
+        }
+    end
+
+  end
+
   describe 'create' do
     context "when valid params are passed" do
       before(:each) do
@@ -153,29 +199,6 @@ RSpec.describe TimeslotsController, type: :controller do
         expect {
           post :create, params: { timeslots: {start_date: "2017-10-30", start_time: "09:00", end_time: "10:00"}, challenge_id: demo_challenge.id}
         }.to change(Timeslot,:count).by(1)
-      end
-    end
-
-    xcontext "when invalid params are passed" do
-      before(:each) do
-        @request.session[:student_id] = demo_student.id
-        post :create, params: { timeslots: {start_date: "", start_time: "09:00", end_time: "10:00"}, challenge_id: demo_challenge.id}
-      end
-
-      it "responds with status code 200" do
-        post(:create, params: { timeslots: {start_date: "", start_time: "09:00", end_time: "10:00"}, challenge_id: demo_challenge.id})
-        expect(response).to have_http_status 200
-      end
-
-      it "renders the new timeslot page" do
-        post(:create, params: { timeslots: {start_date: "", start_time: "09:00", end_time: "10:00"}, challenge_id: demo_challenge.id})
-        expect(response).to render_template("new")
-      end
-
-      it "does not create a new timeslot" do
-        expect {
-          post(:create, params: { timeslots: {start_date: "", start_time: "09:00", end_time: "10:00"}, challenge_id: demo_challenge.id})
-        }.to_not change(Timeslot,:count)
       end
     end
 

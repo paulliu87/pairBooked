@@ -1,5 +1,5 @@
 class TimeslotsController < ApplicationController
-
+  include TimeslotsHelper
   def index
     @challenge = Challenge.find_by_id(params[:challenge_id])
     if @challenge
@@ -54,39 +54,15 @@ class TimeslotsController < ApplicationController
     elsif sanitized_params[:start_at] <= DateTime.now
       @errors = ["Start time must after the current time."]
       render action: "new"
-      # render json: @timeslot.errors, status: :unprocessable_entity
     else
       create_timeslots(sanitized_params[:start_at],sanitized_params[:end_at],current_student.id, @challenge)
       redirect_to "/challenges/#{params[:challenge_id]}/timeslots", notice: 'Tweet was successfully created.'
-      # render json: @timeslot, status: :created
     end
   end
 
   def cancel
-    # controller = self
     timeslot = Timeslot.find(params[:id])
-    mail = Mail.new do
-      from    'bobolinkpairbook@gmail.com'
-      subject   "CANCELLED pairBook #{timeslot.challenge.name}"
-      delivery_method :sendmail
-
-      text_part do
-        body "Your pairing on #{timeslot_string(timeslot)} was cancelled. Please re-input your availability for this challenge."
-      end
-
-      # html_part do
-      #   content_type 'text/html; charset=UTF-8'
-      #   body controller.render_to_string(
-      #     :locals => {:@timeslot => timeslot},
-      #     :template => :'timeslots/show.html'
-      #   )
-      # end
-    end
-
-    [timeslot.initiator.email, timeslot.acceptor.email].each do |email|
-      mail[:to] = email
-      mail.deliver
-    end
+    send_cancellation(timeslot)
     timeslot.destroy
     redirect_to dashboard_path
   end
@@ -128,9 +104,7 @@ class TimeslotsController < ApplicationController
   end
 
   def send_confirmation(timeslot)
-
-   controller = self
-
+    controller = self
     mail = Mail.new do
       from    'bobolinkpairbook@gmail.com'
       subject   "pairBook #{timeslot.challenge.name}"
@@ -149,6 +123,23 @@ class TimeslotsController < ApplicationController
       mail[:to] = email
       mail.deliver
     end
+  end
 
+  def send_cancellation(timeslot)
+    controller = self
+    mail = Mail.new do
+      from    'bobolinkpairbook@gmail.com'
+      subject   "CANCELLED pairBook #{timeslot.challenge.name}"
+      delivery_method :sendmail
+
+      text_part do
+        body "Your pairing on #{controller.timeslot_string(timeslot)} was cancelled. Please re-input your availability for this challenge."
+      end
+    end
+
+    [timeslot.initiator.email, timeslot.acceptor.email].each do |email|
+      mail[:to] = email
+      mail.deliver
+    end
   end
 end
