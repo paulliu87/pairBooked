@@ -65,7 +65,7 @@ RSpec.describe Timeslot, type: :model do
     end
   end
 
-  describe 'scopes' do
+  xdescribe 'scopes' do
     let(:old_slot) {FactoryGirl.build(:timeslot, start_at: Time.zone.now.beginning_of_hour - 3.days)}
     let(:soon_slot) {FactoryGirl.create(:timeslot, start_at: Time.zone.now.beginning_of_hour + 1.hour)}
     let(:future_slot) {FactoryGirl.create(:timeslot, start_at: Time.zone.now.beginning_of_hour + 3.hour)}
