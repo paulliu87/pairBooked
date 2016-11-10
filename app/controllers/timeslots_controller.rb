@@ -1,8 +1,10 @@
 class TimeslotsController < ApplicationController
   include TimeslotsHelper
+  include Mail
   def index
     @challenge = Challenge.find_by_id(params[:challenge_id])
     if @challenge
+      @page_title = "#{@challenge.name}"
       @not_soon_timeslots = @challenge.get_not_soon_timeslots(current_student)
       @soon_timeslots = @challenge.get_soon_timeslots(current_student)
     else
@@ -39,6 +41,8 @@ class TimeslotsController < ApplicationController
   end
 
   def new
+    @challenge = Challenge.find_by_id(params[:challenge_id])
+    @page_title = "Input availability for #{@challenge.name}"
   end
 
   def create

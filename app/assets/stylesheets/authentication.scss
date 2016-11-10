@@ -1,7 +1,25 @@
 // Place all the styles related to the authentication controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+@import url('https://fonts.googleapis.com/css?family=Josefin+Slab');
 
 .hidden {
   display: none;
 }
+
+main {
+  display: flex;
+  flex-direction: column;
+}
+
+#login-button {
+  margin: 0 auto;
+  font-size: 4em;
+}
+
+.logo {
+  font-size: 2em;
+  font-family: 'Josefin Slab', serif;
+}
+
+// * {outline: 2px solid red;}

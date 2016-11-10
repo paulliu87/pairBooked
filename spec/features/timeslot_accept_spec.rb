@@ -9,14 +9,14 @@ RSpec.feature "student accept timeslot" do
     scenario "student will be registered" do
       page.set_rack_session(student_id: student.id)
       visit "/challenges/#{challenge.id}/timeslots/#{timeslot.id}"
-      find_button("Book!").click
+      page.find("#book-button").click
       expect(page.current_path).to eq("/challenges/#{challenge.id}/timeslots/#{timeslot.id}")
     end
     scenario "All empty timeslots will be removed" do
       page.set_rack_session(student_id: student.id)
       visit "/challenges/#{challenge.id}/timeslots/#{timeslot.id}"
       removed_id = empty_timeslot.id
-      find_button("Book!").click
+      page.find("#book-button").click
       expect(Timeslot.find_by_id(removed_id)).to eq nil
     end
   end
