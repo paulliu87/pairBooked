@@ -31,16 +31,20 @@ class AuthenticationController < ApplicationController
 
   def timezone
     @student = current_student
-    @student.time_zone = params[:timezone][:time_zone]
+    if request.xhr?
+
+      @student.time_zone = params[:time_zone]
+    else
+      @student.time_zone = params[:timezone][:time_zone]
+    end
     @student.save
   end
 
   def slack_name
     @student = current_student
     if request.xhr?
-      @student.slack_name = params.keys.first
+      @student.slack_name = params[:slack_name]
     else
-      @student = current_student
       @student.slack_name = params[:slack_name][:slack_name]
     end
     @student.save

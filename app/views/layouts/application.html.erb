@@ -37,13 +37,12 @@
                     <li class="nav-link"><a href="/logout">Log Out</a></li>
                     <li class="nav-form">
                       <%= form_for :timezone, :url => timezone_path do |f| %>
-                        <%= f.label :time_zone %>
                         <div class="row" id="timezone-form">
                           <div class="col-lg-8">
                           <%= f.time_zone_select :time_zone, ActiveSupport::TimeZone.us_zones, { :default => current_student.time_zone }, class: "form-control form-control-sm" %>
                           </div>
                           <div class="col-lg-4">
-                          <%= f.submit "Update", class: "btn btn-primary" %>
+                          <%= f.submit "Update", class: "btn btn-primary", id: "time-zone-update-button"%>
                           </div>
                         </div>
                       <% end %>
