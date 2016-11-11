@@ -7,7 +7,7 @@ module ApplicationHelper
     if current_student
       current_student.time_zone
     else
-      Time.zone
+      Time.zone.name.to_s
     end
   end
     # helper_method :current_student #make this method available in views
