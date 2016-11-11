@@ -15,8 +15,16 @@
   padding-bottom: 0.75em;
   list-style-type: none;
   width: 360px;
-
   a {
     margin-top: -5px;
+
+  }
+
+  a.btn-warning {
+    color: black;
+    i {
+      margin-left: 3px;
+    }
   }
 }
+
