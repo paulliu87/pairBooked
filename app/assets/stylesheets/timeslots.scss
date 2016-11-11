@@ -2,7 +2,29 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+// * { outline: 1px solid red; }
+
 .errors li {
   list-style: none;
   color: red;
 }
+
+.timeslot {
+  margin-top: 1em;
+  padding-top: 0.75em;
+  padding-bottom: 0.75em;
+  list-style-type: none;
+  width: 360px;
+  a {
+    margin-top: -5px;
+
+  }
+
+  a.btn-warning {
+    color: black;
+    i {
+      margin-left: 3px;
+    }
+  }
+}
+
