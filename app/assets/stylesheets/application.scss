@@ -42,10 +42,24 @@ $break-small: 767px;
   }
 }
 
-.navbar-header #brand {
-  display: none;
+#navbar-brand-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-top: -2em;
+  padding-bottom: 2em;
   @media screen and (max-width: $break-small) {
     display: unset;
+  }
+}
+
+.navbar-header #brand {
+  // display: none;
+  font-family: 'Josefin Slab', serif;
+  font-size: 2em;
+
+  @media screen and (max-width: $break-small) {
+    margin-left: 1.25em;
   }
 }
 
