@@ -1,6 +1,6 @@
 <h1>Hello, <%= @student.fullname %></h1>
 <% if @paired_timeslots.present? %>
-  <h2>Open Timeslots</h2>
+  <h2>Your Pairing Sessions</h2>
   <div class="list">
     <table id="paired-list">
         <% @paired_timeslots.each do |timeslot| %>
