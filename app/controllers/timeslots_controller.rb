@@ -56,6 +56,7 @@ class TimeslotsController < ApplicationController
       @errors = ["Start time must before end time."]
       render action: "new"
     elsif sanitized_params[:start_at] <= DateTime.now
+
       @errors = ["Start time must after the current time."]
       render action: "new"
     else
@@ -78,10 +79,10 @@ class TimeslotsController < ApplicationController
   end
 
   def convert_to_datetime(params)
-    start_datetime = params[:start_date] + params[:start_time]
-    params[:start_at] = DateTime.strptime(start_datetime + current_time_zone.to_s[-3..-1],'%F%H:%M %Z')
-    end_datetime = params[:start_date] + params[:end_time]
-    params[:end_at] = DateTime.strptime(end_datetime + current_time_zone.to_s[-3..-1],'%F%H:%M %Z')
+    start_datetime = params[:start_date] + " " + params[:start_time]
+    params[:start_at] = start_datetime.in_time_zone(zone = current_time_zone)
+    end_datetime = params[:start_date] + " " + params[:end_time]
+    params[:end_at] = end_datetime.in_time_zone(zone = current_time_zone)
   end
 
   def create_timeslots(start_at, end_at, initiator_id, challenge)
