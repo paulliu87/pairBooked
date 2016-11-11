@@ -50,8 +50,8 @@
     <% end %>
 
   <% else %>
-    <h2>Your current Slack Username is <span id="slack_name"><%= current_student.slack_name %></span>.
-    <button id="slack-edit-button" class= "btn btn-primary">Click to change</button></h2>
+    <h3>Your Slack Username: <span id="slack_name"><%= current_student.slack_name %></span>.
+    <button id="slack-edit-button" class= "btn btn-primary">Click to change</button></h3>
     <%= form_for :slack_name, :url => slack_name_path, method: "post", html: { id: "update-slack", class: "hidden" } do |f| %>
       <%= f.label :slack_name %>
       <%= f.text_field :slack_name %>
