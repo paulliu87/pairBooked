@@ -31,8 +31,8 @@
         <% if @soon_timeslots[:Monday] != nil %>
           <% @soon_timeslots[:Monday].each do |timeslot| %>
               <li class="timeslot">
-                <a class="btn btn-warning soon" href="/challenges/<%=timeslot.challenge_id%>/timeslots/<%= timeslot.id %>"><%= timeslot_string(timeslot)%></a>
-                <span class="soon-warning">! Starts soon</span>
+                <%= timeslot_string(timeslot)%>
+                <a class="btn btn-warning btn-sm pull-right soon" href="/challenges/<%=timeslot.challenge_id%>/timeslots/<%= timeslot.id %>">Join <i class="glyphicon glyphicon-alert"></i></a>
               </li>
           <% end %>
         <% end %>
@@ -52,8 +52,8 @@
         <% if @soon_timeslots[:Tuesday] != nil %>
           <% @soon_timeslots[:Tuesday].each do |timeslot| %>
               <li class="timeslot">
-                <a class="btn btn-warning soon" href="/challenges/<%=timeslot.challenge_id%>/timeslots/<%= timeslot.id %>"><%= timeslot_string(timeslot)%></a>
-                <span class="soon-warning">! Starts soon</span>
+                <%= timeslot_string(timeslot)%>
+                <a class="btn btn-warning btn-sm pull-right soon" href="/challenges/<%=timeslot.challenge_id%>/timeslots/<%= timeslot.id %>">Join <i class="glyphicon glyphicon-alert"></i></a>
               </li>
           <% end %>
         <% end %>
@@ -73,8 +73,8 @@
         <% if @soon_timeslots[:Wednesday] != nil %>
           <% @soon_timeslots[:Wednesday].each do |timeslot| %>
               <li class="timeslot">
-                <a class="btn btn-warning soon" href="/challenges/<%=timeslot.challenge_id%>/timeslots/<%= timeslot.id %>"><%= timeslot_string(timeslot)%></a>
-                <span class="soon-warning">! Starts soon</span>
+                <%= timeslot_string(timeslot)%>
+                <a class="btn btn-warning btn-sm pull-right soon" href="/challenges/<%=timeslot.challenge_id%>/timeslots/<%= timeslot.id %>">Join <i class="glyphicon glyphicon-alert"></i></a>
               </li>
           <% end %>
         <% end %>
@@ -118,8 +118,8 @@
         <% if @soon_timeslots[:Friday] != nil %>
           <% @soon_timeslots[:Friday].each do |timeslot| %>
               <li class="timeslot">
-                <a class="btn btn-warning soon" href="/challenges/<%=timeslot.challenge_id%>/timeslots/<%= timeslot.id %>"><%= timeslot_string(timeslot)%></a>
-                <span class="soon-warning">! Starts soon</span>
+                <%= timeslot_string(timeslot)%>
+                <a class="btn btn-warning btn-sm pull-right soon" href="/challenges/<%=timeslot.challenge_id%>/timeslots/<%= timeslot.id %>">Join <i class="glyphicon glyphicon-alert"></i></a>
               </li>
           <% end %>
         <% end %>
@@ -140,8 +140,8 @@
         <% if @soon_timeslots[:Saturday] != nil %>
           <% @soon_timeslots[:Saturday].each do |timeslot| %>
               <li class="timeslot">
-                <a class="btn btn-warning soon" href="/challenges/<%=timeslot.challenge_id%>/timeslots/<%= timeslot.id %>"><%= timeslot_string(timeslot)%></a>
-                <span class="soon-warning">! Starts soon</span>
+                <%= timeslot_string(timeslot)%>
+                <a class="btn btn-warning btn-sm pull-right soon" href="/challenges/<%=timeslot.challenge_id%>/timeslots/<%= timeslot.id %>">Join <i class="glyphicon glyphicon-alert"></i></a>
               </li>
           <% end %>
         <% end %>
@@ -162,8 +162,8 @@
         <% if @soon_timeslots[:Sunday] != nil %>
           <% @soon_timeslots[:Sunday].each do |timeslot| %>
               <li class="timeslot">
-                <a class="btn btn-warning soon" href="/challenges/<%=timeslot.challenge_id%>/timeslots/<%= timeslot.id %>"><%= timeslot_string(timeslot)%></a>
-                <span class="soon-warning">! Starts soon</span>
+                <%= timeslot_string(timeslot)%>
+                <a class="btn btn-warning btn-sm pull-right soon" href="/challenges/<%=timeslot.challenge_id%>/timeslots/<%= timeslot.id %>">Join <i class="glyphicon glyphicon-alert"></i></a>
               </li>
           <% end %>
         <% end %>
