@@ -30,7 +30,7 @@ module TimeslotsHelper
   end
 
   def timeslot_string(timeslot)
-    timeslot.start_at.in_time_zone(current_time_zone).strftime("%B %d %Y from %l:%M %P") + " to " + timeslot.end_at.strftime("%l:%M %P")
+    timeslot.start_at.in_time_zone(current_time_zone).strftime("%B %d %Y from %l:%M %P") + " to " + timeslot.end_at.in_time_zone(current_time_zone).strftime("%l:%M %P")
   end
 
   def timeslots_params
@@ -38,10 +38,10 @@ module TimeslotsHelper
   end
 
   def convert_to_datetime(params)
-    start_datetime = params[:start_date] + params[:start_time]
-    params[:start_at] = DateTime.strptime(start_datetime + current_time_zone.to_s[-3..-1],'%F%H:%M %Z')
-    end_datetime = params[:start_date] + params[:end_time]
-    params[:end_at] = DateTime.strptime(end_datetime + current_time_zone.to_s[-3..-1],'%F%H:%M %Z')
+    start_datetime = params[:start_date] + " " + params[:start_time]
+    params[:start_at] = start_datetime.in_time_zone(zone = current_time_zone)
+    end_datetime = params[:start_date] + " " + params[:end_time]
+    params[:end_at] = end_datetime.in_time_zone(zone = current_time_zone)
   end
 
   def create_timeslots(start_at, end_at, initiator_id, challenge)

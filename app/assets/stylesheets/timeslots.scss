@@ -2,8 +2,6 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-// * { outline: 1px solid red; }
-
 .errors li {
   list-style: none;
   color: red;
@@ -28,3 +26,10 @@
   }
 }
 
+#timeslot-index-header {
+  div {
+    a {
+      margin-top: 25px;
+    }
+  }
+}

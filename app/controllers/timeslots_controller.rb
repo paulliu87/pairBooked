@@ -56,6 +56,7 @@ class TimeslotsController < ApplicationController
       @errors = ["Start time must before end time."]
       render action: "new"
     elsif sanitized_params[:start_at] <= DateTime.now
+
       @errors = ["Start time must after the current time."]
       render action: "new"
     else
