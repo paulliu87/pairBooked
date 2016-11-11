@@ -22,6 +22,8 @@
 
 $break-small: 767px;
 
+// * { outline: 1px solid red }
+
 .navbar-header .logo {
 /*  height: 50px;*/
   margin-top: 30px;
@@ -44,6 +46,9 @@ $break-small: 767px;
 
 .navbar-header #brand {
   display: none;
+  font-family: 'Josefin Slab', serif;
+  font-size: 2em;
+  margin-left: 1.25em;
   @media screen and (max-width: $break-small) {
     display: unset;
   }
