@@ -37,7 +37,12 @@ class AuthenticationController < ApplicationController
 
   def slack_name
     @student = current_student
-    @student.slack_name = params[:slack_name][:slack_name]
+    if request.xhr?
+      @student.slack_name = params.keys.first
+    else
+      @student = current_student
+      @student.slack_name = params[:slack_name][:slack_name]
+    end
     @student.save
   end
 
