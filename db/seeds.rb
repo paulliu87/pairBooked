@@ -12,7 +12,7 @@ challenge10 = Challenge.create(name: "6.6 Rspec", due_date: DateTime.new(2016,11
 challenge11 = Challenge.create(name: "7.2 Data Structure", due_date: DateTime.new(2016,11,12,12,00,00).beginning_of_hour);
 challenge12 = Challenge.create(name: "8.2 One to Many", due_date: DateTime.new(2016,11,16,12,00,00).beginning_of_hour);
 challenge13 = Challenge.create(name: "8.4 Many to Many", due_date: DateTime.new(2016,11,25,12,00,00).beginning_of_hour);
-FactoryGirl.create(:timeslot, challenge_id: challenge1.id, start_at: Time.zone.now.beginning_of_hour + 1.hour, end_at: Time.zone.now.beginning_of_hour + 2.hours)
-FactoryGirl.create(:timeslot, challenge_id: challenge1.id, start_at: Time.zone.now.beginning_of_hour + 4.hour, end_at: Time.zone.now.beginning_of_hour + 5.hours)
-FactoryGirl.create(:timeslot, challenge_id: challenge1.id, start_at: Time.zone.now.beginning_of_hour + 6.hour, end_at: Time.zone.now.beginning_of_hour + 7.hours)
+FactoryGirl.create(:timeslot, challenge_id: challenge1.id, start_at: Time.zone.now.beginning_of_hour + 8.hour, end_at: Time.zone.now.beginning_of_hour + 9.hours)
+FactoryGirl.create(:timeslot, challenge_id: challenge1.id, start_at: Time.zone.now.beginning_of_hour + 9.hour, end_at: Time.zone.now.beginning_of_hour + 10.hours)
+FactoryGirl.create(:timeslot, challenge_id: challenge1.id, start_at: Time.zone.now.beginning_of_hour + 10.hour, end_at: Time.zone.now.beginning_of_hour + 11.hours)
 
