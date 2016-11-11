@@ -47,7 +47,6 @@ group :development, :test do
   gem 'faker'
   gem 'rack_session_access'
   gem "figaro"
-  gem "mail"
 
 # For JS tests
   gem 'jasmine-rails'
